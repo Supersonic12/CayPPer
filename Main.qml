@@ -14,8 +14,8 @@ Window {
         height:32
         anchors.top:parent.top
         anchors.left:parent.left
-        anchors.topMargin:20
-        anchors.leftMargin:20
+        anchors.topMargin:10
+        anchors.leftMargin:10
         radius:2
         Image{
             id:searchIcon
@@ -64,17 +64,17 @@ Window {
         anchors.left:searchIconRoot.right
         anchors.leftMargin:10
         anchors.top:parent.top
-        anchors.topMargin: 18
+        anchors.topMargin: 8
         color:"black"
     }
 
     TextField{
         id:searchField
-        anchors.left:searchIconRoot.right
+        anchors.left:separatorSearch.right
         anchors.top:parent.top
-        anchors.leftMargin:20
-        anchors.topMargin:20
-        width: 128
+        anchors.leftMargin:10
+        anchors.topMargin:10
+        width: 160
         height:32
         placeholderText:qsTr("Wallpaper Folder..")
         background:Rectangle{
@@ -94,8 +94,8 @@ Window {
         height:32
         anchors.right:parent.right
         anchors.top:parent.top
-        anchors.rightMargin: 20
-        anchors.topMargin: 20
+        anchors.rightMargin: 10
+        anchors.topMargin: 10
         Image{
             id:appSettingsIcon
             anchors.centerIn: parent
@@ -123,8 +123,8 @@ Window {
             active:false
             onLoaded:{
                 appSettingsLoader.item.closed.connect(() => {
-                                                          appSettingsLoader.active=false
-                                                          appSettingsLoader.source=""
+                    appSettingsLoader.active=false
+                    appSettingsLoader                                      .source=""
                                                       })
             }
         }
@@ -150,6 +150,18 @@ Window {
             }
         }
     }
+    // Horizontal Separator that separates buttons from wallpaper grid
+    Rectangle{
+        id:horizontalSeparator
+        anchors.top:searchIconRoot.bottom
+        anchors.topMargin:10
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:parent.width-anchors.topMargin
+        height:1
+        color:"black"
+    }
+
     Loader{
         id:wallpaperGridLoader
         active:false
