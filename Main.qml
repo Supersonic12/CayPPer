@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 Window {
     id: root
-    width: 640
-    height: 480
+    width: 800
+    height: 508
     visible: true
     title: qsTr("CayPPer")
 
@@ -53,6 +53,8 @@ Window {
                 //take input function should take inputfields text property
                 result=searchField.text
                 inputTaker.takeInput(result)
+                wallpaperGridLoader.source="qrc:/src/qml/Grid.qml"
+                wallpaperGridLoader.active=true
             }
         }
     }
@@ -77,6 +79,7 @@ Window {
         width: 160
         height:32
         placeholderText:qsTr("Wallpaper Folder..")
+        property string result:""
         background:Rectangle{
             radius:6
             border.width:1
@@ -85,6 +88,8 @@ Window {
         onAccepted:{
             result=searchField.text
             inputTaker.takeInput(result)
+            wallpaperGridLoader.source="qrc:/src/qml/Grid.qml"
+            wallpaperGridLoader.active=true
         }
     }
 
@@ -107,7 +112,6 @@ Window {
             mipmap:true
             smooth:true
             asynchronous: true
-            opacity: 0.95
         }
         Rectangle{
             id:appSettingsIconHover
@@ -124,8 +128,7 @@ Window {
             onLoaded:{
                 appSettingsLoader.item.closed.connect(() => {
                     appSettingsLoader.active=false
-                    appSettingsLoader                                      .source=""
-                                                      })
+                    appSettingsLoader.source=""})
             }
         }
 
@@ -139,7 +142,7 @@ Window {
             }
             onExited:{
                 appSettingsIconHover.height=0
-                appSettingsIconHover.color="transparent"
+                appSettingsIconHover.coloreight="transparent"
             }
             onClicked:{
                 if(!appSettingsLoader.active){
@@ -162,9 +165,18 @@ Window {
         color:"black"
     }
 
+
     Loader{
         id:wallpaperGridLoader
+        width:parent.width-20
+        height:parent.width-20-50
+        anchors.top:horizontalSeparator.bottom
+        anchors.left:parent.left
+        anchors.bottom:parent.bottom
+        anchors.right:parent.right
+        anchors.margins: 10
         active:false
+        source:""
     }
 
 }

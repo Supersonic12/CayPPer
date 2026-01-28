@@ -9,7 +9,6 @@ find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Gui
     Qml
-    WaylandClient
 )
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -26,6 +25,8 @@ qt_add_qml_module(appCayPPer
     SOURCES
         src/cpp/inputtakerfromqml.h
         src/cpp/inputtakerfromqml.cpp
+        src/cpp/imagemodel.h
+        src/cpp/imagemodel.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -46,7 +47,6 @@ target_link_libraries(appCayPPer
     Qt6::Quick
     Qt6::Gui
     Qt6::Qml
-    Qt6::WaylandClient
 )
 
 target_include_directories(ListDirectory PUBLIC

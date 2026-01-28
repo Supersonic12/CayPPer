@@ -2,8 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QString>
+#include <QDebug>
 #include "src/cpp/directorylister.h"
 #include "src/cpp/inputtakerfromqml.h"
+#include "src/cpp/imagemodel.h"
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -11,6 +13,9 @@ int main(int argc, char *argv[])
     //now taking dir from qml
     inputTakerFromQML inputTaker;
     engine.rootContext()->setContextProperty("inputTaker",&inputTaker);
+    //defining ImageModel it should take QStringList type of variable
+    ImageModel imageModel;
+    engine.rootContext()->setContextProperty("imageModel",&imageModel);
     QObject::connect(
         &inputTaker,
         &inputTakerFromQML::dirChanged,
@@ -21,12 +26,23 @@ int main(int argc, char *argv[])
             std::cout << "Dir changed to: "
                       << path.toStdString() << std::endl;
 
-            auto files = listDirectory(std::filesystem::path(path.toStdString()));
+            std::vector<filesystem::path> files = listDirectory(std::filesystem::path(path.toStdString()));
 
-            // process files here
+            // process files to qfiles here
+            QStringList qfiles;
+            qfiles.reserve(files.size());
             for(const auto & file :files){
+                const QString localPath =
+                    QString::fromStdString(file.string());
+
+                QUrl url = QUrl::fromLocalFile(localPath);
+
+                qfiles.append(url.toString());
+            }
+            imageModel.setImages(qfiles);
+            for(const auto &file :qfiles){
                 //For Debugging
-                std::cout << file << std::endl;
+                qDebug()<<file;
             }
         });
 
