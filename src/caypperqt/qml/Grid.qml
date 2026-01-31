@@ -12,18 +12,18 @@ GridView{
         id:delegateRect
         width:256
         height:delegateRect.width/16*9
-
         Image{
             id:delegateImage
             property bool isSixteentoNine:true
-
             // Component.onCompleted: {
             //     if(delegateImage.actualWidth/delegateImage.actualHeight===16/9){
 
             //     }
             // }
 
-            anchors.fill:parent
+            width:254
+            height:142
+            anchors.centerIn: parent
             sourceSize:Qt.size(1920,1080)
             source:model.imagePath
             fillMode:Image.PreserveAspectCrop
@@ -32,11 +32,30 @@ GridView{
             asynchronous:true
             cache:true
         }
+        MouseArea{
+            id:delegateMArea
+            anchors.fill:parent
+            hoverEnabled: true
+            property string result:""
+            onEntered:{
+                delegateRect.border.width=1
+                delegateRect.border.color="black"
+            }
+            onExited:{
+                delegateRect.border.width=0
+                delegateRect.border.color="transparent"
+            }
+            onClicked:{
+                //index
+                result=index
+                inputTaker.chooseWallpaper(result)
+            }
+        }
     }
-    highlight:Rectangle{
-        color:"gray"
-        anchors.bottom:delegateImage.top
-        height:1
-        width:delegateImage.width
-    }
+    // highlight:Rectangle{
+    //     color:"gray"
+    //     anchors.bottom:delegateImage.top
+    //     height:1
+    //     width:delegateImage.width
+    // }
 }

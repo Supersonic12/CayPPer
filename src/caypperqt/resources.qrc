@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/icons/search-32x32.png</file>
+        <file>qml/icons/settings-512x512.png</file>
+        <file>qml/icons/search-24x24.png</file>
+        <file>qml/icons/search-48x48.png</file>
+    </qresource>
+</RCC>

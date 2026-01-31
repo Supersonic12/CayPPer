@@ -25,7 +25,7 @@ Window {
             sourceSize.height: 32
             anchors.centerIn: parent
             fillMode:Image.PreserveAspectFit
-            source: "qrc:/icons/search-32x32.png"
+            source: "icons/search-32x32.png"
             asynchronous: true
             smooth:true
             mipmap:true
@@ -53,7 +53,7 @@ Window {
                 //take input function should take inputfields text property
                 result=searchField.text
                 inputTaker.takeInput(result)
-                wallpaperGridLoader.source="qrc:/src/qml/Grid.qml"
+                wallpaperGridLoader.source="Grid.qml"
                 wallpaperGridLoader.active=true
             }
         }
@@ -88,7 +88,7 @@ Window {
         onAccepted:{
             result=searchField.text
             inputTaker.takeInput(result)
-            wallpaperGridLoader.source="qrc:/src/qml/Grid.qml"
+            wallpaperGridLoader.source="Grid.qml"
             wallpaperGridLoader.active=true
         }
     }
@@ -106,7 +106,7 @@ Window {
             anchors.centerIn: parent
             width:parent.width
             height:parent.height
-            source:"qrc:/icons/settings-512x512.png"
+            source:"icons/settings-512x512.png"
             sourceSize:Qt.size(512,512)
             fillMode: Image.PreserveAspectFit
             mipmap:true
@@ -142,11 +142,11 @@ Window {
             }
             onExited:{
                 appSettingsIconHover.height=0
-                appSettingsIconHover.coloreight="transparent"
+                appSettingsIconHover.color="transparent"
             }
             onClicked:{
                 if(!appSettingsLoader.active){
-                    appSettingsLoader.source="qrc:/src/qml/AppSettings.qml"
+                    appSettingsLoader.source="AppSettings.qml"
                     appSettingsLoader.active=true
                 }
                 appSettingsLoader.item.open()
