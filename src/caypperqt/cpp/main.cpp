@@ -3,7 +3,10 @@
 #include <QQmlContext>
 #include <QString>
 #include <QDebug>
-#include "directorylister.h"
+
+
+
+//this are qt specific modules
 #include "inputtakerfromqml.h"
 #include "imagemodel.h"
 #include "controller.h"
@@ -20,27 +23,21 @@ int main(int argc, char *argv[])
     //bindings
     engine.rootContext()->setContextProperty("inputTaker",&inputTaker);
     engine.rootContext()->setContextProperty("imageModel",&imageModel);
-
+    //when directory in search field changes this changes grids model data so it changes what is shown inside
     QObject::connect(
         &inputTaker,
         &inputTakerFromQML::dirChanged,
         &engine,
         [&](const QString &path) {
-            QStringList qfiles = controller.VectorToQList(
-                listDirectory(
-                    std::filesystem::path(
-                        path.toStdString()
-                        )
-                    )
-                );
-            imageModel.setImages(qfiles);
+            imageModel.setImages(controller.whatInsideDirectory(path));
         });
+    //when user clicked a wallpaper then this signal sets wallpaper as background
     QObject::connect(
         &inputTaker,
         &inputTakerFromQML::wallpaperSelected,
         &engine,
-        [&](const QString &path) {
-            controller.setWallpaper(path);
+        [&](const QString &index) {
+            controller.setWallpaper(index);
         });
 
     QObject::connect(

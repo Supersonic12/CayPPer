@@ -12,8 +12,8 @@ public:
     Q_INVOKABLE void chooseWallpaper(const QString &text);
 
 signals:
-    QString dirChanged(const QString &text);
-    QString wallpaperSelected(const QString &text);
+    void dirChanged(const QString &text);
+    void wallpaperSelected(const QString &text);
 private:
     QString p_dir;
     QString p_fileIndex;

@@ -1,10 +1,13 @@
 #include "controller.h"
 #include <QUrl>
 #include "composfinder.h"
+#include "directorylister.h"
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {}
-QStringList Controller::VectorToQList(const std::vector<std::filesystem::path> stdPath){
+
+QStringList Controller::whatInsideDirectory(QString path){
+    std::vector<std::filesystem::path> stdPath=listDirectory(path.toStdString());
     listString.clear();
     listString.reserve(stdPath.size());
     for(const auto & file : stdPath){
@@ -16,9 +19,11 @@ QStringList Controller::VectorToQList(const std::vector<std::filesystem::path> s
 }
 
 
-int Controller::setWallpaper(QString input){
+void Controller::setWallpaper(QString q_index){
     ComposFinder composfinder;
-    std::filesystem::path wallpaper=(input.toStdString());
+
+    int index=q_index.toInt();
+    QUrl url(listString.at(index));
+    std::filesystem::path wallpaper=(url.toLocalFile().toStdString());
     composfinder.isWayland(wallpaper);
-    return 0;
 }

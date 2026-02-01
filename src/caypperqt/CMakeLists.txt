@@ -26,10 +26,7 @@ qt_add_qml_module(appCayPPer
         cpp/imagemodel.h
         cpp/controller.h
         cpp/controller.cpp
-        cpp/composfinder.h
-        cpp/composfinder.cpp
-        cpp/changer.h
-        cpp/changer.cpp
+
 )
 target_link_libraries(appCayPPer
     PRIVATE

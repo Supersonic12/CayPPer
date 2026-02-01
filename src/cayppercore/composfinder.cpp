@@ -7,7 +7,12 @@ void ComposFinder::isWayland(std::filesystem::path chosenPaper){
     Changer changer;
     const char* wayland= std::getenv("WAYLAND_DISPLAY");
     if(wayland){
-        getCompositor();
+        std::string compName=getCompositor();
+        if(compName=="hyprland"){
+            changer.runHyprland(chosenPaper);
+        }else if(compName=="sway"){
+            //changer.runSway(chosenPaper);
+        }
     }else{
         changer.runXWallpaper(chosenPaper);
     }
@@ -23,7 +28,6 @@ const char* ComposFinder::getCompositor(){
 
     }else{
         compositorName="unknown";
-
     }
     return compositorName;
 };

@@ -1,23 +1,18 @@
 #include "inputtakerfromqml.h"
-#include <QDebug>
+#include <QPair>
+//#include <QDebug>
 inputTakerFromQML::inputTakerFromQML(QObject *parent)
     : QObject{parent}
 {}
 void inputTakerFromQML::takeInput(const QString &text){
-
-    qDebug()<< "TextFromQml:"<<text;
+    //qDebug()<< "Grid showing directory: "<<text;
     p_dir=text;
     emit dirChanged(p_dir);
 }
 void inputTakerFromQML::chooseWallpaper(const QString &text){
-    qDebug() << "Chosen Wallpaper" << text;
     p_fileIndex=text;
+    //qDebug() << "Chosen Wallpaper Index: " << text;
+    //qDebug() << "Chosen Wallpaper Dir: " << p_dir;
     emit wallpaperSelected(p_fileIndex);
 }
-QString dirChanged(QString input)
-{
-    return input;
-}
-QString wallpaperSelected(QString input){
-    return input;
-}
+
