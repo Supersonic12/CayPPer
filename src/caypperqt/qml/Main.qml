@@ -93,7 +93,6 @@ Window {
         }
     }
 
-
     ComboBox{
         id:fillModeBox
         anchors.top:parent.top
@@ -102,8 +101,13 @@ Window {
         anchors.leftMargin:10
         width:96
         height:32
+        //Did it like this because it was giving error everytime closing application
+        //need to find better solution if exists
+        model: controller ? controller.modes : []
+        onCurrentIndexChanged: {
+            wallpaperGridLoader.item.chosenMode=fillModeBox.currentIndex
+        }
     }
-
 
     Rectangle{
         id:appSettingsRoot
@@ -138,9 +142,13 @@ Window {
             id:appSettingsLoader
             active:false
             onLoaded:{
-                appSettingsLoader.item.closed.connect(() => {
-                                                          appSettingsLoader.active=false
-                                                          appSettingsLoader.source=""})
+                appSettingsLoader.
+                item.
+                closed.
+                connect(() =>
+                        {
+                            appSettingsLoader.active=false
+                            appSettingsLoader.source=""})
             }
         }
 
@@ -166,8 +174,6 @@ Window {
         }
     }
 
-
-
     // Horizontal Separator that separates buttons from wallpaper grid
     Rectangle{
         id:horizontalSeparator
@@ -191,7 +197,9 @@ Window {
         anchors.margins: 10
         active:false
         source:""
+        onLoaded:{
+            item.chosenMode=fillModeBox.currentIndex
+        }
     }
-
 }
 

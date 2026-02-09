@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 GridView{
     id:wallpaperGridRoot
+    property int chosenMode:0
     //it will take directory from InputTaker.dirPath
     //it will load wallpapers with QImage
     cellWidth: 260
@@ -15,12 +16,6 @@ GridView{
         Image{
             id:delegateImage
             property bool isSixteentoNine:true
-            // Component.onCompleted: {
-            //     if(delegateImage.actualWidth/delegateImage.actualHeight===16/9){
-
-            //     }
-            // }
-
             width:254
             height:142
             anchors.centerIn: parent
@@ -49,13 +44,9 @@ GridView{
                 //index
                 result=index
                 inputTaker.chooseWallpaper(result)
+                inputTaker.selectedMode(wallpaperGridRoot.chosenMode)
+                console.log(wallpaperGridRoot.chosenMode)
             }
         }
     }
-    // highlight:Rectangle{
-    //     color:"gray"
-    //     anchors.bottom:delegateImage.top
-    //     height:1
-    //     width:delegateImage.width
-    // }
 }

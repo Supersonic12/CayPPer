@@ -12,17 +12,10 @@ public:
     explicit Controller(QObject *parent = nullptr);
     //looks what is inside given path
     QStringList whatInsideDirectory(QString path);
-    //saves as return value of whatInsideDirectory
-    //i save it to use in setWallPaper i think
 
-
-    // i need to use listString i believe.
-    //since i just call core libraries idk if i will need saving return value of listString
-
-    //takes index and path of directory from inputtakefromqml::wallpaperSelected
-    QStringList m_modes() const;
+    QStringList modes() const;
     void callSetWallpaper(QString index);
-    void refreshAvailableModes();
+    Q_INVOKABLE void refreshAvailableModes();
 signals:
     void modesChanged();
 private:

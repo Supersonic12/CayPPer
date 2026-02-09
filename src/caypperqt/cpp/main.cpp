@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
     //bindings
     engine.rootContext()->setContextProperty("inputTaker",&inputTaker);
     engine.rootContext()->setContextProperty("imageModel",&imageModel);
+    engine.rootContext()->setContextProperty("controller",&controller);
+
     //when directory in search field changes this changes grids model data so it changes what is shown inside
     QObject::connect(
         &inputTaker,
@@ -31,6 +33,7 @@ int main(int argc, char *argv[])
         [&](const QString &path) {
             imageModel.setImages(controller.whatInsideDirectory(path));
         });
+
     //when user clicked a wallpaper then this signal sets wallpaper as background
     QObject::connect(
         &inputTaker,
@@ -46,7 +49,7 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("CayPPer","Main");
 
+    engine.loadFromModule("CayPPer","Main");
     return app.exec();
 }

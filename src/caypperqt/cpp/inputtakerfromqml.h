@@ -10,10 +10,12 @@ public:
     explicit inputTakerFromQML(QObject *parent = nullptr);
     Q_INVOKABLE void takeInput(const QString &text);
     Q_INVOKABLE void chooseWallpaper(const QString &text);
+    Q_INVOKABLE void selectedMode(const int &mode);
 
 signals:
     void dirChanged(const QString &text);
     void wallpaperSelected(const QString &text);
+    void modeSelected(const int &index);
 private:
     QString p_dir;
     QString p_fileIndex;

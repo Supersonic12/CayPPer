@@ -44,7 +44,7 @@ void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector
 }
 
 std::vector<FillMode> coreService::supportedModes() const{
-    if(isWayland_){
+    if(!isWayland_){
         return{
             FillMode::Center,
             FillMode::Focus,

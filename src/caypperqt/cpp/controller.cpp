@@ -3,7 +3,9 @@
 #include "directorylister.h"
 Controller::Controller(QObject *parent)
     : QObject{parent}
-{}
+{
+    refreshAvailableModes();
+}
 
 QStringList Controller::whatInsideDirectory(QString path){
     std::vector<std::filesystem::path> stdPath=listDirectory(path.toStdString());
@@ -29,17 +31,20 @@ void Controller::refreshAvailableModes(){
     modes_.clear();
     for(auto m: core_.supportedModes()){
         switch(m){
-        case FillMode::Center:      return modes_.append("Center");
-        case FillMode::Contain:     return modes_.append("Contain");
-        case FillMode::Cover:       return modes_.append("Cover");
-        case FillMode::Fill:        return modes_.append("Fill");
-        case FillMode::Fit:         return modes_.append("Fit");
-        case FillMode::Focus:       return modes_.append("Focus");
-        case FillMode::Maximize:    return modes_.append("Maximize");
-        case FillMode::Stretch:     return modes_.append("Stretch");
-        case FillMode::Tile:        return modes_.append("Tile");
-        case FillMode::Zoom:        return modes_.append("Zoom");
+        case FillMode::Center:       modes_.append("Center");   break;
+        case FillMode::Contain:      modes_.append("Contain");  break;
+        case FillMode::Cover:        modes_.append("Cover");    break;
+        case FillMode::Fill:         modes_.append("Fill");     break;
+        case FillMode::Fit:          modes_.append("Fit");      break;
+        case FillMode::Focus:        modes_.append("Focus");    break;
+        case FillMode::Maximize:     modes_.append("Maximize"); break;
+        case FillMode::Stretch:      modes_.append("Stretch");  break;
+        case FillMode::Tile:         modes_.append("Tile");     break;
+        case FillMode::Zoom:         modes_.append("Zoom");     break;
         }
     }
     emit modesChanged();
+}
+QStringList Controller::modes() const{
+    return modes_;
 }
