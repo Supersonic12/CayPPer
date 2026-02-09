@@ -1,6 +1,7 @@
 #include <QUrl>
 #include "controller.h"
 #include "directorylister.h"
+#include "domainExpansion/fillmodeconverter.h"
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {
@@ -20,12 +21,12 @@ QStringList Controller::whatInsideDirectory(QString path){
 }
 
 
-void Controller::callSetWallpaper(QString q_index){
-
+void Controller::callSetWallpaper(QString q_index,QString mode){
+    FillMode fillmode=toFillMode(mode.toStdString());
     int index=q_index.toInt();
     QUrl url(listString.at(index));
     std::filesystem::path wallpaper=(url.toLocalFile().toStdString());
-    //core_.setWallpaper(wallpaper,);
+    //core_.setWallpaper(wallpaper,,fillmode);
 }
 void Controller::refreshAvailableModes(){
     modes_.clear();

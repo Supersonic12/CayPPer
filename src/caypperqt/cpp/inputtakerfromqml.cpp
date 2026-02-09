@@ -13,10 +13,11 @@ void inputTakerFromQML::chooseWallpaper(const QString &text){
     p_fileIndex=text;
     //qDebug() << "Chosen Wallpaper Index: " << text;
     //qDebug() << "Chosen Wallpaper Dir: " << p_dir;
-    emit wallpaperSelected(p_fileIndex);
+    emit wallpaperSelected(p_fileIndex,p_modeFill);
 }
 
-void inputTakerFromQML::selectedMode(const int &index){
-    emit modeSelected(index);
+void inputTakerFromQML::selectedMode(const QString &mode){
+    p_modeFill=mode;
+    emit modeSelected(mode);
 }
 

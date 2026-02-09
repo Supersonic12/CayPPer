@@ -105,7 +105,7 @@ Window {
         //need to find better solution if exists
         model: controller ? controller.modes : []
         onCurrentIndexChanged: {
-            wallpaperGridLoader.item.chosenMode=fillModeBox.currentIndex
+            wallpaperGridLoader.item.chosenMode=fillModeBox.currentText
         }
     }
 
@@ -198,7 +198,7 @@ Window {
         active:false
         source:""
         onLoaded:{
-            item.chosenMode=fillModeBox.currentIndex
+            item.chosenMode=fillModeBox.currentText
         }
     }
 }

@@ -72,4 +72,27 @@ inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode){
         return std::nullopt;
     }
 }
+inline FillMode toFillMode(std::string mode){
+    if(mode=="Fill"){
+        return FillMode::Fill;
+    }else if(mode=="Fit"){
+        return FillMode::Fit;
+    }else if(mode=="Stretch"){
+        return FillMode::Stretch;
+    }else if(mode=="Tile"){
+        return FillMode::Tile;
+    }else if(mode=="Center"){
+        return FillMode::Center;
+    }else if(mode=="Contain"){
+        return FillMode::Contain;
+    }else if(mode=="Cover"){
+        return FillMode::Cover;
+    }else if(mode=="Focus"){
+        return FillMode::Focus;
+    }else if(mode=="Maximize"){
+        return FillMode::Maximize;
+    }else{
+        return FillMode::Zoom;
+    }
+}
 #endif // FILLMODECONVERTER_H

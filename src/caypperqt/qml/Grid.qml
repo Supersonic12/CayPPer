@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 GridView{
     id:wallpaperGridRoot
-    property int chosenMode:0
+    property string chosenMode:0
     //it will take directory from InputTaker.dirPath
     //it will load wallpapers with QImage
     cellWidth: 260

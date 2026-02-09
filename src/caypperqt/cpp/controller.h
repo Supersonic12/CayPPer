@@ -14,7 +14,7 @@ public:
     QStringList whatInsideDirectory(QString path);
 
     QStringList modes() const;
-    void callSetWallpaper(QString index);
+    void callSetWallpaper(QString index,QString mode);
     Q_INVOKABLE void refreshAvailableModes();
 signals:
     void modesChanged();
@@ -22,6 +22,7 @@ private:
     coreService core_;
     QStringList listString;
     QStringList modes_;
+    FillMode selectedMode;
 };
 
 #endif // CONTROLLER_H
