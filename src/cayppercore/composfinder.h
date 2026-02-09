@@ -1,12 +1,17 @@
 #ifndef COMPOSFINDER_H
 #define COMPOSFINDER_H
-#include<filesystem>
 class ComposFinder
 {
 public:
+    enum class Compositor {
+        Hyprland,
+        Sway,
+        Unknown
+    };
+
     ComposFinder();
-    void isWayland(std::filesystem::path chosenPaper);
-    const char* getCompositor();
+    bool isWayland();
+    Compositor getCompositor();
 };
 
 #endif // COMPOSFINDER_H

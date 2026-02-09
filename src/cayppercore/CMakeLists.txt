@@ -5,6 +5,13 @@ add_library(cayppercore STATIC
     changer.h
     composfinder.cpp
     composfinder.h
+    monitorhandler.h
+    monitorhandler.cpp
+    coreservice.h
+    coreservice.cpp
+    domainExpansion/fillmode.h
+    domainExpansion/fillmodeconverter.h
+
 )
 
 target_include_directories(cayppercore

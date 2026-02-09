@@ -1,33 +1,29 @@
+#include <stdlib.h>
 #include "composfinder.h"
-#include<stdlib.h>
 #include "changer.h"
+
 ComposFinder::ComposFinder() {}
 
-void ComposFinder::isWayland(std::filesystem::path chosenPaper){
+bool ComposFinder::isWayland(){
     Changer changer;
     const char* wayland= std::getenv("WAYLAND_DISPLAY");
     if(wayland){
-        std::string compName=getCompositor();
-        if(compName=="hyprland"){
-            changer.runHyprland(chosenPaper);
-        }else if(compName=="sway"){
-            //changer.runSway(chosenPaper);
-        }
+        return true;
     }else{
-        changer.runXWallpaper(chosenPaper);
+        return false;
     }
 }
 
-const char* ComposFinder::getCompositor(){
+ComposFinder::Compositor ComposFinder::getCompositor(){
     const char * compositorName;
     if(std::getenv("HYPRLAND_INSTANCE_SIGNATURE")){
-        compositorName="hyprland";
+        return Compositor::Hyprland;
     }
     else if(std::getenv("SWAYSOCK")){
-        compositorName="sway";
-
+        return Compositor::Sway;
     }else{
-        compositorName="unknown";
+        return Compositor::Unknown;
     }
-    return compositorName;
 };
+
+

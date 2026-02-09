@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         &inputTakerFromQML::wallpaperSelected,
         &engine,
         [&](const QString &index) {
-            controller.setWallpaper(index);
+            controller.callSetWallpaper(index);
         });
 
     QObject::connect(

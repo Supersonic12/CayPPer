@@ -93,6 +93,18 @@ Window {
         }
     }
 
+
+    ComboBox{
+        id:fillModeBox
+        anchors.top:parent.top
+        anchors.topMargin:10
+        anchors.left:searchField.right
+        anchors.leftMargin:10
+        width:96
+        height:32
+    }
+
+
     Rectangle{
         id:appSettingsRoot
         width:32
@@ -127,8 +139,8 @@ Window {
             active:false
             onLoaded:{
                 appSettingsLoader.item.closed.connect(() => {
-                    appSettingsLoader.active=false
-                    appSettingsLoader.source=""})
+                                                          appSettingsLoader.active=false
+                                                          appSettingsLoader.source=""})
             }
         }
 
@@ -153,6 +165,9 @@ Window {
             }
         }
     }
+
+
+
     // Horizontal Separator that separates buttons from wallpaper grid
     Rectangle{
         id:horizontalSeparator
@@ -164,7 +179,6 @@ Window {
         height:1
         color:"black"
     }
-
 
     Loader{
         id:wallpaperGridLoader
