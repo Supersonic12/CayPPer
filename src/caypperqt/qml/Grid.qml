@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 GridView{
     id:wallpaperGridRoot
-    property string chosenMode:0
     //it will take directory from InputTaker.dirPath
     //it will load wallpapers with QImage
     cellWidth: 260
@@ -32,6 +31,8 @@ GridView{
             anchors.fill:parent
             hoverEnabled: true
             property string result:""
+
+
             onEntered:{
                 delegateRect.border.width=1
                 delegateRect.border.color="black"
@@ -44,8 +45,7 @@ GridView{
                 //index
                 result=index
                 inputTaker.chooseWallpaper(result)
-                inputTaker.selectedMode(wallpaperGridRoot.chosenMode)
-                console.log(wallpaperGridRoot.chosenMode)
+
             }
         }
     }

@@ -5,7 +5,8 @@
 Changer::Changer() {}
 
 int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode){
-    if(std::system(("xwallpaper --zoom \""+chosenPaper.string() + "\"").c_str())==0){
+    std::string s_fillmode=fromXWallModetoString(fillmode);
+    if(std::system(("xwallpaper " + s_fillmode + " '"+chosenPaper.string() + "'").c_str())==0){
         return 0;
     }
     return 1;

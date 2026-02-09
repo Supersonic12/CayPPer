@@ -104,8 +104,14 @@ Window {
         //Did it like this because it was giving error everytime closing application
         //need to find better solution if exists
         model: controller ? controller.modes : []
+         onActivated: {
+             inputTaker.selectedMode(currentText)
+         }
         onCurrentIndexChanged: {
-            wallpaperGridLoader.item.chosenMode=fillModeBox.currentText
+            inputTaker.selectedMode(currentText)
+        }
+        Component.onCompleted: {
+            inputTaker.selectedMode(currentText)
         }
     }
 
@@ -198,7 +204,7 @@ Window {
         active:false
         source:""
         onLoaded:{
-            item.chosenMode=fillModeBox.currentText
+
         }
     }
 }

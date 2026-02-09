@@ -2,6 +2,7 @@
 #include "controller.h"
 #include "directorylister.h"
 #include "domainExpansion/fillmodeconverter.h"
+#include <QDebug>
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {
@@ -26,6 +27,7 @@ void Controller::callSetWallpaper(QString q_index,QString mode){
     int index=q_index.toInt();
     QUrl url(listString.at(index));
     std::filesystem::path wallpaper=(url.toLocalFile().toStdString());
+    qDebug()<<mode<<":"<<index;
     //core_.setWallpaper(wallpaper,,fillmode);
 }
 void Controller::refreshAvailableModes(){
