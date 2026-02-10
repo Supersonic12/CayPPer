@@ -21,3 +21,6 @@ void inputTakerFromQML::selectedMode(const QString &mode){
     emit modeSelected(mode);
 }
 
+void inputTakerFromQML::selectedMonitor(const bool &ischecked,const QString &monitor){
+    emit monitorsSelectedChanged(ischecked,monitor);
+}

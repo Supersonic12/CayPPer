@@ -6,7 +6,7 @@
 #include<vector>
 
 #include "composfinder.h"
-#include "monitorhandler.h"
+#include "monitorlister.h"
 #include "changer.h"
 #include "domainExpansion/fillmode.h"
 
@@ -22,7 +22,7 @@ public:
 
 private:
     ComposFinder composFinder_;
-    MonitorHandler monitorhandler_;
+    MonitorLister monitorlister_;
     Changer changer_;
     bool isWayland_;
     ComposFinder::Compositor compositor_;

@@ -7,6 +7,7 @@ Controller::Controller(QObject *parent)
     : QObject{parent}
 {
     refreshAvailableModes();
+    refreshAvailableMonitors();
 }
 
 QStringList Controller::whatInsideDirectory(QString path){
@@ -27,8 +28,11 @@ void Controller::callSetWallpaper(QString q_index,QString mode){
     int index=q_index.toInt();
     QUrl url(listString.at(index));
     std::filesystem::path wallpaper=(url.toLocalFile().toStdString());
-    qDebug()<<mode<<":"<<index;
-    //core_.setWallpaper(wallpaper,,fillmode);
+    std::vector<std::string> selectedMonitorsVector;
+    for(const auto& monitor:std::as_const(selectedMonitors_)){
+        selectedMonitorsVector.push_back(monitor.toStdString());
+    }
+    core_.setWallpaper(wallpaper,selectedMonitorsVector,fillmode);
 }
 void Controller::refreshAvailableModes(){
     modes_.clear();
@@ -48,6 +52,29 @@ void Controller::refreshAvailableModes(){
     }
     emit modesChanged();
 }
+void Controller::refreshAvailableMonitors(){
+    availablemonitors_.clear();
+    for(const auto& monitor:core_.monitors()){
+        availablemonitors_.append(QString::fromStdString(monitor));
+    }
+    emit monitorsChanged();
+}
+
+void Controller::refreshSelectedMonitors(const bool ischecked, const QString selectedmonitor){
+    if(ischecked && !selectedMonitors_.contains(selectedmonitor)){
+        selectedMonitors_.append(selectedmonitor);
+    }else{
+        selectedMonitors_.removeAll(selectedmonitor);
+    }
+    //this function isnt called yet
+    //qDebug()<<selectedMonitors_<<":selectedcalled with these\n";
+}
+
 QStringList Controller::modes() const{
     return modes_;
+}
+
+QStringList Controller::connectedMonitors() const{
+    //qDebug()<<availablemonitors_<<":list of available monitors\n";
+    return availablemonitors_;
 }

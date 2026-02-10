@@ -14,9 +14,10 @@ ComposFinder::Compositor coreService::compositor() const{
 
 std::vector<std::string> coreService::monitors() const{
     if(!isWayland_){
-        return {};
+        std::vector<std::string>monitor=monitorlister_.getMonitorX();
+        return monitorlister_.getMonitorX();
     }
-    return monitorhandler_.getMonitor(compositor_);
+    return monitorlister_.getMonitorWayland(compositor_);
 }
 
 void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillMode){

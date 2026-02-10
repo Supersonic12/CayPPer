@@ -43,7 +43,14 @@ int main(int argc, char *argv[])
             qDebug()<<"wallpaperSelected emits these:"<<index<<"-"<<mode<<"\n";
             controller.callSetWallpaper(index,mode);
         });
-
+    QObject::connect(
+        &inputTaker,
+        &inputTakerFromQML::monitorsSelectedChanged,
+        &engine,
+        [&](const bool &ischecked,const QString &monitorName){
+            controller.refreshSelectedMonitors(ischecked,monitorName);
+        }
+        );
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,

@@ -5,17 +5,33 @@
 Changer::Changer() {}
 
 int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode){
-    std::string s_fillmode=fromXWallModetoString(fillmode);
-    if(std::system(("xwallpaper " + s_fillmode + " '"+chosenPaper.string() + "'").c_str())==0){
-        return 0;
+    std::string str_mode=fromXWallModetoString(fillmode);
+    if(selectedMonitors.empty()){
+        std::cerr<<"no Monitor Checked, check at least one\n";
+        return 1;
     }
-    return 1;
+    for(const auto& monitor:selectedMonitors){
+        std::string cmd="xwallpaper --output '" + monitor +"' " + str_mode + " '" + chosenPaper.string() + "'";
+        int status = std::system(cmd.c_str());
+        if(status != 0){
+            std::cout<<"there is a problem\n";
+            return 1;
+        }
+        std::cout<<"runXwallpaper applies to this monitors:"<<monitor<<";\n";
+    }
+    return 0;
 }
 int Changer::runHyprland(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FitModeHyprland fillmode){
-    std::string mode = fromHyprModetoString(fillmode);
+    if(selectedMonitors.empty()){
+        std::cerr<<"no Monitor Checked, check at least one\n";
+        return 1;
+    }
+    std::string str_mode = fromHyprModetoString(fillmode);
+
     for(auto &monitor:selectedMonitors){
-        if(std::system(("hyprctl hyprpaper wallpaper '" + monitor + "," + chosenPaper.string()  + "," + mode + "'").c_str())){}
-        else{
+        std::string cmd="hyprctl hyprpaper wallpaper '" + monitor + "," + chosenPaper.string() + "," + str_mode + "'";
+        int status = std::system(cmd.c_str());
+        if(status != 0){
             std::cerr<<"Couldnt set wallpaper on monitor: " + monitor + "\n";
             return 1;
         }
@@ -23,10 +39,14 @@ int Changer::runHyprland(std::filesystem::path chosenPaper,std::vector<std::stri
     return 0;
 }
 int Changer::runSway(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeSway fillmode){
-    std::string mode = fromSwayModetoString(fillmode);
+    if(selectedMonitors.empty()){
+        std::cerr<<"no Monitor Checked, check at least one\n";
+        return 1;
+    }
+    std::string str_mode = fromSwayModetoString(fillmode);
 
     for(auto &monitor:selectedMonitors){
-        if(std::system(("swaybg -o " + monitor + " -i " + chosenPaper.string() + " -m "+ mode).c_str()) == 0){}
+        if(std::system(("swaybg -o " + monitor + " -i " + chosenPaper.string() + " -m "+ str_mode).c_str()) == 0){}
         else{
             std::cerr<<"Couldnt set wallpaper on monitor: " + monitor + "\n";
             return 1;

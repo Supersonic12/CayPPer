@@ -45,7 +45,6 @@ GridView{
                 //index
                 result=index
                 inputTaker.chooseWallpaper(result)
-
             }
         }
     }

@@ -5,8 +5,8 @@ add_library(cayppercore STATIC
     changer.h
     composfinder.cpp
     composfinder.h
-    monitorhandler.h
-    monitorhandler.cpp
+    monitorlister.h
+    monitorlister.cpp
     coreservice.h
     coreservice.cpp
     domainExpansion/fillmode.h

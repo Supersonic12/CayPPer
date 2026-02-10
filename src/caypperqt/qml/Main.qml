@@ -104,15 +104,44 @@ Window {
         //Did it like this because it was giving error everytime closing application
         //need to find better solution if exists
         model: controller ? controller.modes : []
-         onActivated: {
-             inputTaker.selectedMode(currentText)
-         }
+        onActivated: {
+            inputTaker.selectedMode(currentText)
+        }
         onCurrentIndexChanged: {
             inputTaker.selectedMode(currentText)
         }
         Component.onCompleted: {
             inputTaker.selectedMode(currentText)
         }
+    }
+
+    ListView{
+        id:monitorListView
+        anchors.top:parent.top
+        anchors.left:fillModeBox.right
+        anchors.topMargin: 10
+        anchors.leftMargin: 10
+        width:96
+        height:32
+        model:controller ? controller.connectedMonitors : []
+        delegate:Rectangle{
+            width:96
+            height:32
+            color:"transparent"
+            CheckBox{
+                anchors.centerIn: parent
+                text:modelData
+                onCheckedChanged:{
+                    inputTaker.selectedMonitor(checked, modelData)
+                }
+            }
+        }
+        highlight:Rectangle{
+            width:96
+            height:32
+            color:"gray"
+        }
+
     }
 
     Rectangle{
