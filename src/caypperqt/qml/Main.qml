@@ -233,7 +233,11 @@ Window {
         active:false
         source:""
         onLoaded:{
-
+            if(item){
+                searchField.focus=false
+                item.currentIndex=0
+                item.forceActiveFocus()
+            }
         }
     }
 }

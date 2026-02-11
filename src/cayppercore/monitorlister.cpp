@@ -116,8 +116,8 @@ std::vector<std::string> MonitorLister::getMonitorX() const{
     for(auto it=begin;it!=end;++it){
         monitors.push_back((*it)[1].str());
     }
-    for(const auto &monitor:monitors){
-        std::cout<<monitor<<"\n";
-    }
+    // for(const auto &monitor:monitors){
+    //     std::cout<<monitor<<"\n";
+    // }
     return monitors;
 }

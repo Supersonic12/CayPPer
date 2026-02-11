@@ -7,11 +7,15 @@ GridView{
     cellWidth: 260
     cellHeight: wallpaperGridRoot.cellWidth/16*9
     clip:true
+    keyNavigationEnabled: true
+    highlightFollowsCurrentItem: true
     model:imageModel
     delegate: Rectangle{
         id:delegateRect
         width:256
         height:delegateRect.width/16*9
+        color:"transparent"
+
         Image{
             id:delegateImage
             property bool isSixteentoNine:true
@@ -26,6 +30,7 @@ GridView{
             asynchronous:true
             cache:true
         }
+
         MouseArea{
             id:delegateMArea
             anchors.fill:parent
@@ -47,5 +52,11 @@ GridView{
                 inputTaker.chooseWallpaper(result)
             }
         }
+
     }
+    highlight:Rectangle{
+        color:"orange"
+    }
+
+
 }

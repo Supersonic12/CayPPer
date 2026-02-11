@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         &inputTakerFromQML::wallpaperSelected,
         &engine,
         [&](const QString &index,const QString &mode) {
-            qDebug()<<"wallpaperSelected emits these:"<<index<<"-"<<mode<<"\n";
+            //qDebug()<<"wallpaperSelected emits these:"<<index<<"-"<<mode<<"\n";
             controller.callSetWallpaper(index,mode);
         });
     QObject::connect(

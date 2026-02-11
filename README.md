@@ -16,5 +16,6 @@
 - [ ] in settings add setting dark and light mode
 - [ ] make this dark and light mode saved in config directory
 - [ ] make default directory saved in config directory
-
+- [ ] add vim key navigation support
+- [ ] add enabling vim key navigation in settings
 

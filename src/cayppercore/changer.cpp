@@ -1,7 +1,7 @@
 #include "changer.h"
 #include "domainExpansion/fillmodeconverter.h"
 #include<iostream>
-#include <cstdlib>
+
 Changer::Changer() {}
 
 int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode){
@@ -14,10 +14,10 @@ int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::st
         std::string cmd="xwallpaper --output '" + monitor +"' " + str_mode + " '" + chosenPaper.string() + "'";
         int status = std::system(cmd.c_str());
         if(status != 0){
-            std::cout<<"there is a problem\n";
+            std::cerr<<"there is a problem in changer::runXWallpaper. Couldnt set wallpaper on monitor: " + monitor + "\n";
             return 1;
         }
-        std::cout<<"runXwallpaper applies to this monitors:"<<monitor<<";\n";
+        //std::cout<<"runXwallpaper applies to this monitors:"<<monitor<<";\n";
     }
     return 0;
 }
@@ -32,7 +32,7 @@ int Changer::runHyprland(std::filesystem::path chosenPaper,std::vector<std::stri
         std::string cmd="hyprctl hyprpaper wallpaper '" + monitor + "," + chosenPaper.string() + "," + str_mode + "'";
         int status = std::system(cmd.c_str());
         if(status != 0){
-            std::cerr<<"Couldnt set wallpaper on monitor: " + monitor + "\n";
+            std::cerr<<"there is a problem in changer::runHyprland. Couldnt set wallpaper on monitor: " + monitor + "\n";
             return 1;
         }
     }
@@ -48,7 +48,7 @@ int Changer::runSway(std::filesystem::path chosenPaper,std::vector<std::string> 
     for(auto &monitor:selectedMonitors){
         if(std::system(("swaybg -o " + monitor + " -i " + chosenPaper.string() + " -m "+ str_mode).c_str()) == 0){}
         else{
-            std::cerr<<"Couldnt set wallpaper on monitor: " + monitor + "\n";
+            std::cerr<<"there is a problem in changer::runSway. Couldnt set wallpaper on monitor: " + monitor + "\n";
             return 1;
         }
     }
