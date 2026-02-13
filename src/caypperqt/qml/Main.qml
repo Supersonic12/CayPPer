@@ -53,6 +53,7 @@ Window {
                 //take input function should take inputfields text property
                 result=searchField.text
                 inputTaker.takeInput(result)
+                wallpaperGridLoader.source=""
                 wallpaperGridLoader.source="Grid.qml"
                 wallpaperGridLoader.active=true
             }
@@ -76,7 +77,7 @@ Window {
         anchors.top:parent.top
         anchors.leftMargin:10
         anchors.topMargin:10
-        width: 160
+        width: root.width/3 //160
         height:32
         placeholderText:qsTr("Wallpaper Folder..")
         property string result:""
@@ -88,6 +89,7 @@ Window {
         onAccepted:{
             result=searchField.text
             inputTaker.takeInput(result)
+            wallpaperGridLoader.source=""
             wallpaperGridLoader.source="Grid.qml"
             wallpaperGridLoader.active=true
         }
@@ -104,6 +106,20 @@ Window {
         //Did it like this because it was giving error everytime closing application
         //need to find better solution if exists
         model: controller ? controller.modes : []
+        background: Rectangle{
+            border.width: 1
+            border.color: "black"
+            radius:6
+            width:96
+            height:32
+            Text{
+                text:modelData
+                anchors.centerIn: parent
+                verticalAlignment: Qt.AlignVCenter
+                horizontalAlignment: Qt.AlignHCenter
+            }
+        }
+
         onActivated: {
             inputTaker.selectedMode(currentText)
         }
@@ -140,6 +156,7 @@ Window {
             width:96
             height:32
             color:"gray"
+            radius:6
         }
 
     }
@@ -238,6 +255,7 @@ Window {
                 item.currentIndex=0
                 item.forceActiveFocus()
             }
+
         }
     }
 }

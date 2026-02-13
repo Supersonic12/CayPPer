@@ -7,8 +7,11 @@ GridView{
     cellWidth: 260
     cellHeight: wallpaperGridRoot.cellWidth/16*9
     clip:true
-    keyNavigationEnabled: true
     highlightFollowsCurrentItem: true
+    focus:true
+    activeFocusOnTab: true
+    keyNavigationEnabled: true
+    property bool vimMode:false
     model:imageModel
     delegate: Rectangle{
         id:delegateRect
@@ -54,6 +57,77 @@ GridView{
         }
 
     }
+    property int columns:wallpaperGridRoot.width/cellWidth
+    property string keyBuffer:""
+    Timer{
+        id:bufferSequenceTimer
+        interval:400
+        repeat:false
+        onTriggered: wallpaperGridRoot.keyBuffer = ""
+    }
+
+    Keys.onPressed: (event) => {
+                        if(event.isAutoRepeat){
+                            return;
+                        }
+                        if(!wallpaperGridRoot.vimMode){
+                            event.accepted=false
+                            return
+                        }
+
+                        let handled=false
+
+
+                        wallpaperGridRoot.keyBuffer += event.text
+                        bufferSequenceTimer.restart()
+                        switch(wallpaperGridRoot.keyBuffer){
+
+                            case "h":
+                            wallpaperGridRoot.currentIndex--
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            case "l":
+                            wallpaperGridRoot.currentIndex++
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            case "j":
+                            wallpaperGridRoot.currentIndex+=wallpaperGridRoot.columns
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            case "k":
+                            wallpaperGridRoot.currentIndex-=wallpaperGridRoot.columns
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            case "gg":
+                            wallpaperGridRoot.currentIndex=0
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            case "G":
+                            wallpaperGridRoot.currentIndex=wallpaperGridRoot.count-1
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
+                            default:
+                            if(wallpaperGridRoot.keyBuffer.length>2){
+                                wallpaperGridRoot.keyBuffer=""
+                                handled=true
+                                break
+                            }
+                        }
+                        if(handled){
+                            wallpaperGridRoot.currentIndex=Math.max(0,
+                                                                    Math.min(wallpaperGridRoot.count - 1,
+                                                                             wallpaperGridRoot.currentIndex))
+                            wallpaperGridRoot.keyBuffer=""
+                            event.accepted=true
+                        }
+                    }
+
     highlight:Rectangle{
         color:"orange"
     }
