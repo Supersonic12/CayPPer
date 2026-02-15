@@ -113,22 +113,23 @@ Window {
             radius:6
             width:96
             height:32
-            Text{
-                text:modelData
-                anchors.centerIn: parent
-                verticalAlignment: Qt.AlignVCenter
-                horizontalAlignment: Qt.AlignHCenter
-            }
+
         }
 
         onActivated: {
+            if(controller){
             controller.setSelectedMode(currentText)
+            }
         }
         onCurrentIndexChanged: {
+            if(controller){
             controller.setSelectedMode(currentText)
+            }
         }
         Component.onCompleted: {
+            if(controller){
             controller.setSelectedMode(currentText)
+            }
         }
     }
 

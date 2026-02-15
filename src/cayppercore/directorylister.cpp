@@ -2,7 +2,7 @@
 #include<iostream>
 #include<algorithm>
 using namespace std;
-    const std::vector<filesystem::path>listDirectory(filesystem::path dirPath)
+    const std::vector<filesystem::path> directoryLister::listDirectory(filesystem::path dirPath)
     {
         // Checking existence of directory
         if (!filesystem::exists(dirPath))

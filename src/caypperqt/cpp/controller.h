@@ -67,8 +67,6 @@ private:
     //and for setWallpaper create a coreservice object
     coreService core_;
 
-
-
     // FillMode selectedMode;
 };
 

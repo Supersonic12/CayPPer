@@ -1,6 +1,6 @@
 #include <QUrl>
 #include "controller.h"
-#include "directorylister.h"
+//#include "directorylister.h"
 #include "domainExpansion/fillmodeconverter.h"
 #include <QDebug>
 Controller::Controller(QObject *parent)
@@ -8,7 +8,17 @@ Controller::Controller(QObject *parent)
 {
     refreshAvailableModes();
     refreshAvailableMonitors();
-
+    core_.setDirectoryChangeCallBack(
+        [this]()
+        {
+            QMetaObject::invokeMethod(
+                this,
+                [this]
+                {
+                    refreshDirectoryContent(directoryPath_);
+                },
+                Qt::QueuedConnection);
+        });
     // connect(&timerofdirectorycheck_,
     //         &QTimer::timeout,
     //         this,
@@ -72,7 +82,7 @@ void Controller::setDirectoryPath(QString path){
 void Controller::refreshDirectoryContent(QString path){
 
     //see what is inside new path
-    std::vector<std::filesystem::path> stdPath=listDirectory(path.toStdString());
+    std::vector<std::filesystem::path> stdPath=core_.listDirectory(path.toStdString());
     //newList takes newPath's contents vector as QT list
     //IMPORTANT
     //I will need to change this to QAbstractList

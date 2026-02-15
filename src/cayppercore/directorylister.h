@@ -4,6 +4,11 @@
 #include <filesystem>
 #include <vector>
 
-const std::vector<std::filesystem::path> listDirectory(std::filesystem::path dirPath);
+class directoryLister{
+public:
+    const std::vector<std::filesystem::path> listDirectory(std::filesystem::path dirPath);
+};
+
+
 
 #endif

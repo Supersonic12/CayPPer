@@ -12,7 +12,7 @@ GridView{
     activeFocusOnTab: true
     keyNavigationEnabled: true
     property bool vimMode:false
-    model:controller.getImageModel
+    model:controller? controller.getImageModel : []
     delegate: Rectangle{
         id:delegateRect
         width:256
