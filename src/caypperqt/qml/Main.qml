@@ -52,7 +52,8 @@ Window {
             onClicked:{
                 //take input function should take inputfields text property
                 result=searchField.text
-                inputTaker.takeInput(result)
+                controller.setDirectoryPath(result)
+                //inputTaker.takeInput(result)
                 wallpaperGridLoader.source=""
                 wallpaperGridLoader.source="Grid.qml"
                 wallpaperGridLoader.active=true
@@ -88,7 +89,7 @@ Window {
         }
         onAccepted:{
             result=searchField.text
-            inputTaker.takeInput(result)
+            controller.setDirectoryPath(result)
             wallpaperGridLoader.source=""
             wallpaperGridLoader.source="Grid.qml"
             wallpaperGridLoader.active=true
@@ -105,7 +106,7 @@ Window {
         height:32
         //Did it like this because it was giving error everytime closing application
         //need to find better solution if exists
-        model: controller ? controller.modes : []
+        model: controller ? controller.getModes : []
         background: Rectangle{
             border.width: 1
             border.color: "black"
@@ -121,13 +122,13 @@ Window {
         }
 
         onActivated: {
-            inputTaker.selectedMode(currentText)
+            controller.setSelectedMode(currentText)
         }
         onCurrentIndexChanged: {
-            inputTaker.selectedMode(currentText)
+            controller.setSelectedMode(currentText)
         }
         Component.onCompleted: {
-            inputTaker.selectedMode(currentText)
+            controller.setSelectedMode(currentText)
         }
     }
 
@@ -139,7 +140,7 @@ Window {
         anchors.leftMargin: 10
         width:96
         height:32
-        model:controller ? controller.connectedMonitors : []
+        model:controller ? controller.getConnectedMonitors : []
         delegate:Rectangle{
             width:96
             height:32
@@ -148,7 +149,7 @@ Window {
                 anchors.centerIn: parent
                 text:modelData
                 onCheckedChanged:{
-                    inputTaker.selectedMonitor(checked, modelData)
+                    controller.setSelectedMonitors(checked, modelData)
                 }
             }
         }

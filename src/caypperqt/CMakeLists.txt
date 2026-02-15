@@ -20,9 +20,9 @@ qt_add_qml_module(appCayPPer
     qml/icons/settings-512x512.png
 
     SOURCES
-        cpp/inputtakerfromqml.cpp
+        #cpp/inputtakerfromqml.cpp
         cpp/imagemodel.cpp
-        cpp/inputtakerfromqml.h
+        #cpp/inputtakerfromqml.h
         cpp/imagemodel.h
         cpp/controller.h
         cpp/controller.cpp

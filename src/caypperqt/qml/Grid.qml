@@ -12,7 +12,7 @@ GridView{
     activeFocusOnTab: true
     keyNavigationEnabled: true
     property bool vimMode:false
-    model:imageModel
+    model:controller.getImageModel
     delegate: Rectangle{
         id:delegateRect
         width:256
@@ -52,7 +52,7 @@ GridView{
             onClicked:{
                 //index
                 result=index
-                inputTaker.chooseWallpaper(result)
+                controller.setWallpaper(result)
             }
         }
 
