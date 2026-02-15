@@ -2,12 +2,15 @@ import QtQuick
 import QtQuick.Controls
 Menu{
     id:settingsRoot
-    //For Debugging, Delete in release
-    Component.onDestruction: {
-    }
-
     MenuItem{
-        text:"Edit"
+        text:"Vim Keys"
+        checkable:true
+
+        onCheckedChanged:{
+            if(wallpaperGridLoader.item){
+                wallpaperGridLoader.item.setVimMode(checked)
+            }
+        }
     }
     MenuItem{
         text:"User"

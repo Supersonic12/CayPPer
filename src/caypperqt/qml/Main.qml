@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "settings" 1.0 as SettingsStore
 Window {
     id: root
     width: 800
@@ -195,15 +196,6 @@ Window {
         Loader{
             id:appSettingsLoader
             active:false
-            onLoaded:{
-                appSettingsLoader.
-                item.
-                closed.
-                connect(() =>
-                        {
-                            appSettingsLoader.active=false
-                            appSettingsLoader.source=""})
-            }
         }
 
         MouseArea{
@@ -252,12 +244,9 @@ Window {
         active:false
         source:""
         onLoaded:{
-            if(item){
-                searchField.focus=false
-                item.currentIndex=0
-                item.forceActiveFocus()
-            }
-
+            searchField.focus=false
+            item.currentIndex=0
+            item.forceActiveFocus()
         }
     }
 }

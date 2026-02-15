@@ -6,13 +6,14 @@ qt_add_executable(appCayPPer
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+set_source_files_properties(qml/settings/'SettingsStore.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 qt_add_qml_module(appCayPPer
     URI CayPPer
     QML_FILES
     qml/Main.qml
     qml/AppSettings.qml
     qml/Grid.qml
-
+    qml/settings/SettingsStore.qml
     RESOURCES
     qml/icons/search-24x24.png
     qml/icons/search-32x32.png
@@ -26,8 +27,9 @@ qt_add_qml_module(appCayPPer
         cpp/imagemodel.h
         cpp/controller.h
         cpp/controller.cpp
-
 )
+
+
 target_link_libraries(appCayPPer
     PRIVATE
         Qt6::Core
