@@ -17,8 +17,11 @@ ComposFinder::Compositor coreService::compositor() const{
 
 std::vector<std::string> coreService::monitors() const{
     if(!isWayland_){
-        std::vector<std::string>monitor=monitorlister_.getMonitorX();
-        return monitorlister_.getMonitorX();
+        std::vector<std::string>monitorlist=monitorlister_.getMonitorX();
+        // for(auto &monitor: monitorlist){
+        //     std::cout<<monitor<<",\n";
+        // }
+        return monitorlist;
     }
     return monitorlister_.getMonitorWayland(compositor_);
 }

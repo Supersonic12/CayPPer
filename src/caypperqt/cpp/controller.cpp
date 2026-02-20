@@ -19,11 +19,10 @@ Controller::Controller(QObject *parent)
                 },
                 Qt::QueuedConnection);
         });
-    // connect(&timerofdirectorycheck_,
-    //         &QTimer::timeout,
-    //         this,
-    //         &Controller::checkDirectory);
-    // timerofdirectorycheck_.start(300);
+    configPath_=settings_.getValue("General/configPath","Unknown").toString();
+    defaultWallPath_=settings_.getValue("General/defaultWallPath","Unknown").toString();
+    vimKeysToggle_=settings_.getBoolValue("Behavior/vimKeys",false).toBool();
+    darkModeToggle_=settings_.getBoolValue("Appearance/darkMode",false).toBool();
 }
 //constructor functions
 //should be called by default
@@ -50,6 +49,7 @@ void Controller::refreshAvailableMonitors(){
     for(const auto& monitor:core_.monitors()){
         availableMonitors_.append(QString::fromStdString(monitor));
     }
+    qDebug() << "Detected monitors:" << (availableMonitors_);
     emit monitorsChanged();
 }
 
@@ -69,13 +69,23 @@ QStringList Controller::getConnectedMonitors() const{
 
 //first this will be called by qml
 void Controller::setDirectoryPath(QString path){
+    QUrl url=QUrl::fromUserInput(path);
+    QString localPath;
+
+    if(url.isLocalFile()){
+        localPath=url.toLocalFile();
+    }
+    else{
+        localPath=path;
+    }
     //emit directoryPathChanged();
-    if(path==directoryPath_){
+    if(localPath==directoryPath_){
         return;
     }
-    directoryPath_=path;
+
+    directoryPath_=localPath;
     //call of refreshDirectoryContent
-    refreshDirectoryContent(path);
+    refreshDirectoryContent(localPath);
 
 }
 
@@ -150,5 +160,56 @@ void Controller::checkDirectory(){
 }
 
 
+
+//settings controls
+QString Controller::configPath(){
+    configPath_=settings_.getValue("General/configPath","Unknown").toString();
+    return configPath_;
+}
+QString Controller::defaultWallPath(){
+    defaultWallPath_=settings_.getValue("General/defaultWallPath","Unknown").toString();
+    return defaultWallPath_;
+}
+bool Controller::vimKeysToggle(){
+    vimKeysToggle_=settings_.getBoolValue("Behavior/vimKeys",false).toBool();
+    return vimKeysToggle_;
+}
+bool Controller::darkModeToggle(){
+    darkModeToggle_=settings_.getBoolValue("Appearance/darkMode",false).toBool();
+    return darkModeToggle_;
+}
+
+void Controller::setConfigPath(QUrl path){
+    if(configPath_==path){
+        return;
+    }
+    configPath_=path.toLocalFile();
+    settings_.setValue("General/configPath",configPath_);
+    emit configPathChanged();
+}
+void Controller::setDefaultWallPath(QUrl path){
+    if(defaultWallPath_==path){
+        return;
+    }
+    defaultWallPath_=path.toLocalFile();
+    settings_.setValue("General/defaultWallPath",defaultWallPath_);
+    emit defaultWallPathChanged();
+}
+void Controller::setVimKeysToggle(bool value){
+    if(vimKeysToggle_==value){
+        return;
+    }
+    vimKeysToggle_=value;
+    settings_.setValue("Behavior/vimKeys",vimKeysToggle_);
+    emit vimKeysToggleChanged();
+}
+void Controller::setDarkModeToggle(bool value){
+    if(darkModeToggle_==value){
+        return;
+    }
+    darkModeToggle_=value;
+    settings_.setValue("Appearance/darkMode",darkModeToggle_);
+    emit darkModeToggleChanged();
+}
 
 

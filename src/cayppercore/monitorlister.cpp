@@ -110,7 +110,7 @@ std::vector<std::string> MonitorLister::getMonitorX() const{
     close(pipefd[0]);
     waitpid(pid,nullptr,0);
 
-    std::regex connectedMonitor(R"((\w{2,4}-\d)(?=\sconnected))");
+    std::regex connectedMonitor(R"((\S+?)(?=\sconnected))");
     auto begin =std::sregex_iterator(output.begin(), output.end(), connectedMonitor);
     auto end = std::sregex_iterator();
     for(auto it=begin;it!=end;++it){

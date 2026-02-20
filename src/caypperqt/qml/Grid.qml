@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import "settings" 1.0 as SettingsStore
 GridView{
     id:wallpaperGridRoot
     //it will take directory from InputTaker.dirPath
@@ -11,15 +10,11 @@ GridView{
     highlightFollowsCurrentItem: true
     focus:true
     activeFocusOnTab: true
-    property bool vimMode:false
-    keyNavigationEnabled:true
-    model:controller? controller.getImageModel : []
-    signal setVimMode(bool enabled)
-
-    onSetVimMode:{
-        vimMode=enabled
-        keyNavigationEnabled=!enabled
+    property bool vimMode:controller? controller.vimKeysToggle:false
+    Component.onCompleted: {
+        keyNavigationEnabled=!vimMode
     }
+    model:controller? controller.getImageModel : []
 
     delegate: Rectangle{
         id:delegateRect
@@ -130,9 +125,10 @@ GridView{
                             }
                         }
                         if(handled){
-                            wallpaperGridRoot.currentIndex=Math.max(0,
-                                                                    Math.min(wallpaperGridRoot.count - 1,
-                                                                             wallpaperGridRoot.currentIndex))
+                            wallpaperGridRoot.currentIndex=Math.max(
+                                0,
+                                Math.min(wallpaperGridRoot.count - 1,
+                                         wallpaperGridRoot.currentIndex))
                             wallpaperGridRoot.keyBuffer=""
                             event.accepted=true
                         }

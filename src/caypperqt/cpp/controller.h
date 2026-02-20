@@ -6,8 +6,10 @@
 #include <QTimer>
 #include <QString>
 #include <QFileSystemWatcher>
+#include <QUrl>
 #include "coreservice.h"
 #include "imagemodel.h"
+#include "appsettings.h"
 class Controller : public QObject
 {
     Q_OBJECT
@@ -20,6 +22,18 @@ class Controller : public QObject
     Q_PROPERTY(QAbstractListModel* getImageModel
                    READ getImageModel
                        CONSTANT)
+    Q_PROPERTY(QString configPath
+               READ configPath
+               NOTIFY configPathChanged)
+    Q_PROPERTY(QString defaultWallPath
+               READ defaultWallPath
+               NOTIFY defaultWallPathChanged)
+    Q_PROPERTY(bool vimKeysToggle
+               READ vimKeysToggle
+               NOTIFY vimKeysToggleChanged)
+    Q_PROPERTY(bool darkModeToggle
+               READ darkModeToggle
+               NOTIFY darkModeToggleChanged)
 public:
 
     explicit Controller(QObject *parent = nullptr);
@@ -36,15 +50,26 @@ public:
 
     QStringList getModes() const;
     QStringList getConnectedMonitors() const;
-    //QStringList getDirectoryContent() const;
     QAbstractListModel* getImageModel();
 
+
+    QString configPath();
+    Q_INVOKABLE void setConfigPath(QUrl path);
+    QString defaultWallPath();
+    Q_INVOKABLE void setDefaultWallPath(QUrl path);
+    bool vimKeysToggle();
+    Q_INVOKABLE void setVimKeysToggle(bool value);
+    bool darkModeToggle();
+    Q_INVOKABLE void setDarkModeToggle(bool value);
 signals:
     void modesChanged();
     void monitorsChanged();
-    //void directoryContentChanged();
     void directoryPathChanged();
     void imageModelChanged();
+    void configPathChanged();
+    void defaultWallPathChanged();
+    void vimKeysToggleChanged();
+    void darkModeToggleChanged();
 private:
     void refreshDirectoryContent(QString path);
     void checkDirectory();
@@ -67,7 +92,13 @@ private:
     //and for setWallpaper create a coreservice object
     coreService core_;
 
-    // FillMode selectedMode;
+    //settings object;
+    appsettings settings_;
+
+    QString configPath_;
+    QString defaultWallPath_;
+    bool vimKeysToggle_;
+    bool darkModeToggle_;
 };
 
 #endif // CONTROLLER_H
