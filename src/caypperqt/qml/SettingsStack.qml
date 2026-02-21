@@ -175,7 +175,7 @@ Rectangle{
                                 hoverEnabled: true
                                 onEntered:{
                                     defaultWallPathRect.border.width=1
-                                    defaultWallPathRect.border.color=Qt.application.palette.mid
+                                    defaultWallPathRect.border.color=root.palette.mid
                                 }
                                 onExited:{
                                     defaultWallPathRect.border.width=0
