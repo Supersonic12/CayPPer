@@ -23,6 +23,9 @@ inline std::string fromHyprModetoString(FitModeHyprland mode){
     case FitModeHyprland::Cover:    return "cover";
     case FitModeHyprland::Tile:     return "tile";
     }
+    // fallback
+    std::cerr << "Invalid Hyprland fill mode\n";
+    return "fill";  // safe default
 }
 inline std::string fromXWallModetoString(FillModeXWall mode){
     switch(mode){
@@ -33,15 +36,21 @@ inline std::string fromXWallModetoString(FillModeXWall mode){
     case FillModeXWall::Tile:       return "--tile";
     case FillModeXWall::Zoom:       return "--zoom";
     }
+    // fallback
+    std::cerr << "Invalid XWallpaper fill mode\n";
+    return "--focus";  // safe default
 }
 inline std::string fromXFCEModetoString(FillModeXFCE mode){
     switch(mode){
     case FillModeXFCE::Center:              return "1";
-    case FillModeXFCE::Scaled:              return "2";
+    case FillModeXFCE::Zoom:                return "2";
+    case FillModeXFCE::Scaled:              return "4";
     case FillModeXFCE::Stretch:             return "3";
-    case FillModeXFCE::Zoom:                return "4";
     case FillModeXFCE::Spanning_Screens:    return "5";
     }
+    // fallback
+    std::cerr << "Invalid XFCE fill mode\n";
+    return "4";  // safe default
 }
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
     switch(mode){

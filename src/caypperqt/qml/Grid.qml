@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 GridView{
     id:wallpaperGridRoot
+    objectName: "wallpaperGrid"
     //it will take directory from InputTaker.dirPath
     //it will load wallpapers with QImage
     cellWidth: 260
@@ -18,7 +19,7 @@ GridView{
 
     delegate: Rectangle{
         id:delegateRect
-        width:256
+        width:260
         height:delegateRect.width/16*9
         color:"transparent"
 
@@ -117,6 +118,11 @@ GridView{
                             wallpaperGridRoot.keyBuffer = ""
                             handled=true
                             break
+                            case "f":
+                            controller.setWallpaper(wallpaperGridRoot.currentIndex)
+                            wallpaperGridRoot.keyBuffer = ""
+                            handled=true
+                            break
                             default:
                             if(wallpaperGridRoot.keyBuffer.length>2){
                                 wallpaperGridRoot.keyBuffer=""
@@ -135,7 +141,9 @@ GridView{
                     }
 
     highlight:Rectangle{
-        color:"orange"
+        color:wallpaperGridRoot.palette.highlight
+        border.color:wallpaperGridRoot.palette.highlight
+        border.width:3
     }
 
 

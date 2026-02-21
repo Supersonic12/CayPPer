@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtCore
-Window {
+ApplicationWindow {
     id: root
     width: 800
     height: 508
@@ -19,6 +19,7 @@ Window {
             Rectangle{
                 id:mainRoot
                 //Search button
+                color:root.palette.window
                 Rectangle{
                     id:searchIconRoot
                     width:32
@@ -28,6 +29,7 @@ Window {
                     anchors.topMargin:10
                     anchors.leftMargin:10
                     radius:2
+                    color:root.palette.window
                     Image{
                         id:searchIcon
                         width:parent.width
@@ -55,7 +57,7 @@ Window {
                         hoverEnabled: true
                         property string result:""
                         onEntered:{
-                            searchIconHover.color="black"
+                            searchIconHover.color=root.palette.mid
                         }
                         onExited:{
                             searchIconHover.color="transparent"
@@ -79,7 +81,7 @@ Window {
                     anchors.leftMargin:10
                     anchors.top:parent.top
                     anchors.topMargin: 8
-                    color:"black"
+                    color:root.palette.mid
                 }
 
                 TextField{
@@ -91,11 +93,13 @@ Window {
                     width: root.width/3 //160
                     height:32
                     placeholderText:qsTr("Wallpaper Folder..")
+                    placeholderTextColor: root.palette.text
                     property string result:""
                     background:Rectangle{
                         radius:6
                         border.width:1
-                        border.color:"black"
+                        border.color:root.palette.mid
+                        color:root.palette.window
                     }
                     onAccepted:{
                         result=searchField.text
@@ -113,6 +117,7 @@ Window {
                     anchors.leftMargin:10
                     anchors.top:parent.top
                     anchors.topMargin: 10
+                    color:root.palette.window
                     FolderDialog{
                         id:searchFieldDialog
                         property string resultdialog:""
@@ -143,7 +148,7 @@ Window {
                         anchors.fill:parent
                         hoverEnabled: true
                         onEntered:{
-                            searchDialogHighLight.color="black"
+                            searchDialogHighLight.color=root.palette.mid
                         }
                         onExited:{
                             searchDialogHighLight.color="transparent"
@@ -162,7 +167,7 @@ Window {
                     anchors.leftMargin:10
                     anchors.top:parent.top
                     anchors.topMargin: 8
-                    color:"black"
+                    color:root.palette.mid
                 }
 
                 ComboBox{
@@ -176,10 +181,12 @@ Window {
                     //Did it like this because it was giving error everytime closing application
                     //need to find better solution if exists
                     model: controller ? controller.getModes : []
+
                     background: Rectangle{
                         id:fillModeBoxRect
                         border.width: 1
-                        border.color: "black"
+                        border.color: root.palette.mid
+                        color:root.palette.window
                         radius:6
                         width:96
                         height:32
@@ -190,6 +197,7 @@ Window {
                         if(controller){
                             controller.setSelectedMode(currentText)
                         }
+
                     }
                     onCurrentIndexChanged: {
                         if(controller){
@@ -199,6 +207,11 @@ Window {
                     Component.onCompleted: {
                         if(controller){
                             controller.setSelectedMode(currentText)
+                        }
+                    }
+                    popup.onVisibleChanged: {
+                        if(!popup.visible && wallpaperGridLoader.item){
+                            wallpaperGridLoader.item.forceActiveFocus()
                         }
                     }
                 }
@@ -211,7 +224,7 @@ Window {
                     anchors.top:parent.top
                     anchors.leftMargin:10
                     anchors.topMargin:10
-                    color:"black"
+                    color:root.palette.mid
                 }
                 Rectangle{
                     anchors.top:parent.top
@@ -221,7 +234,8 @@ Window {
                     anchors.topMargin: 10
                     anchors.leftMargin: 10
                     radius:10
-                    border.color:"black"
+                    color:root.palette.window
+                    border.color:root.palette.mid
                     border.width: 1
                     ListView{
                         id:monitorListView
@@ -237,12 +251,17 @@ Window {
                         delegate:Rectangle{
                             width:96
                             height:32
-                            color:"transparent"
+                            color:root.palette.window
                             CheckBox{
+                                id:monitorCheckBox
                                 anchors.centerIn: parent
+                                anchors.fill:parent
                                 text:modelData
                                 onCheckedChanged:{
                                     controller.setSelectedMonitors(checked, modelData)
+                                    if(wallpaperGridLoader.item){
+                                        wallpaperGridLoader.item.forceActiveFocus()
+                                    }
                                 }
                             }
                         }
@@ -256,6 +275,7 @@ Window {
                     anchors.top:parent.top
                     anchors.rightMargin: 10
                     anchors.topMargin: 10
+                    color:root.palette.window
                     Image{
                         id:appSettingsIcon
                         anchors.centerIn: parent
@@ -282,7 +302,7 @@ Window {
                         hoverEnabled: true
                         onEntered:{
                             appSettingsIconHover.height=1
-                            appSettingsIconHover.color="black"
+                            appSettingsIconHover.color=root.palette.mid
                         }
                         onExited:{
                             appSettingsIconHover.height=0
@@ -305,7 +325,7 @@ Window {
                     anchors.horizontalCenter: parent.horizontalCenter
                     width:parent.width-anchors.topMargin
                     height:1
-                    color:"black"
+                    color:root.palette.mid
                 }
 
                 Loader{

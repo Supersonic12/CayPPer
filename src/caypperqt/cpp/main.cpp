@@ -4,7 +4,7 @@
 #include <QString>
 #include <QDebug>
 #include <QSettings>
-
+#include <QPalette>
 #include "controller.h"
 using namespace std;
 int main(int argc, char *argv[])
