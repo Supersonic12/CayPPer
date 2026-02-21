@@ -1,4 +1,4 @@
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Svg)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick QuickControls2)
 
 qt_add_executable(appCayPPer
     cpp/main.cpp
@@ -39,7 +39,7 @@ target_link_libraries(appCayPPer
         Qt6::Gui
         Qt6::Quick
         Qt6::Qml
-        Qt6::Svg
+        Qt6::QuickControls2
         cayppercore
 )
 

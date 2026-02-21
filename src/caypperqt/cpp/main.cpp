@@ -9,12 +9,23 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
+    Controller *controller=new Controller;
+    if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORMTHEME")) {
+        QByteArray desktop = qgetenv("XDG_CURRENT_DESKTOP").toLower();
+        if (desktop.contains("kde") || desktop.contains("plasma")) {
+            qputenv("QT_QPA_PLATFORMTHEME", "kde");
+        } else if(desktop.contains("gtk3")){
+            qputenv("QT_QPA_PLATFORMTHEME", "gtk3");
+        } else{
+
+        }
+    }
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
-    Controller *controller=new Controller;
+
 
     engine.rootContext()->setContextProperty("controller",controller);
     QObject::connect(
