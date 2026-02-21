@@ -9,12 +9,12 @@ sudo apt install \
     qt6-base-dev \
     qt6-declarative-dev \
     qt6-base-dev-tools \
-    qt6-qmltooling-plugins \
     qml6-module-qtquick \
     qml6-module-qtquick-controls \
     qml6-module-qtquick-layouts \
     qt6-wayland \
-    x11-xserver-utils
+    x11-xserver-utils \
+    xwallpaper
 ```
 ## Build from source
 ```
@@ -39,8 +39,6 @@ ninja
 - [ ] Save most used directories and use them when recommending directories during search
 - [ ] Add a default directory to show when opening program
 - [x] in settings add setting default directory, 
-- [ ] in settings add setting dark and light mode
-- [x] make this dark and light mode saved in config directory
 - [x] make default directory saved in config directory
 - [x] add vim key navigation support
 - [x] add enabling vim key navigation in settings
