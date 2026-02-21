@@ -34,7 +34,16 @@ inline std::string fromXWallModetoString(FillModeXWall mode){
     case FillModeXWall::Zoom:       return "--zoom";
     }
 }
-
+inline std::string fromXFCEModetoString(FillModeXFCE mode){
+    switch(mode){
+    case FillModeXFCE::Center:              return "0";
+    case FillModeXFCE::Tile:                return "1";
+    case FillModeXFCE::Stretch:             return "2";
+    case FillModeXFCE::Scaled:              return "3";
+    case FillModeXFCE::Zoom:                return "4";
+    case FillModeXFCE::Scaled_Keep_Aspect:  return "5";
+    }
+}
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
     switch(mode){
     case FillMode::Center:          return FillModeXWall::Center;
@@ -50,11 +59,11 @@ inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
 }
 inline std::optional<FillModeSway> mapToSway(FillMode mode){
     switch(mode){
-    case FillMode::Center: return FillModeSway::Center;
-    case FillMode::Tile: return FillModeSway::Tile;
+    case FillMode::Center:  return FillModeSway::Center;
+    case FillMode::Tile:    return FillModeSway::Tile;
     case FillMode::Stretch: return FillModeSway::Stretch;
-    case FillMode::Fill: return FillModeSway::Fill;
-    case FillMode::Fit: return FillModeSway::Fit;
+    case FillMode::Fill:    return FillModeSway::Fill;
+    case FillMode::Fit:     return FillModeSway::Fit;
     default:
         std::cerr<<"Unsupported Sway fill mode\n";
         return std::nullopt;
@@ -64,11 +73,24 @@ inline std::optional<FillModeSway> mapToSway(FillMode mode){
 inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode){
     switch(mode){
     case FillMode::Contain: return FitModeHyprland::Contain;
-    case FillMode::Tile: return FitModeHyprland::Tile;
-    case FillMode::Cover: return FitModeHyprland::Cover;
-    case FillMode::Fill: return FitModeHyprland::Fill;
+    case FillMode::Tile:    return FitModeHyprland::Tile;
+    case FillMode::Cover:   return FitModeHyprland::Cover;
+    case FillMode::Fill:    return FitModeHyprland::Fill;
     default:
         std::cerr<<"Unsupported Hyprland fill mode\n";
+        return std::nullopt;
+    }
+}
+inline std::optional<FillModeXFCE>  maptoXFCE(FillMode mode){
+    switch(mode){
+    case FillMode::Center:              return FillModeXFCE::Center;
+    case FillMode::Tile:                return FillModeXFCE::Tile;
+    case FillMode::Stretch:             return FillModeXFCE::Stretch;
+    case FillMode::Zoom:                return FillModeXFCE::Zoom;
+    case FillMode::Scaled:              return FillModeXFCE::Scaled;
+    case FillMode::Scaled_Keep_Aspect:  return FillModeXFCE::Scaled_Keep_Aspect;
+    default:
+        std::cerr<<"Unsupporder XFCE fill mode\n";
         return std::nullopt;
     }
 }
@@ -91,6 +113,10 @@ inline FillMode toFillMode(std::string mode){
         return FillMode::Focus;
     }else if(mode=="Maximize"){
         return FillMode::Maximize;
+    }else if(mode=="Scaled"){
+        return FillMode::Scaled;
+    }else if(mode=="Scaled Keep Aspect"){
+        return FillMode::Scaled_Keep_Aspect;
     }else{
         return FillMode::Zoom;
     }

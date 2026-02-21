@@ -3,15 +3,17 @@
 #include <sys/inotify.h>
 #include <unistd.h>
 #include <cstring>
-coreService::coreService() : isWayland_(composFinder_.isWayland()),
-    compositor_(composFinder_.getCompositor())
+coreService::coreService() :
+    isWayland_(envvardetector_.isWayland()),
+    isXFCE_(envvardetector_.isXFCE()),
+    compositor_(envvardetector_.getCompositor())
 {
 }
 
 bool coreService::isWayland() const{
     return isWayland_;
 }
-ComposFinder::Compositor coreService::compositor() const{
+EnvVarDetector::Compositor coreService::compositor() const{
     return compositor_;
 }
 
@@ -28,19 +30,27 @@ std::vector<std::string> coreService::monitors() const{
 
 void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillMode){
     if(!isWayland_){
-        auto mode=mapToXWall(fillMode);
-        if(!mode){
-            return;
+        if(!isXFCE()){
+            auto mode=mapToXWall(fillMode);
+            if(!mode){
+                return;
+            }
+            changer_.runXWallpaper(wallPath,selectedMonitors,*mode);}
+        else{
+            auto mode=maptoXFCE(fillMode);
+            if(!mode){
+                return;
+            }
+            changer_.runXFCE(wallPath,selectedMonitors,*mode);
         }
-        changer_.runXWallpaper(wallPath,selectedMonitors,*mode);
     }else{
-        if(compositor_==ComposFinder::Compositor::Hyprland){
+        if(compositor_==EnvVarDetector::Compositor::Hyprland){
             auto mode=mapToHyprland(fillMode);
             if(!mode){
                 return;
             }
             changer_.runHyprland(wallPath,selectedMonitors,*mode);
-        }else if(compositor_==ComposFinder::Compositor::Sway){
+        }else if(compositor_==EnvVarDetector::Compositor::Sway){
             auto mode=mapToSway(fillMode);
             if(!mode){
                 return;
@@ -52,22 +62,34 @@ void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector
 
 std::vector<FillMode> coreService::supportedModes() const{
     if(!isWayland_){
-        return{
-            FillMode::Center,
-            FillMode::Focus,
-            FillMode::Maximize,
-            FillMode::Stretch,
-            FillMode::Tile,
-            FillMode::Zoom
-        };
-    }else if(compositor_==ComposFinder::Compositor::Hyprland) {
+        if(isXFCE_){
+            return{
+                FillMode::Center,
+                FillMode::Tile,
+                FillMode::Stretch,
+                FillMode::Zoom,
+                FillMode::Scaled,
+                FillMode::Scaled_Keep_Aspect
+            };
+        }
+        else{
+            return{
+                FillMode::Center,
+                FillMode::Focus,
+                FillMode::Maximize,
+                FillMode::Stretch,
+                FillMode::Tile,
+                FillMode::Zoom
+            };
+        }
+    }else if(compositor_==EnvVarDetector::Compositor::Hyprland) {
         return{
             FillMode::Contain,
             FillMode::Cover,
             FillMode::Fill,
             FillMode::Tile
         };
-    }else if(compositor_==ComposFinder::Compositor::Sway){
+    }else if(compositor_==EnvVarDetector::Compositor::Sway){
         return{
             FillMode::Center,
             FillMode::Fill,
@@ -156,9 +178,11 @@ void coreService::watchLoop(){
             }
             i+=sizeof(struct inotify_event)+event->len;
         }
-
     }
 }
 coreService::~coreService(){
     stopWatching();
+}
+bool coreService::isXFCE() const{
+    return isXFCE_;
 }

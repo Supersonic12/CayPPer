@@ -1,5 +1,31 @@
 # A Waypaper Alternative coded with QT,WX and C++ 
 
+## Dependency Installation
+```
+sudo apt install \
+    build-essential \
+    cmake \
+    ninja-build \
+    qt6-base-dev \
+    qt6-declarative-dev \
+    qt6-base-dev-tools \
+    qt6-qmltooling-plugins \
+    qml6-module-qtquick \
+    qml6-module-qtquick-controls \
+    qml6-module-qtquick-layouts \
+    qt6-wayland \
+    x11-xserver-utils
+```
+## Build from source
+```
+git clone https://github.com/Supersonic12/CayPPer
+cd CayPPer
+mkdir build
+cd build
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
+ninja
+
+```
 # To Do
 - [x] Make Grid delegates clickable, hoverable
 - [x] Add Mouse navigation through grid delegates

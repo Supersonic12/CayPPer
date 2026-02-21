@@ -3,8 +3,8 @@ add_library(cayppercore STATIC
     directorylister.h
     changer.cpp
     changer.h
-    composfinder.cpp
-    composfinder.h
+    envvardetector.cpp
+    envvardetector.h
     monitorlister.h
     monitorlister.cpp
     coreservice.h

@@ -8,7 +8,7 @@
 #include <atomic>
 #include <thread>
 
-#include "composfinder.h"
+#include "envvardetector.h"
 #include "monitorlister.h"
 #include "changer.h"
 #include "domainExpansion/fillmode.h"
@@ -20,7 +20,8 @@ public:
     coreService();
     ~coreService();
     bool isWayland() const;
-    ComposFinder::Compositor compositor() const;
+    bool isXFCE() const;
+    EnvVarDetector::Compositor compositor() const;
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
     const std::vector<std::filesystem::path> listDirectory(std::filesystem::path);
@@ -30,12 +31,12 @@ public:
     void startWatching(const std::filesystem::path& path);
 
 private:
-    ComposFinder composFinder_;
+    EnvVarDetector envvardetector_;
     MonitorLister monitorlister_;
     directoryLister directorylister_;
     Changer changer_;
     bool isWayland_;
-    ComposFinder::Compositor compositor_;
+    EnvVarDetector::Compositor compositor_;
     void notifyDirectoryChanged();
     std::function<void()> directoryChangedCallback_;
     void watchLoop();
@@ -44,6 +45,7 @@ private:
     int watchDescriptor_{-1};
     std::thread watcherThread_;
     std::atomic<bool> running_{false};
+    bool isXFCE_;
 };
 
 #endif // CORESERVICE_H

@@ -1,6 +1,6 @@
-#ifndef COMPOSFINDER_H
-#define COMPOSFINDER_H
-class ComposFinder
+#ifndef ENVVARDETECTOR_H
+#define ENVVARDETECTOR_H
+class EnvVarDetector
 {
 public:
     enum class Compositor {
@@ -9,9 +9,10 @@ public:
         Unknown
     };
 
-    ComposFinder();
+    EnvVarDetector();
     bool isWayland();
+    bool isXFCE();
     Compositor getCompositor();
 };
 
-#endif // COMPOSFINDER_H
+#endif // ENVVARDETECTOR_H

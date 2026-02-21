@@ -12,6 +12,7 @@ public:
     int runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode);
     int runHyprland(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FitModeHyprland fillmode);
     int runSway(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeSway fillmode);
+    int runXFCE(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXFCE fillmode);
 };
 
 #endif // CHANGER_H

@@ -7,7 +7,7 @@
 #include<iostream>
 MonitorLister::MonitorLister() {}
 extern char **environ;
-std::vector<std::string> MonitorLister::getMonitorWayland(ComposFinder::Compositor compositor) const{
+std::vector<std::string> MonitorLister::getMonitorWayland(EnvVarDetector::Compositor compositor) const{
     int pipefd[2];
     if (pipe(pipefd)==-1){
         perror("pipe");
@@ -23,7 +23,7 @@ std::vector<std::string> MonitorLister::getMonitorWayland(ComposFinder::Composit
 
     pid_t pid;
     std::vector<std::string> monitors;
-    if (compositor==ComposFinder::Compositor::Hyprland){
+    if (compositor==EnvVarDetector::Compositor::Hyprland){
         char * argv[]={
             (char *)"hyprctl",
             (char *)"monitors",
@@ -121,3 +121,4 @@ std::vector<std::string> MonitorLister::getMonitorX() const{
     // }
     return monitors;
 }
+

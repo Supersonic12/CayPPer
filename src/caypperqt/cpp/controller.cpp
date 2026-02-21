@@ -40,6 +40,8 @@ void Controller::refreshAvailableModes(){
         case FillMode::Stretch:      availableModes_.append("Stretch");  break;
         case FillMode::Tile:         availableModes_.append("Tile");     break;
         case FillMode::Zoom:         availableModes_.append("Zoom");     break;
+        case FillMode::Scaled:       availableModes_.append("Scaled");    break;
+        case FillMode::Scaled_Keep_Aspect: availableModes_.append("Scaled(KeepAspect)"); break;
         }
     }
     emit modesChanged();
@@ -49,7 +51,6 @@ void Controller::refreshAvailableMonitors(){
     for(const auto& monitor:core_.monitors()){
         availableMonitors_.append(QString::fromStdString(monitor));
     }
-    qDebug() << "Detected monitors:" << (availableMonitors_);
     emit monitorsChanged();
 }
 

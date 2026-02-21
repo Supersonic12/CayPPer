@@ -46,9 +46,29 @@ int Changer::runSway(std::filesystem::path chosenPaper,std::vector<std::string> 
     std::string str_mode = fromSwayModetoString(fillmode);
 
     for(auto &monitor:selectedMonitors){
-        if(std::system(("swaybg -o " + monitor + " -i " + chosenPaper.string() + " -m "+ str_mode).c_str()) == 0){}
+        if(std::system(("swaybg -o " + monitor + " -i '" + chosenPaper.string() + "' -m "+ str_mode).c_str()) == 0){}
         else{
             std::cerr<<"there is a problem in changer::runSway. Couldnt set wallpaper on monitor: " + monitor + "\n";
+            return 1;
+        }
+    }
+    return 0;
+}
+int Changer::runXFCE(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXFCE fillmode){
+    if(selectedMonitors.empty()){
+        std::cerr<<"no Monitor Checked, check at least one\n";
+        return 1;
+    }
+    std::string std_mode = fromXFCEModetoString(fillmode);
+    for(auto &monitor:selectedMonitors){
+        if(std::system(("xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/last-image -n -t string -s '"+chosenPaper.string()+"'").c_str())==0){}
+        else{
+            std::cerr<<"Couldn't set wallpaper on XFCE\n";
+            return 1;
+        }
+        if(std::system(("xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/image-style -n -t int -s "+ std_mode+"").c_str())==0){}
+        else{
+            std::cerr<<"Couldn't set fillmode on XFCE\n";
             return 1;
         }
     }

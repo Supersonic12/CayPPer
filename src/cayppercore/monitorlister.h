@@ -4,12 +4,12 @@
 #include<vector>
 #include<string>
 
-#include"composfinder.h"
+#include"envvardetector.h"
 class MonitorLister
 {
 public:
     MonitorLister();
-    std::vector<std::string> getMonitorWayland(ComposFinder::Compositor compositor) const;
+    std::vector<std::string> getMonitorWayland(EnvVarDetector::Compositor compositor) const;
     std::vector<std::string> getMonitorX() const;
 
 };
