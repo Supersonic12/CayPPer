@@ -1,4 +1,4 @@
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Svg)
 
 qt_add_executable(appCayPPer
     cpp/main.cpp
@@ -11,7 +11,7 @@ qt_add_qml_module(appCayPPer
     URI CayPPer
     QML_FILES
     qml/Main.qml
-
+    qml/SettingsStack.qml
     qml/Grid.qml
     RESOURCES
     qml/icons/search.svg
@@ -27,8 +27,9 @@ qt_add_qml_module(appCayPPer
         cpp/imagemodel.h
         cpp/controller.h
         cpp/controller.cpp
-        SOURCES cpp/appsettings.h cpp/appsettings.cpp
-        QML_FILES qml/SettingsStack.qml
+        cpp/appsettings.h
+        cpp/appsettings.cpp
+
 )
 
 
@@ -38,13 +39,9 @@ target_link_libraries(appCayPPer
         Qt6::Gui
         Qt6::Quick
         Qt6::Qml
+        Qt6::Svg
         cayppercore
 )
-target_link_libraries(appCayPPer PRIVATE Qt6::Widgets)
-#
-#set_target_properties(appCayPPer PROPERTIES
-#    MACOSX_BUNDLE TRUE
-#    WIN32_EXECUTABLE TRUE
-#)
+
 
 

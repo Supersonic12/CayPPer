@@ -14,10 +14,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
-    Controller controller;
+    Controller *controller=new Controller;
 
-    engine.rootContext()->setContextProperty("controller",&controller);
-
+    engine.rootContext()->setContextProperty("controller",controller);
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,

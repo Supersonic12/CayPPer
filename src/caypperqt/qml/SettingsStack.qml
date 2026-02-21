@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
+import QtQuick.Effects
 import QtCore
 Rectangle{
     id:root
@@ -22,6 +23,11 @@ Rectangle{
             height:24
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
+            layer.enabled:true
+            layer.effect: MultiEffect{
+                colorization: 1.0
+                colorizationColor: root.palette.text
+            }
         }
         MouseArea{
             anchors.fill:parent
@@ -108,6 +114,11 @@ Rectangle{
                             source:"icons/folder.svg"
                             fillMode: Image.PreserveAspectFit
                             smooth:true
+                            layer.enabled:true
+                            layer.effect: MultiEffect{
+                                colorization: 1.0
+                                colorizationColor: root.palette.text
+                            }
                             MouseArea{
                                 hoverEnabled: true
                                 anchors.fill:parent
@@ -169,6 +180,11 @@ Rectangle{
                             width:24
                             height:24
                             fillMode: Image.PreserveAspectFit
+                            layer.enabled:true
+                            layer.effect: MultiEffect{
+                                colorization: 1.0
+                                colorizationColor: root.palette.text
+                            }
                             MouseArea{
                                 id:defaultWallPathArea
                                 anchors.fill:parent
@@ -232,8 +248,13 @@ Rectangle{
                                     height:parent.height
                                     anchors.centerIn:parent
                                     fillMode:Image.PreserveAspectFit
-                                    source: "icons/check.svg"
+                                    source:"icons/check.svg"
                                     visible:controller?controller.darkModeToggle:false
+                                    layer.enabled:true
+                                    layer.effect: MultiEffect{
+                                        colorization: 1.0
+                                        colorizationColor: root.palette.text
+                                    }
                                 }
                             }
                             onCheckedChanged: {
@@ -295,6 +316,11 @@ Rectangle{
                                     fillMode:Image.PreserveAspectFit
                                     source:"icons/check.svg"
                                     visible:controller?controller.vimKeysToggle:false
+                                    layer.enabled:true
+                                    layer.effect: MultiEffect{
+                                        colorization: 1.0
+                                        colorizationColor: root.palette.text
+                                    }
                                 }
                             }
                             onCheckedChanged: {

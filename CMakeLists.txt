@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Qml
 )
 
-qt_standard_project_setup(REQUIRES 6.8)
+qt_standard_project_setup(REQUIRES 6.10)
 
 add_subdirectory(src/cayppercore)
 add_subdirectory(src/caypperqt)

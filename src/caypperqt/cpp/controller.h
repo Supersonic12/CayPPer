@@ -61,6 +61,8 @@ public:
     Q_INVOKABLE void setVimKeysToggle(bool value);
     bool darkModeToggle();
     Q_INVOKABLE void setDarkModeToggle(bool value);
+
+
 signals:
     void modesChanged();
     void monitorsChanged();
@@ -70,6 +72,7 @@ signals:
     void defaultWallPathChanged();
     void vimKeysToggleChanged();
     void darkModeToggleChanged();
+    void iconColorsChanged();
 private:
     void refreshDirectoryContent(QString path);
     void checkDirectory();
@@ -99,6 +102,7 @@ private:
     QString defaultWallPath_;
     bool vimKeysToggle_;
     bool darkModeToggle_;
+
 };
 
 #endif // CONTROLLER_H

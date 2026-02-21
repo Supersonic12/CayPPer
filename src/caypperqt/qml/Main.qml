@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
+import QtQuick.Effects
 import QtCore
 ApplicationWindow {
     id: root
@@ -42,6 +43,11 @@ ApplicationWindow {
                         asynchronous: true
                         smooth:true
                         mipmap:true
+                        layer.enabled:true
+                        layer.effect: MultiEffect{
+                            colorization: 1.0
+                            colorizationColor: root.palette.text
+                        }
                     }
                     Rectangle{
                         id:searchIconHover
@@ -139,6 +145,11 @@ ApplicationWindow {
                         smooth:true
                         mipmap:true
                         asynchronous: true
+                        layer.enabled:true
+                        layer.effect: MultiEffect{
+                            colorization: 1.0
+                            colorizationColor: root.palette.text
+                        }
                     }
                     Rectangle{
                         id:searchDialogHighLight
@@ -291,6 +302,11 @@ ApplicationWindow {
                         mipmap:true
                         smooth:true
                         asynchronous: true
+                        layer.enabled:true
+                        layer.effect: MultiEffect{
+                            colorization: 1.0
+                            colorizationColor: root.palette.text
+                        }
                     }
                     Rectangle{
                         id:appSettingsIconHover
