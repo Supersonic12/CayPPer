@@ -38,7 +38,9 @@ bool EnvVarDetector::isXFCE(){
     std::istringstream ss(env);
     std::string part;
     while(std::getline(ss,part,':')){
-        if(part == "xfce") return true;
+        if(part == "xfce") {
+            return true;
+        }
     }
     return false;
 }

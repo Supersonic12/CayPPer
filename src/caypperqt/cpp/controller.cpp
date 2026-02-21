@@ -8,6 +8,9 @@ Controller::Controller(QObject *parent)
 {
     refreshAvailableModes();
     refreshAvailableMonitors();
+    if(core_.isXFCE()==true){
+        qputenv("QT_QPA_PLATFORMTHEME","gtk3");
+    }
     core_.setDirectoryChangeCallBack(
         [this]()
         {
