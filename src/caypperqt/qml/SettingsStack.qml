@@ -17,7 +17,7 @@ Rectangle{
         color:root.palette.window
         Image{
             id:backButtonIcon
-            source:"icons/left-arrow-32x32.png"
+            source:"icons/left-arrow.svg"
             width:24
             height:24
             anchors.centerIn: parent
@@ -105,7 +105,7 @@ Rectangle{
                             anchors.centerIn: parent
                             width:24
                             height:24
-                            source:"icons/folder-32x32.png"
+                            source:"icons/folder.svg"
                             fillMode: Image.PreserveAspectFit
                             smooth:true
                             MouseArea{
@@ -113,7 +113,7 @@ Rectangle{
                                 anchors.fill:parent
                                 onEntered:{
                                     configPathRect.border.width=1
-                                    configPathRect.border.color="gray"
+                                    configPathRect.border.color=root.palette.mid
                                 }
                                 onExited:{
                                     configPathRect.border.width=0
@@ -164,7 +164,7 @@ Rectangle{
                         color:root.palette.window
                         Image{
                             id:defaultWallPathIcon
-                            source:"icons/folder-32x32.png"
+                            source:"icons/folder.svg"
                             anchors.centerIn: parent
                             width:24
                             height:24
@@ -232,7 +232,7 @@ Rectangle{
                                     height:parent.height
                                     anchors.centerIn:parent
                                     fillMode:Image.PreserveAspectFit
-                                    source: "icons/check-32x32.png"
+                                    source: "icons/check.svg"
                                     visible:controller?controller.darkModeToggle:false
                                 }
                             }
@@ -293,7 +293,7 @@ Rectangle{
                                     width:parent.width
                                     height:parent.height
                                     fillMode:Image.PreserveAspectFit
-                                    source:"icons/check-32x32.png"
+                                    source:"icons/check.svg"
                                     visible:controller?controller.vimKeysToggle:false
                                 }
                             }

@@ -38,7 +38,7 @@ ApplicationWindow {
                         sourceSize.height: 32
                         anchors.centerIn: parent
                         fillMode:Image.PreserveAspectFit
-                        source: "icons/search-32x32.png"
+                        source: "icons/search.svg"
                         asynchronous: true
                         smooth:true
                         mipmap:true
@@ -134,8 +134,11 @@ ApplicationWindow {
                         width:32
                         height:32
                         anchors.centerIn: parent
-                        source:"icons/folder-32x32.png"
+                        source:"icons/folder.svg"
                         fillMode: Image.PreserveAspectFit
+                        smooth:true
+                        mipmap:true
+                        asynchronous: true
                     }
                     Rectangle{
                         id:searchDialogHighLight
@@ -282,7 +285,7 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         width:parent.width
                         height:parent.height
-                        source:"icons/settings-512x512.png"
+                        source:"icons/settings.svg"
                         sourceSize:Qt.size(512,512)
                         fillMode: Image.PreserveAspectFit
                         mipmap:true

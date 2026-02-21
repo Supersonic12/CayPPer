@@ -14,13 +14,11 @@ qt_add_qml_module(appCayPPer
 
     qml/Grid.qml
     RESOURCES
-    qml/icons/search-24x24.png
-    qml/icons/search-32x32.png
-    qml/icons/search-48x48.png
-    qml/icons/settings-512x512.png
-    qml/icons/folder-32x32.png
-    qml/icons/left-arrow-32x32.png
-    qml/icons/check-32x32.png
+    qml/icons/search.svg
+    qml/icons/settings.svg
+    qml/icons/folder.svg
+    qml/icons/left-arrow.svg
+    qml/icons/check.svg
 
     SOURCES
         #cpp/inputtakerfromqml.cpp
