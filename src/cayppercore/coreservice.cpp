@@ -65,11 +65,10 @@ std::vector<FillMode> coreService::supportedModes() const{
         if(isXFCE_){
             return{
                 FillMode::Center,
-                FillMode::Tile,
+                FillMode::Scaled,
                 FillMode::Stretch,
                 FillMode::Zoom,
-                FillMode::Scaled,
-                FillMode::Scaled_Keep_Aspect
+                FillMode::Spanning_Screens
             };
         }
         else{

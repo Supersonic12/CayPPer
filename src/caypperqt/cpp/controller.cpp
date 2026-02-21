@@ -41,7 +41,7 @@ void Controller::refreshAvailableModes(){
         case FillMode::Tile:         availableModes_.append("Tile");     break;
         case FillMode::Zoom:         availableModes_.append("Zoom");     break;
         case FillMode::Scaled:       availableModes_.append("Scaled");    break;
-        case FillMode::Scaled_Keep_Aspect: availableModes_.append("Scaled(KeepAspect)"); break;
+        case FillMode::Spanning_Screens: availableModes_.append("SpanningScreens"); break;
         }
     }
     emit modesChanged();

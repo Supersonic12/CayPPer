@@ -12,7 +12,7 @@ enum class FillMode{
     Focus,
     Maximize,
     Scaled,
-    Scaled_Keep_Aspect,
+    Spanning_Screens,
     Zoom
 };
 enum class FillModeSway{
@@ -38,11 +38,10 @@ enum class FillModeXWall{
 };
 enum class FillModeXFCE{
     Center,
-    Tile,
     Stretch,
     Scaled,
     Zoom,
-    Scaled_Keep_Aspect,
+    Spanning_Screens,
 };
 
 #endif // FILLMODE_H

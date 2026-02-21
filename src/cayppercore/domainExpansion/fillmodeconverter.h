@@ -36,12 +36,11 @@ inline std::string fromXWallModetoString(FillModeXWall mode){
 }
 inline std::string fromXFCEModetoString(FillModeXFCE mode){
     switch(mode){
-    case FillModeXFCE::Center:              return "0";
-    case FillModeXFCE::Tile:                return "1";
-    case FillModeXFCE::Stretch:             return "2";
-    case FillModeXFCE::Scaled:              return "3";
+    case FillModeXFCE::Center:              return "1";
+    case FillModeXFCE::Scaled:              return "2";
+    case FillModeXFCE::Stretch:             return "3";
     case FillModeXFCE::Zoom:                return "4";
-    case FillModeXFCE::Scaled_Keep_Aspect:  return "5";
+    case FillModeXFCE::Spanning_Screens:    return "5";
     }
 }
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
@@ -84,13 +83,12 @@ inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode){
 inline std::optional<FillModeXFCE>  maptoXFCE(FillMode mode){
     switch(mode){
     case FillMode::Center:              return FillModeXFCE::Center;
-    case FillMode::Tile:                return FillModeXFCE::Tile;
+    case FillMode::Spanning_Screens:    return FillModeXFCE::Spanning_Screens;
     case FillMode::Stretch:             return FillModeXFCE::Stretch;
     case FillMode::Zoom:                return FillModeXFCE::Zoom;
     case FillMode::Scaled:              return FillModeXFCE::Scaled;
-    case FillMode::Scaled_Keep_Aspect:  return FillModeXFCE::Scaled_Keep_Aspect;
     default:
-        std::cerr<<"Unsupporder XFCE fill mode\n";
+        std::cerr<<"Unsupported XFCE fill mode\n";
         return std::nullopt;
     }
 }
@@ -115,8 +113,8 @@ inline FillMode toFillMode(std::string mode){
         return FillMode::Maximize;
     }else if(mode=="Scaled"){
         return FillMode::Scaled;
-    }else if(mode=="Scaled Keep Aspect"){
-        return FillMode::Scaled_Keep_Aspect;
+    }else if(mode=="SpanningScreens"){
+        return FillMode::Spanning_Screens;
     }else{
         return FillMode::Zoom;
     }
