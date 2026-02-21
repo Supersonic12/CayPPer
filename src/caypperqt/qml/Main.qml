@@ -143,6 +143,7 @@ ApplicationWindow {
                         height:1
                         anchors.top:searchFieldDialogRect.bottom
                         anchors.left:parent.left
+                        color:root.palette.window
                     }
                     MouseArea{
                         anchors.fill:parent

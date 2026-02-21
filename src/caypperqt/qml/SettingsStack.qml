@@ -28,7 +28,7 @@ Rectangle{
             hoverEnabled: true
             onEntered:{
                 backButtonRect.border.width=1
-                backButtonRect.border.color=Qt.application.palette.mid
+                backButtonRect.border.color=root.palette.mid
             }
             onExited:{
                 backButtonRect.border.color="transparent"
