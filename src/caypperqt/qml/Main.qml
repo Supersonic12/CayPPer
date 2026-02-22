@@ -95,9 +95,9 @@ ApplicationWindow {
                                 case "j":
                                 if(stackRoot.currentItem.modeBox.popup.visible){
                                     stackRoot.currentItem.modeBox.currentIndex =
-                                        Math.max(0,
-                                            Math.min(stackRoot.currentItem.modeBox.currentIndex + 1,
-                                                     stackRoot.currentItem.modeBox.count - 1))
+                                    Math.max(0,
+                                             Math.min(stackRoot.currentItem.modeBox.currentIndex + 1,
+                                                      stackRoot.currentItem.modeBox.count - 1))
                                     stackRoot.currentItem.modeBox.incrementCurrentIndex()
                                     handled = true
                                 }
@@ -106,9 +106,9 @@ ApplicationWindow {
                                 case "k":
                                 if(stackRoot.currentItem.modeBox.popup.visible){
                                     stackRoot.currentItem.modeBox.currentIndex =
-                                        Math.max(0,
-                                            Math.min(stackRoot.currentItem.modeBox.currentIndex - 1,
-                                                     stackRoot.currentItem.modeBox.count - 1))
+                                    Math.max(0,
+                                             Math.min(stackRoot.currentItem.modeBox.currentIndex - 1,
+                                                      stackRoot.currentItem.modeBox.count - 1))
                                     stackRoot.currentItem.modeBox.decrementCurrentIndex()
                                     handled = true
                                 }
@@ -322,6 +322,7 @@ ApplicationWindow {
 
                     onActivated: {
                         if(controller){
+                            fillModeBox.popup.forceActiveFocus()
                             controller.setSelectedMode(currentText)
                         }
 
@@ -337,6 +338,12 @@ ApplicationWindow {
                         }
                     }
                     popup.onVisibleChanged: {
+                        if(popup.visible){
+                            fillModeBox.forceActiveFocus()
+                        } else if (wallpaperGridLoader.item){
+                            wallpaperGridLoader.item.forceActiveFocus()
+                        }
+
                         if(!popup.visible && wallpaperGridLoader.item){
                             wallpaperGridLoader.item.forceActiveFocus()
                         }

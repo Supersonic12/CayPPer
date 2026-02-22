@@ -12,10 +12,22 @@ sudo apt install \
     qml6-module-qtquick \
     qml6-module-qtquick-controls \
     qml6-module-qtquick-layouts \
-    qt6-wayland \
-    x11-xserver-utils \
-    xwallpaper
+    qt6-wayland 
 ```
+
+If x11 based system
+
+```
+sudo apt install \
+xwallpaper \
+x11-xserver-utils
+```
+
+if hyprland
+
+`sudo pacman -Sy hyprpaper`
+
+
 ## Build from source
 ```
 git clone https://github.com/Supersonic12/CayPPer
@@ -24,7 +36,6 @@ mkdir build
 cd build
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
 ninja
-
 ```
 
 ## Vim Keys
