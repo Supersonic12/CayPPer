@@ -7,6 +7,9 @@ import QtCore
 Rectangle{
     id:root
     color:root.palette.window
+    property alias vimKeysBox:vimKeysToggleBox
+    property alias configDialog:configPathDialog
+    property alias defaultPathDialog:defaultWallPathDialog
     Rectangle{
         id:backButtonRect
         anchors.left:parent.left

@@ -9,18 +9,131 @@ ApplicationWindow {
     height: 508
     visible: true
     title: qsTr("CayPPer")
+    property bool vimMode: controller? controller.vimKeysToggle: false
+    property string keyBuffer:""
+    Timer{
+        id:bufferSequenceTimer
+        interval:400
+        repeat:false
+        onTriggered: root.keyBuffer= ""
+    }
     StackView{
         id:stackRoot
         initialItem: mainComponent
         width:parent.width
         height:parent.height
         anchors.fill:parent
+        focus:true
+        Keys.onPressed: (event) =>{
+                            if(event.isAutoRepeat){
+                                return
+                            }
+                            if(!root.vimMode){
+                                event.accepted=false
+                                return
+                            }
+                            let handled = false
+                            root.keyBuffer+=event.text
+                            bufferSequenceTimer.restart()
+                            switch(root.keyBuffer){
+                                case "gw":
+                                if(stackRoot.depth===1){
+                                    stackRoot.currentItem.folderDialog.open()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gs":
+                                if(stackRoot.depth===1){
+                                    stackRoot.push(settingsComponent)
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gr":
+                                if(stackRoot.depth===1){
+                                    stackRoot.currentItem.gridLoader.forceActiveFocus()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gm":
+                                if(stackRoot.depth===1){
+                                    stackRoot.currentItem.modeBox.popup.open()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gW":
+                                if(stackRoot.depth===2){
+                                    stackRoot.currentItem.configDialog.open()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gc":
+                                if(stackRoot.depth===2){
+                                    stackRoot.currentItem.defaultPathDialog.open()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gv":
+                                if(stackRoot.depth===2){
+                                    stackRoot.currentItem.vimKeysBox.checked=!stackRoot.currentItem.vimKeysBox.checked
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "gn":
+                                if(stackRoot.depth===2){
+                                    stackRoot.pop(null)
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                                case "j":
+                                if(stackRoot.currentItem.modeBox.popup.visible){
+                                    stackRoot.currentItem.modeBox.currentIndex =
+                                        Math.max(0,
+                                            Math.min(stackRoot.currentItem.modeBox.currentIndex + 1,
+                                                     stackRoot.currentItem.modeBox.count - 1))
+                                    stackRoot.currentItem.modeBox.incrementCurrentIndex()
+                                    handled = true
+                                }
+                                root.keyBuffer=""
+                                break
+                                case "k":
+                                if(stackRoot.currentItem.modeBox.popup.visible){
+                                    stackRoot.currentItem.modeBox.currentIndex =
+                                        Math.max(0,
+                                            Math.min(stackRoot.currentItem.modeBox.currentIndex - 1,
+                                                     stackRoot.currentItem.modeBox.count - 1))
+                                    stackRoot.currentItem.modeBox.decrementCurrentIndex()
+                                    handled = true
+                                }
+                                root.keyBuffer=""
+                                break
+                                case "I":
+                                if(stackRoot.currentItem.modeBox.popup.visible){
+                                    stackRoot.currentItem.modeBox.popup.close()
+                                }
+                                root.keyBuffer=""
+                                handled=true
+                                break
+                            }
+
+                        }
+
         Component{
             id:mainComponent
             Rectangle{
                 id:mainRoot
                 //Search button
                 color:root.palette.window
+                property alias gridLoader :wallpaperGridLoader
+                property alias folderDialog: searchFieldDialog
+                property alias modeBox:fillModeBox
                 Rectangle{
                     id:searchIconRoot
                     width:32
@@ -205,7 +318,6 @@ ApplicationWindow {
                         radius:6
                         width:96
                         height:32
-
                     }
 
                     onActivated: {

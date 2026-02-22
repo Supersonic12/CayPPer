@@ -26,6 +26,33 @@ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
 ninja
 
 ```
+
+## Vim Keys
+
+### In Main Menu
+
+gs - go Settings menu
+gw - open folder dialog
+gr - focus to wallpaper grid
+gm - focus to fill mode changer
+
+### in Grid
+
+h - go left
+l - go right
+j - go down
+k - go up
+gg - go uppermost wallpaper
+G - go bottommost wallpaper
+f - set highlighted wallpaper
+
+### in Settings
+
+gn - go to Main menu
+gW - open default folder choice dialog
+gc - open config folder choice dialog
+gv - turn of vim keys
+
 # To Do
 - [x] Make Grid delegates clickable, hoverable
 - [x] Add Mouse navigation through grid delegates

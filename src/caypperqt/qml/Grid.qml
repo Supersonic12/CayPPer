@@ -74,7 +74,7 @@ GridView{
 
     Keys.onPressed: (event) => {
                         if(event.isAutoRepeat){
-                            return;
+                            return
                         }
                         if(!wallpaperGridRoot.vimMode){
                             event.accepted=false
