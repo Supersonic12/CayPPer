@@ -31,9 +31,6 @@ class Controller : public QObject
     Q_PROPERTY(bool vimKeysToggle
                READ vimKeysToggle
                NOTIFY vimKeysToggleChanged)
-    Q_PROPERTY(bool darkModeToggle
-               READ darkModeToggle
-               NOTIFY darkModeToggleChanged)
 public:
 
     explicit Controller(QObject *parent = nullptr);
@@ -59,8 +56,7 @@ public:
     Q_INVOKABLE void setDefaultWallPath(QUrl path);
     bool vimKeysToggle();
     Q_INVOKABLE void setVimKeysToggle(bool value);
-    bool darkModeToggle();
-    Q_INVOKABLE void setDarkModeToggle(bool value);
+
 
 
 signals:
@@ -71,7 +67,6 @@ signals:
     void configPathChanged();
     void defaultWallPathChanged();
     void vimKeysToggleChanged();
-    void darkModeToggleChanged();
     void iconColorsChanged();
 private:
     void refreshDirectoryContent(QString path);
@@ -101,7 +96,6 @@ private:
     QString configPath_;
     QString defaultWallPath_;
     bool vimKeysToggle_;
-    bool darkModeToggle_;
 
 };
 

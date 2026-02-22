@@ -8,7 +8,8 @@ Controller::Controller(QObject *parent)
 {
     refreshAvailableModes();
     refreshAvailableMonitors();
-    if(core_.isXFCE()==true){
+    QByteArray desktop = qgetenv("XDG_CURRENT_DESKTOP").toLower();
+    if(desktop.contains("xfce") || desktop.contains("gnome") || desktop.contains("mate")){
         qputenv("QT_QPA_PLATFORMTHEME","gtk3");
     }
     core_.setDirectoryChangeCallBack(
@@ -25,7 +26,6 @@ Controller::Controller(QObject *parent)
     configPath_=settings_.getValue("General/configPath","Unknown").toString();
     defaultWallPath_=settings_.getValue("General/defaultWallPath","Unknown").toString();
     vimKeysToggle_=settings_.getBoolValue("Behavior/vimKeys",false).toBool();
-    darkModeToggle_=settings_.getBoolValue("Appearance/darkMode",false).toBool();
 }
 //constructor functions
 //should be called by default
@@ -178,10 +178,7 @@ bool Controller::vimKeysToggle(){
     vimKeysToggle_=settings_.getBoolValue("Behavior/vimKeys",false).toBool();
     return vimKeysToggle_;
 }
-bool Controller::darkModeToggle(){
-    darkModeToggle_=settings_.getBoolValue("Appearance/darkMode",false).toBool();
-    return darkModeToggle_;
-}
+
 
 void Controller::setConfigPath(QUrl path){
     if(configPath_==path){
@@ -207,13 +204,6 @@ void Controller::setVimKeysToggle(bool value){
     settings_.setValue("Behavior/vimKeys",vimKeysToggle_);
     emit vimKeysToggleChanged();
 }
-void Controller::setDarkModeToggle(bool value){
-    if(darkModeToggle_==value){
-        return;
-    }
-    darkModeToggle_=value;
-    settings_.setValue("Appearance/darkMode",darkModeToggle_);
-    emit darkModeToggleChanged();
-}
+
 
 
