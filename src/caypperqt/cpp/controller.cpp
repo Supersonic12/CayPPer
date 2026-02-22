@@ -181,7 +181,7 @@ bool Controller::vimKeysToggle(){
 
 
 void Controller::setConfigPath(QUrl path){
-    if(configPath_==path){
+    if(configPath_==path.toLocalFile()){
         return;
     }
     configPath_=path.toLocalFile();
@@ -189,7 +189,7 @@ void Controller::setConfigPath(QUrl path){
     emit configPathChanged();
 }
 void Controller::setDefaultWallPath(QUrl path){
-    if(defaultWallPath_==path){
+    if(defaultWallPath_==path.toLocalFile()){
         return;
     }
     defaultWallPath_=path.toLocalFile();
