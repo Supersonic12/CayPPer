@@ -4,7 +4,6 @@
 #include <QString>
 #include <QObject>
 #include <QTimer>
-#include <QString>
 #include <QFileSystemWatcher>
 #include <QUrl>
 #include "coreservice.h"

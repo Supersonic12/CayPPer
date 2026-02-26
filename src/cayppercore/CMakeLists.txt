@@ -1,3 +1,5 @@
+find_package(sdbus-c++ REQUIRED)
+
 add_library(cayppercore STATIC
     directorylister.cpp
     directorylister.h
@@ -11,10 +13,13 @@ add_library(cayppercore STATIC
     coreservice.cpp
     domainExpansion/fillmode.h
     domainExpansion/fillmodeconverter.h
-
+    xfce/xfcechanger.h xfce/xfcechanger.cpp
 )
-
+target_link_libraries(cayppercore
+    PRIVATE
+    SDBusCpp::sdbus-c++)
 target_include_directories(cayppercore
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
+add_subdirectory(kdeplasma/)

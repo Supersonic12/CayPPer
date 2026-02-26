@@ -1,7 +1,7 @@
 #include "changer.h"
 #include "domainExpansion/fillmodeconverter.h"
 #include<iostream>
-
+#include "xfce/xfcechanger.h"
 Changer::Changer() {}
 
 int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode){
@@ -60,17 +60,8 @@ int Changer::runXFCE(std::filesystem::path chosenPaper,std::vector<std::string> 
         return 1;
     }
     std::string std_mode = fromXFCEModetoString(fillmode);
-    for(auto &monitor:selectedMonitors){
-        if(std::system(("xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/last-image -n -t string -s '"+chosenPaper.string()+"'").c_str())==0){}
-        else{
-            std::cerr<<"Couldn't set wallpaper on XFCE\n";
-            return 1;
-        }
-        if(std::system(("xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/image-style -n -t int -s "+ std_mode+"").c_str())==0){}
-        else{
-            std::cerr<<"Couldn't set fillmode on XFCE\n";
-            return 1;
-        }
-    }
+    xfcechanger changerXFCE;
+    changerXFCE.change(chosenPaper,selectedMonitors,std_mode);
+
     return 0;
 }
