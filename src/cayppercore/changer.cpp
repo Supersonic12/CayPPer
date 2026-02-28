@@ -2,6 +2,7 @@
 #include "domainExpansion/fillmodeconverter.h"
 #include<iostream>
 #include "xfce/xfcechanger.h"
+#include "kdeplasma/kdechanger.h"
 Changer::Changer() {}
 
 int Changer::runXWallpaper(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXWall fillmode){
@@ -63,5 +64,11 @@ int Changer::runXFCE(std::filesystem::path chosenPaper,std::vector<std::string> 
     xfcechanger changerXFCE;
     changerXFCE.change(chosenPaper,selectedMonitors,std_mode);
 
+    return 0;
+}
+int Changer::runKDE(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeKDE fillmode){
+    kdechanger changerKDE;
+    int int_mode=fromKDEModetoInt(fillmode);
+    changerKDE.change(chosenPaper,selectedMonitors,int_mode);
     return 0;
 }

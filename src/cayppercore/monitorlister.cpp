@@ -5,6 +5,7 @@
 #include<regex>
 #include<cstring>
 #include<iostream>
+#include "kdeplasma/kdemonitorlisting.h"
 MonitorLister::MonitorLister() {}
 extern char **environ;
 std::vector<std::string> MonitorLister::getMonitor(EnvVarDetector::Compositor compositor) const{
@@ -63,44 +64,54 @@ std::vector<std::string> MonitorLister::getMonitor(EnvVarDetector::Compositor co
         }
 
     }
+    // if compositor is KDE
+    else if(compositor==EnvVarDetector::Compositor::KDE){
+        kdemonitorlisting kdemonitorlist;
+        std::vector<int> int_monitorIDs=kdemonitorlist.getMonitorListIDs();
+        std::vector<std::string> str_monitorIDs;
+        for(const auto& monitor:int_monitorIDs){
+            str_monitorIDs.push_back(std::to_string(monitor));
+        }
+        return str_monitorIDs;
+    }
     //if compositor is X11
     else if(compositor==EnvVarDetector::Compositor::X11){
-    char *argv[]{
-        (char*) "xrandr",
-        nullptr
-    };
-    int status = posix_spawnp(
-        &pid,
-        "xrandr",
-        &w_actions,
-        nullptr,
-        argv,
-        environ);
-    posix_spawn_file_actions_destroy(&w_actions);
-    close(pipefd[1]);
-    if(status!=0){
-        std::cerr<<"posix spawn failed in X: "<<strerror(status)<<"\n";
+        char *argv[]{
+            (char*) "xrandr",
+            nullptr
+        };
+        int status = posix_spawnp(
+            &pid,
+            "xrandr",
+            &w_actions,
+            nullptr,
+            argv,
+            environ);
+        posix_spawn_file_actions_destroy(&w_actions);
+        close(pipefd[1]);
+        if(status!=0){
+            std::cerr<<"posix spawn failed in X: "<<strerror(status)<<"\n";
+            close(pipefd[0]);
+            return {};
+        }
+        std::string output;
+        char buffer[4096];
+        ssize_t count=0;
+        while((count=read(pipefd[0],buffer,sizeof(buffer)))>0){
+            output.append(buffer,count);
+        }
         close(pipefd[0]);
-        return {};
-    }
-    std::string output;
-    char buffer[4096];
-    ssize_t count=0;
-    while((count=read(pipefd[0],buffer,sizeof(buffer)))>0){
-        output.append(buffer,count);
-    }
-    close(pipefd[0]);
-    waitpid(pid,nullptr,0);
+        waitpid(pid,nullptr,0);
 
-    std::regex connectedMonitor(R"((\S+?)(?=\sconnected))");
-    auto begin =std::sregex_iterator(output.begin(), output.end(), connectedMonitor);
-    auto end = std::sregex_iterator();
-    for(auto it=begin;it!=end;++it){
-        monitors.push_back((*it)[1].str());
-    }
-    // for(const auto &monitor:monitors){
-    //     std::cout<<monitor<<"\n";
-    // }
+        std::regex connectedMonitor(R"((\S+?)(?=\sconnected))");
+        auto begin =std::sregex_iterator(output.begin(), output.end(), connectedMonitor);
+        auto end = std::sregex_iterator();
+        for(auto it=begin;it!=end;++it){
+            monitors.push_back((*it)[1].str());
+        }
+        // for(const auto &monitor:monitors){
+        //     std::cout<<monitor<<"\n";
+        // }
     }
     posix_spawn_file_actions_destroy(&w_actions);
     return monitors;

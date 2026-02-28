@@ -43,5 +43,12 @@ enum class FillModeXFCE{
     Zoom,
     Spanning_Screens,
 };
+enum class FillModeKDE{
+    Center,
+    Scaled,
+    Stretch,
+    Zoom,
+    Tile
+};
 
 #endif // FILLMODE_H

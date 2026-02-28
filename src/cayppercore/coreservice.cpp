@@ -17,21 +17,14 @@ EnvVarDetector::Compositor coreService::compositor() const{
 }
 
 std::vector<std::string> coreService::monitors() const{
-    if(!isWayland_){
-        std::vector<std::string>monitorlist=monitorlister_.getMonitorX();
-        // for(auto &monitor: monitorlist){
-        //     std::cout<<monitor<<",\n";
-        // }
-        return monitorlist;
-    }
-    return monitorlister_.getMonitorWayland(compositor_);
+    return monitorlister_.getMonitor(compositor_);
 }
 
 void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillMode){
     if(!isWayland_){
         //if X11 XFCE
         if(compositor_==EnvVarDetector::Compositor::XFCE){
-            auto mode=maptoXFCE(fillMode);
+            auto mode=mapToXFCE(fillMode);
             if(!mode){
                 return;
             }
@@ -63,6 +56,13 @@ void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector
                 return;
             }
             changer_.runSway(wallPath,selectedMonitors,*mode);
+        }
+        else if(compositor_==EnvVarDetector::Compositor::KDE){
+            auto mode=mapToKDE(fillMode);
+            if(!mode){
+                return;
+            }
+            changer_.runKDE(wallPath,selectedMonitors,*mode);
         }
     }
 }
@@ -103,7 +103,16 @@ std::vector<FillMode> coreService::supportedModes() const{
             FillMode::Stretch,
             FillMode::Tile
         };
-    }else{
+    }else if(compositor_==EnvVarDetector::Compositor::KDE){
+        return{
+            FillMode::Center,
+            FillMode::Scaled,
+            FillMode::Stretch,
+            FillMode::Tile,
+            FillMode::Zoom
+        };
+    }
+    else{
         return{};
     }
 }

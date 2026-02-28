@@ -7,8 +7,8 @@ class kdechanger
 {
 public:
     kdechanger();
-    void change(std::filesystem::path path,std::vector<std::string> selectedMonitors,std::string fillmode);
-
+    void change(std::filesystem::path path,std::vector<std::string> selectedMonitors,int fillmode);
+    void changeAll(std::filesystem::path path,int fillmode);
 };
 
 #endif // KDECHANGER_H

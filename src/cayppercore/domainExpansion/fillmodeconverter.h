@@ -52,6 +52,15 @@ inline std::string fromXFCEModetoString(FillModeXFCE mode){
     std::cerr << "Invalid XFCE fill mode\n";
     return "4";  // safe default
 }
+inline int fromKDEModetoInt(FillModeKDE mode){
+    switch(mode){
+    case FillModeKDE::Center:       return 0;
+    case FillModeKDE::Scaled:       return 1;
+    case FillModeKDE::Stretch:      return 2;
+    case FillModeKDE::Tile:         return 3;
+    case FillModeKDE::Zoom:         return 4;
+    }
+}
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
     switch(mode){
     case FillMode::Center:          return FillModeXWall::Center;
@@ -89,7 +98,7 @@ inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode){
         return std::nullopt;
     }
 }
-inline std::optional<FillModeXFCE>  maptoXFCE(FillMode mode){
+inline std::optional<FillModeXFCE>  mapToXFCE(FillMode mode){
     switch(mode){
     case FillMode::Center:              return FillModeXFCE::Center;
     case FillMode::Spanning_Screens:    return FillModeXFCE::Spanning_Screens;
@@ -98,6 +107,18 @@ inline std::optional<FillModeXFCE>  maptoXFCE(FillMode mode){
     case FillMode::Scaled:              return FillModeXFCE::Scaled;
     default:
         std::cerr<<"Unsupported XFCE fill mode\n";
+        return std::nullopt;
+    }
+}
+inline std::optional<FillModeKDE>   mapToKDE(FillMode mode){
+    switch(mode){
+    case FillMode::Center:          return FillModeKDE::Center;
+    case FillMode::Scaled:          return FillModeKDE::Scaled;
+    case FillMode::Stretch:         return FillModeKDE::Stretch;
+    case FillMode::Tile:            return FillModeKDE::Tile;
+    case FillMode::Zoom:            return FillModeKDE::Zoom;
+    default:
+        std::cerr<<"Unsupported KDE fill mode\n";
         return std::nullopt;
     }
 }

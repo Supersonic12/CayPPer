@@ -13,6 +13,7 @@ public:
     int runHyprland(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FitModeHyprland fillmode);
     int runSway(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeSway fillmode);
     int runXFCE(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeXFCE fillmode);
+    int runKDE(std::filesystem::path chosenPaper,std::vector<std::string> selectedMonitors, FillModeKDE fillmode);
 };
 
 #endif // CHANGER_H

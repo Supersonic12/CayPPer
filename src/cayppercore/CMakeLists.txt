@@ -14,6 +14,7 @@ add_library(cayppercore STATIC
     domainExpansion/fillmode.h
     domainExpansion/fillmodeconverter.h
     xfce/xfcechanger.h xfce/xfcechanger.cpp
+    domainExpansion/jsscriptloader.h
 )
 target_link_libraries(cayppercore
     PRIVATE
