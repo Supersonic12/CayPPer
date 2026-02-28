@@ -7,7 +7,7 @@
 #include<iostream>
 MonitorLister::MonitorLister() {}
 extern char **environ;
-std::vector<std::string> MonitorLister::getMonitorWayland(EnvVarDetector::Compositor compositor) const{
+std::vector<std::string> MonitorLister::getMonitor(EnvVarDetector::Compositor compositor) const{
     int pipefd[2];
     if (pipe(pipefd)==-1){
         perror("pipe");
@@ -63,26 +63,8 @@ std::vector<std::string> MonitorLister::getMonitorWayland(EnvVarDetector::Compos
         }
 
     }
-    posix_spawn_file_actions_destroy(&w_actions);
-    return monitors;
-}
-std::vector<std::string> MonitorLister::getMonitorX() const{
-    int pipefd[2];
-    if(pipe(pipefd)==-1){
-        perror("piping error");
-        return {};
-    }
-    posix_spawn_file_actions_t x_actions;
-    posix_spawn_file_actions_init(&x_actions);
-
-    posix_spawn_file_actions_adddup2(&x_actions,pipefd[1],STDOUT_FILENO);
-    posix_spawn_file_actions_adddup2(&x_actions,pipefd[1],STDERR_FILENO);
-
-    posix_spawn_file_actions_addclose(&x_actions,pipefd[0]);
-
-
-    pid_t pid;
-    std::vector<std::string> monitors;
+    //if compositor is X11
+    else if(compositor==EnvVarDetector::Compositor::X11){
     char *argv[]{
         (char*) "xrandr",
         nullptr
@@ -90,11 +72,11 @@ std::vector<std::string> MonitorLister::getMonitorX() const{
     int status = posix_spawnp(
         &pid,
         "xrandr",
-        &x_actions,
+        &w_actions,
         nullptr,
         argv,
         environ);
-    posix_spawn_file_actions_destroy(&x_actions);
+    posix_spawn_file_actions_destroy(&w_actions);
     close(pipefd[1]);
     if(status!=0){
         std::cerr<<"posix spawn failed in X: "<<strerror(status)<<"\n";
@@ -119,6 +101,8 @@ std::vector<std::string> MonitorLister::getMonitorX() const{
     // for(const auto &monitor:monitors){
     //     std::cout<<monitor<<"\n";
     // }
+    }
+    posix_spawn_file_actions_destroy(&w_actions);
     return monitors;
 }
 

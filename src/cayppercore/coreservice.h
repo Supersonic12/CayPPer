@@ -13,14 +13,12 @@
 #include "changer.h"
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
-
 class coreService
 {
 public:
     coreService();
     ~coreService();
     bool isWayland() const;
-    bool isXFCE() const;
     EnvVarDetector::Compositor compositor() const;
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
@@ -45,7 +43,6 @@ private:
     int watchDescriptor_{-1};
     std::thread watcherThread_;
     std::atomic<bool> running_{false};
-    bool isXFCE_;
 };
 
 #endif // CORESERVICE_H

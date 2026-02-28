@@ -2,7 +2,11 @@
 #include <sdbus-c++/sdbus-c++.h>
 #include <regex>
 #include <iostream>
-kdemonitorlisting::kdemonitorlisting() {}
+kdemonitorlisting::kdemonitorlisting() {
+    setKWinInfo();
+    setMonitorCount();
+    setMonitorList();
+}
 void kdemonitorlisting::setKWinInfo(){
     auto connection = sdbus::createSessionBusConnection();
     sdbus::ServiceName destination("org.kde.KWin");
@@ -15,27 +19,49 @@ void kdemonitorlisting::setKWinInfo(){
     sdbus::MethodName getconf("supportInformation");
     proxyID->callMethod(getconf).onInterface(interf).storeResultsTo(kwinInfo_);
 }
-int kdemonitorlisting::getMonitorCount(){
-    std::regex numberOfScreens(R"(Number of Screens: (\d+):\n-+\n)");
-    return 0;
-}
-
-std::vector<int> kdemonitorlisting::getMonitorIDs(){
-    std::regex screenIDs(R"(Screen (\d+))");
-    std::smatch matches;
-    if(std::regex_search(kwinInfo_,matches,screenIDs)){
-        std::cout<<"Pattern Found: "<<std::endl;
-        std::cout<<"Matched Text: "<< matches[0] <<std::endl;
+void kdemonitorlisting::setMonitorCount(){
+    std::regex numberOfScreens(R"(Number\sof\sScreens:\s*(\d+))");
+    std::smatch match;
+    if(std::regex_search(kwinInfo_,match,numberOfScreens)){
+        monitorCount_=std::stoi(match[1].str());
     }else{
         std::cout<<"Pattern Not Found.\n";
     }
-    return {};
 }
-std::vector<std::string> kdemonitorlisting::getMonitorNames(){
-    std::regex screenNames(R"(Screen\s\d+:\n-+\nName:\s([^\n]+))");
-    return {};
+
+
+void kdemonitorlisting::setMonitorList(){
+    std::regex reg_screenIDs(R"(Screen\s(\d+):\n-+\nName:\s([^\n]+)\nEnabled:\s1)");
+    auto match_begin=std::sregex_iterator(kwinInfo_.begin(),kwinInfo_.end(),reg_screenIDs);
+    auto match_end=std::sregex_iterator();
+    for(std::sregex_iterator i=match_begin;i!=match_end;++i){
+        struct Monitor target;
+        target.id=std::stoi((*i)[1].str());
+        target.name=(*i)[2].str();
+        std::vector<Monitor>::iterator it=std::find(monitorList_.begin(),monitorList_.end(),target);
+        if(it==monitorList_.end()){
+            monitorList_.push_back(target);
+        }
+    }
 }
-bool kdemonitorlisting::isEnabled(){
-    std::regex screenEnabled(R"(Screen\s\d+:\n-+\nName:\s[^\n]+\nEnabled:\s(\d+))");
-    return 0;
+int kdemonitorlisting::getMonitorCount() const{
+    return monitorCount_;
 }
+std::vector<kdemonitorlisting::Monitor> kdemonitorlisting::getMonitorList() const{
+    return monitorList_;
+}
+std::vector<std::string> kdemonitorlisting::getMonitorListNames() const{
+    std::vector<std::string> monitorNames;
+    for (auto const &monitor:monitorList_){
+        monitorNames.push_back(monitor.name);
+    }
+    return monitorNames;
+}
+std::vector<int>    kdemonitorlisting::getMonitorListIDs() const{
+    std::vector<int> monitorIDs;
+    for (auto const &monitor:monitorList_){
+        monitorIDs.push_back(monitor.id);
+    }
+    return monitorIDs;
+}
+

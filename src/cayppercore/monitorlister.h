@@ -9,8 +9,7 @@ class MonitorLister
 {
 public:
     MonitorLister();
-    std::vector<std::string> getMonitorWayland(EnvVarDetector::Compositor compositor) const;
-    std::vector<std::string> getMonitorX() const;
+    std::vector<std::string> getMonitor(EnvVarDetector::Compositor compositor) const;
 
 };
 

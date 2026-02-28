@@ -5,7 +5,6 @@
 #include <cstring>
 coreService::coreService() :
     isWayland_(envvardetector_.isWayland()),
-    isXFCE_(envvardetector_.isXFCE()),
     compositor_(envvardetector_.getCompositor())
 {
 }
@@ -30,27 +29,35 @@ std::vector<std::string> coreService::monitors() const{
 
 void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillMode){
     if(!isWayland_){
-        if(!isXFCE()){
-            auto mode=mapToXWall(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runXWallpaper(wallPath,selectedMonitors,*mode);}
-        else{
+        //if X11 XFCE
+        if(compositor_==EnvVarDetector::Compositor::XFCE){
             auto mode=maptoXFCE(fillMode);
             if(!mode){
                 return;
             }
             changer_.runXFCE(wallPath,selectedMonitors,*mode);
         }
-    }else{
+        //default
+        else{
+            auto mode=mapToXWall(fillMode);
+            if(!mode){
+                return;
+            }
+            changer_.runXWallpaper(wallPath,selectedMonitors,*mode);
+        }
+
+    }
+    else{
+        //if HYPRLAND
         if(compositor_==EnvVarDetector::Compositor::Hyprland){
             auto mode=mapToHyprland(fillMode);
             if(!mode){
                 return;
             }
             changer_.runHyprland(wallPath,selectedMonitors,*mode);
-        }else if(compositor_==EnvVarDetector::Compositor::Sway){
+        }
+        //if SWAY
+        else if(compositor_==EnvVarDetector::Compositor::Sway){
             auto mode=mapToSway(fillMode);
             if(!mode){
                 return;
@@ -62,7 +69,7 @@ void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector
 
 std::vector<FillMode> coreService::supportedModes() const{
     if(!isWayland_){
-        if(isXFCE_){
+        if(compositor_==EnvVarDetector::Compositor::XFCE){
             return{
                 FillMode::Center,
                 FillMode::Scaled,
@@ -181,7 +188,4 @@ void coreService::watchLoop(){
 }
 coreService::~coreService(){
     stopWatching();
-}
-bool coreService::isXFCE() const{
-    return isXFCE_;
 }
