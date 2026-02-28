@@ -107,9 +107,11 @@ std::vector<FillMode> coreService::supportedModes() const{
         return{
             FillMode::Center,
             FillMode::Scaled,
-            FillMode::Stretch,
+            FillMode::ScaledCropped,
+            FillMode::ScaledKeepAspect,
             FillMode::Tile,
-            FillMode::Zoom
+            FillMode::TileHorizontally,
+            FillMode::TileVertically
         };
     }
     else{
