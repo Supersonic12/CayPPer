@@ -54,11 +54,15 @@ inline std::string fromXFCEModetoString(FillModeXFCE mode){
 }
 inline int fromKDEModetoInt(FillModeKDE mode){
     switch(mode){
-    case FillModeKDE::Center:       return 0;
-    case FillModeKDE::Scaled:       return 1;
-    case FillModeKDE::Stretch:      return 2;
-    case FillModeKDE::Tile:         return 3;
-    case FillModeKDE::Zoom:         return 4;
+
+    case FillModeKDE::Scaled:                return 0;
+    case FillModeKDE::ScaledKeepAspect:      return 1;
+    case FillModeKDE::ScaledCropped:         return 2;
+    case FillModeKDE::Tile:                  return 3;
+    case FillModeKDE::TileVertically:        return 4;
+    case FillModeKDE::TileHorizontally:      return 5;
+    case FillModeKDE::Center:                return 6;
+
     default:
         return 4;
     }
@@ -116,9 +120,11 @@ inline std::optional<FillModeKDE>   mapToKDE(FillMode mode){
     switch(mode){
     case FillMode::Center:          return FillModeKDE::Center;
     case FillMode::Scaled:          return FillModeKDE::Scaled;
-    case FillMode::Stretch:         return FillModeKDE::Stretch;
+    case FillMode::ScaledKeepAspect:return FillModeKDE::ScaledKeepAspect;
     case FillMode::Tile:            return FillModeKDE::Tile;
-    case FillMode::Zoom:            return FillModeKDE::Zoom;
+    case FillMode::ScaledCropped:   return FillModeKDE::ScaledCropped;
+    case FillMode::TileVertically:  return FillModeKDE::TileVertically;
+    case FillMode::TileHorizontally:return FillModeKDE::TileHorizontally;
     default:
         std::cerr<<"Unsupported KDE fill mode\n";
         return std::nullopt;
@@ -147,7 +153,16 @@ inline FillMode toFillMode(std::string mode){
         return FillMode::Scaled;
     }else if(mode=="SpanningScreens"){
         return FillMode::Spanning_Screens;
-    }else{
+    }else if(mode=="Tile(Horizontally)"){
+        return FillMode::TileHorizontally;
+    }else if(mode=="Tile(Vertically)"){
+        return FillMode::TileVertically;
+    }else if(mode=="Scaled(Keep Ratio)"){
+        return FillMode::ScaledKeepAspect;
+    }else if(mode=="Scaled(Crop)"){
+        return FillMode::ScaledCropped;
+    }
+    else{
         return FillMode::Zoom;
     }
 }
