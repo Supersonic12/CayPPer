@@ -230,45 +230,44 @@ Rectangle{
                         text: "Vim Keys"
                         color:root.palette.text
                     }
-                    Item{
+
+                    CheckBox{
+                        id:vimKeysToggleBox
+                        checked:controller? controller.vimKeysToggle:false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        Layout.preferredHeight: 24
-                        Layout.preferredWidth: 24
-                        CheckBox{
-                            id:vimKeysToggleBox
-                            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                            checked:controller? controller.vimKeysToggle:false
-                            indicator:Rectangle{
-                                id:vimKeysToggleBoxRect
-                                width:24
-                                height:24
-                                border.width:1
-                                border.color:root.palette.mid
-                                color:root.palette.window
-                                radius:4
-                                Image{
-                                    id:vimKeysToggleIndicatorIcon
-                                    width:parent.width
-                                    height:parent.height
-                                    fillMode:Image.PreserveAspectFit
-                                    source:"icons/check.svg"
-                                    visible:controller?controller.vimKeysToggle:false
-                                    layer.enabled:true
-                                    layer.effect: MultiEffect{
-                                        colorization: 1.0
-                                        colorizationColor: root.palette.text
-                                    }
+                        Layout.preferredHeight: 32
+                        Layout.preferredWidth: 32
+                        indicator:Rectangle{
+                            id:vimKeysToggleBoxRect
+                            width:24
+                            height:24
+                            anchors.centerIn: parent
+                            border.width:1
+                            border.color:root.palette.mid
+                            color:root.palette.window
+                            radius:4
+                            Image{
+                                id:vimKeysToggleIndicatorIcon
+                                width:parent.width
+                                height:parent.height
+                                fillMode:Image.PreserveAspectFit
+                                source:"icons/check.svg"
+                                visible:controller?controller.vimKeysToggle:false
+                                layer.enabled:true
+                                layer.effect: MultiEffect{
+                                    colorization: 1.0
+                                    colorizationColor: root.palette.text
                                 }
                             }
-                            onCheckedChanged: {
-                                if(controller){
-                                    if(checked){
-                                        vimKeysToggleIndicatorIcon.visible=true
-                                    }else{
-                                        vimKeysToggleIndicatorIcon.visible=false
-                                    }
-                                    controller.setVimKeysToggle(checked)
+                        }
+                        onCheckedChanged: {
+                            if(controller){
+                                if(checked){
+                                    vimKeysToggleIndicatorIcon.visible=true
+                                }else{
+                                    vimKeysToggleIndicatorIcon.visible=false
                                 }
+                                controller.setVimKeysToggle(checked)
                             }
                         }
                     }
