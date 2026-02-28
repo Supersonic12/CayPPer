@@ -20,6 +20,12 @@ void kdechanger::change(std::filesystem::path path,std::vector<std::string> sele
     sdbus::InterfaceName interf("org.kde.PlasmaShell");
     sdbus::MethodName scriptEv("evaluateScript");
     std::string jsScript=loadScript("script.js");
+    /* CAUTION for now i hardcode path of script js and when js file copied
+     *          to that path manually it works like a charm
+     *          i should make it that cmake automatically puts js
+     *          file to the place i want
+     *          /usr/share/applications/caypper/script.js might be the path i would use
+     *          /usr/share/caypper/script.js  also is possible  */
     jsScript+="\napply("+givenVars.dump()+");";
     proxy->callMethod(scriptEv).onInterface(interf).withArguments(jsScript);
 }
