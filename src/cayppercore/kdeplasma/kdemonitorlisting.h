@@ -1,5 +1,6 @@
 #ifndef KDEMONITORLISTING_H
 #define KDEMONITORLISTING_H
+
 #include <vector>
 #include <string>
 class kdemonitorlisting
@@ -9,6 +10,10 @@ public:
     struct Monitor{
         int id;
         std::string name;
+        bool operator==(const Monitor&other) const
+        {
+            return id==other.id && name==other.name;
+        }
     };
 
     std::vector<Monitor> getMonitorList() const;

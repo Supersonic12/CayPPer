@@ -87,7 +87,6 @@ std::vector<std::string> MonitorLister::getMonitor(EnvVarDetector::Compositor co
             nullptr,
             argv,
             environ);
-        posix_spawn_file_actions_destroy(&w_actions);
         close(pipefd[1]);
         if(status!=0){
             std::cerr<<"posix spawn failed in X: "<<strerror(status)<<"\n";

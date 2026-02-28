@@ -18,7 +18,8 @@ add_library(cayppercore STATIC
 )
 target_link_libraries(cayppercore
     PRIVATE
-    SDBusCpp::sdbus-c++)
+    SDBusCpp::sdbus-c++
+    plasmawallchanger)
 target_include_directories(cayppercore
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}

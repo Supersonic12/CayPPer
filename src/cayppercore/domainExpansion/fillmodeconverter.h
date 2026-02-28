@@ -59,6 +59,8 @@ inline int fromKDEModetoInt(FillModeKDE mode){
     case FillModeKDE::Stretch:      return 2;
     case FillModeKDE::Tile:         return 3;
     case FillModeKDE::Zoom:         return 4;
+    default:
+        return 4;
     }
 }
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
