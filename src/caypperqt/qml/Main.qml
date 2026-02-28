@@ -308,8 +308,7 @@ ApplicationWindow {
                     height:32
                     //Did it like this because it was giving error everytime closing application
                     //need to find better solution if exists
-                    model: controller ? controller.getModes : []
-
+                    model:[]
                     background: Rectangle{
                         id:fillModeBoxRect
                         border.width: 1
@@ -333,6 +332,7 @@ ApplicationWindow {
                         }
                     }
                     Component.onCompleted: {
+                        model=controller.getModes
                         if(controller){
                             controller.setSelectedMode(currentText)
                         }

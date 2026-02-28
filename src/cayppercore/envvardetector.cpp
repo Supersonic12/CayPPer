@@ -30,22 +30,23 @@ bool EnvVarDetector::xdgContains(const std::string &token){
     return false;
 }
 EnvVarDetector::Compositor EnvVarDetector::getCompositor(){
-    const char * compositorName;
     if(std::getenv("HYPRLAND_INSTANCE_SIGNATURE")){
         return Compositor::Hyprland;
     }
     else if(std::getenv("SWAYSOCK")){
         return Compositor::Sway;
-    }else if(xdgContains("KDE")){
+    }
+    else if(xdgContains("kde")){
         return Compositor::KDE;
-    }else if(xdgContains("GNOME")){
+    }
+    else if(xdgContains("gnome")){
         return Compositor::GNOME;
-    }else if(xdgContains("XFCE")){
+    }
+    else if(xdgContains("xfce")){
         return Compositor::XFCE;
-    }else if(isX11()){
+    }
+    else{
         return Compositor::X11;
-    }else{
-        return Compositor::Unknown;
     }
 };
 
