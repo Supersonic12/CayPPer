@@ -17,3 +17,13 @@ qt_standard_project_setup(REQUIRES 6.8)
 add_subdirectory(src/cayppercore)
 add_subdirectory(src/caypperqt)
 add_subdirectory(src/caypperwx)
+
+option(ENABLE_KDE "KDE wayland backend for KDE environment" ON)
+if(ENABLE_KDE)
+    add_subdirectory(src/cayppercore/kdeplasma/)
+    target_link_libraries(cayppercore
+    PRIVATE
+    plasmawallchanger
+)
+endif()
+include(GNUInstallDirs)

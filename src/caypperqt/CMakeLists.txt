@@ -1,11 +1,11 @@
 find_package(Qt6 REQUIRED COMPONENTS Core Quick QuickControls2)
-
-qt_add_executable(CayPPerbin
-    cpp/main.cpp
-)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+qt_add_executable(CayPPerbin
+    cpp/main.cpp
+)
+
 
 qt_add_qml_module(CayPPerbin
     URI CayPPer

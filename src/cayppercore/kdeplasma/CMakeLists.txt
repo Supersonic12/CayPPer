@@ -2,7 +2,7 @@
 find_package(sdbus-c++ REQUIRED)
 find_package(nlohmann_json REQUIRED)
 add_library(
-	plasmawallchanger STATIC
+	plasmawallchanger SHARED
 	kdechanger.h
 	kdechanger.cpp
 	kdemonitorlisting.h

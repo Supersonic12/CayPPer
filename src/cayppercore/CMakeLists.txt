@@ -1,6 +1,6 @@
 find_package(sdbus-c++ REQUIRED)
 
-add_library(cayppercore STATIC
+add_library(cayppercore SHARED
     directorylister.cpp
     directorylister.h
     changer.cpp
@@ -18,10 +18,10 @@ add_library(cayppercore STATIC
 )
 target_link_libraries(cayppercore
     PRIVATE
-    SDBusCpp::sdbus-c++
-    plasmawallchanger)
+    SDBusCpp::sdbus-c++)
+
 target_include_directories(cayppercore
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
-add_subdirectory(kdeplasma/)
+
