@@ -1,12 +1,13 @@
 #include "coreservice.h"
-#include "domainExpansion/fillmodeconverter.h"
 #include <sys/inotify.h>
 #include <unistd.h>
 #include <cstring>
+#include "backends/changerFactory.h"
 coreService::coreService() :
     isWayland_(envvardetector_.isWayland()),
     compositor_(envvardetector_.getCompositor())
 {
+    changer_=ChangerFactory::create(compositor_,isWayland_);
 }
 
 bool coreService::isWayland() const{
@@ -20,51 +21,11 @@ std::vector<std::string> coreService::monitors() const{
     return monitorlister_.getMonitor(compositor_);
 }
 
-void coreService::setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillMode){
-    if(!isWayland_){
-        //if X11 XFCE
-        if(compositor_==EnvVarDetector::Compositor::XFCE){
-            auto mode=mapToXFCE(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runXFCE(wallPath,selectedMonitors,*mode);
-        }
-        //default
-        else{
-            auto mode=mapToXWall(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runXWallpaper(wallPath,selectedMonitors,*mode);
-        }
-
+void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
+    if(!changer_){
+        return;
     }
-    else{
-        //if HYPRLAND
-        if(compositor_==EnvVarDetector::Compositor::Hyprland){
-            auto mode=mapToHyprland(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runHyprland(wallPath,selectedMonitors,*mode);
-        }
-        //if SWAY
-        else if(compositor_==EnvVarDetector::Compositor::Sway){
-            auto mode=mapToSway(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runSway(wallPath,selectedMonitors,*mode);
-        }
-        else if(compositor_==EnvVarDetector::Compositor::KDE){
-            auto mode=mapToKDE(fillMode);
-            if(!mode){
-                return;
-            }
-            changer_.runKDE(wallPath,selectedMonitors,*mode);
-        }
-    }
+    changer_->setWallpaper(path,selectedMonitors,fillMode);
 }
 
 std::vector<FillMode> coreService::supportedModes() const{

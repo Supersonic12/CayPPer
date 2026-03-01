@@ -1,4 +1,3 @@
-
 find_package(sdbus-c++ REQUIRED)
 find_package(nlohmann_json REQUIRED)
 add_library(

@@ -10,9 +10,9 @@
 
 #include "envvardetector.h"
 #include "monitorlister.h"
-#include "changer.h"
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
+#include "IChanger.h"
 class coreService
 {
 public:
@@ -32,7 +32,6 @@ private:
     EnvVarDetector envvardetector_;
     MonitorLister monitorlister_;
     directoryLister directorylister_;
-    Changer changer_;
     bool isWayland_;
     EnvVarDetector::Compositor compositor_;
     void notifyDirectoryChanged();
@@ -43,6 +42,9 @@ private:
     int watchDescriptor_{-1};
     std::thread watcherThread_;
     std::atomic<bool> running_{false};
+
+    //polymorphic pointer for linking backends to core service
+    std::unique_ptr<IChanger> changer_;
 };
 
 #endif // CORESERVICE_H

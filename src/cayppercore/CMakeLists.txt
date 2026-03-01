@@ -1,10 +1,6 @@
-find_package(sdbus-c++ REQUIRED)
-
 add_library(cayppercore SHARED
     directorylister.cpp
     directorylister.h
-    changer.cpp
-    changer.h
     envvardetector.cpp
     envvardetector.h
     monitorlister.h
@@ -13,12 +9,11 @@ add_library(cayppercore SHARED
     coreservice.cpp
     domainExpansion/fillmode.h
     domainExpansion/fillmodeconverter.h
-    xfce/xfcechanger.h xfce/xfcechanger.cpp
     domainExpansion/jsscriptloader.h
+    IChanger.h
+    backends/changerFactory.cpp
+    backends/changerFactory.h
 )
-target_link_libraries(cayppercore
-    PRIVATE
-    SDBusCpp::sdbus-c++)
 
 target_include_directories(cayppercore
     PUBLIC

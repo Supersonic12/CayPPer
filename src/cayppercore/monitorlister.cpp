@@ -5,7 +5,7 @@
 #include<regex>
 #include<cstring>
 #include<iostream>
-#include "kdeplasma/kdemonitorlisting.h"
+#include "backends/kdeplasma/kdemonitorlisting.h"
 MonitorLister::MonitorLister() {}
 extern char **environ;
 std::vector<std::string> MonitorLister::getMonitor(EnvVarDetector::Compositor compositor) const{
