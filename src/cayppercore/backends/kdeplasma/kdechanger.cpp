@@ -5,6 +5,10 @@
 using json = nlohmann::json;
 
 void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode){
+    if(selectedMonitors.empty()){
+        std::cerr<<"No Monitor Checked, Check at least one!\n";
+        return;
+    }
     int int_mode;
     if(auto mapped=mapToKDE(fillMode)){
         int_mode=fromKDEModetoInt(*mapped);
