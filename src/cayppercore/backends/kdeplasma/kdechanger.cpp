@@ -37,7 +37,7 @@ void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string
     sdbus::InterfaceName interf("org.kde.PlasmaShell");
     sdbus::MethodName scriptEv("evaluateScript");
 
-    std::string jsScript=loadScript("script.js");
+    std::string jsScript=loadScript(getJSPATH());
     /* CAUTION for now i hardcode path of script js and when js file copied
      *          to that path manually it works like a charm
      *          i should make it that cmake automatically puts js
