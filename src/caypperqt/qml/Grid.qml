@@ -23,7 +23,7 @@
             height:delegateRect.width/16*9
             color:"transparent"
             border.width: GridView.isCurrentItem ?3:0
-            border.color: GridView.isCurrentItem ? wallpaperGridRoot.palette.mid : "transparent"
+            border.color: GridView.isCurrentItem ? wallpaperGridRoot.palette.highlight : "transparent"
             z:GridView.isCurrentItem ? 1:0
             Image{
                 id:delegateImage
