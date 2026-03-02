@@ -6,7 +6,6 @@ add_library(
 	kdechanger.cpp
 	kdemonitorlisting.h
 	kdemonitorlisting.cpp
-	script.js
 )
 target_link_libraries(plasmawallchanger
 	PRIVATE

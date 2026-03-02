@@ -3,7 +3,7 @@
 #include <sdbus-c++/sdbus-c++.h>
 #include <../../domainExpansion/jsscriptloader.h>
 using json = nlohmann::json;
-std::string getJSPATH(){
+std::string KDEChanger::getJSPATH(){
     if(std::filesystem::exists(JS_TEMPLATE_PATH)){
         return JS_TEMPLATE_PATH;
     }
