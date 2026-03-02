@@ -3,7 +3,12 @@
 #include <sdbus-c++/sdbus-c++.h>
 #include <../../domainExpansion/jsscriptloader.h>
 using json = nlohmann::json;
-
+std::string getJSPATH(){
+    if(std::filesystem::exists(JS_TEMPLATE_PATH)){
+        return JS_TEMPLATE_PATH;
+    }
+    return "./script.js";
+}
 void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode){
     if(selectedMonitors.empty()){
         std::cerr<<"No Monitor Checked, Check at least one!\n";
@@ -31,6 +36,7 @@ void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string
     auto proxy=sdbus::createProxy(*connection,destination,objPath);
     sdbus::InterfaceName interf("org.kde.PlasmaShell");
     sdbus::MethodName scriptEv("evaluateScript");
+
     std::string jsScript=loadScript("script.js");
     /* CAUTION for now i hardcode path of script js and when js file copied
      *          to that path manually it works like a charm
@@ -58,7 +64,7 @@ void KDEChanger::setWallpaperAll(std::filesystem::path path,FillMode fillMode){
     auto proxy = sdbus::createProxy(*connection,destination,objpath);
     sdbus::InterfaceName interf("org.kde.PlasmaShell");
     sdbus::MethodName scriptEvAll("evaluateScript");
-    std::string jsScript=loadScript("script.js");
+    std::string jsScript=loadScript(getJSPATH());
     jsScript+="\napplyAll("+givenVars.dump()+")";
     proxy->callMethod(scriptEvAll).onInterface(interf).withArguments(jsScript);
 }

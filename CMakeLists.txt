@@ -30,7 +30,8 @@ if(KDE_BACKEND)
         PRIVATE
         plasmawallchanger
     )
-target_compile_definitions(cayppercore PRIVATE KDE_BACKEND)
+
+target_compile_definitions(cayppercore PRIVATE KDE_BACKEND) 
 endif()
 if(XFCE_BACKEND)
     add_subdirectory(src/cayppercore/backends/xfce/)
