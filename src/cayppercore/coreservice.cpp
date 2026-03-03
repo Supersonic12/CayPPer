@@ -74,6 +74,15 @@ std::vector<FillMode> coreService::supportedModes() const{
             FillMode::TileHorizontally,
             FillMode::TileVertically
         };
+    }else if(compositor_==EnvVarDetector::Compositor::GNOME){
+        return{
+            FillMode::Center,
+            FillMode::Scaled,
+            FillMode::Stretch,
+            FillMode::Tile,
+            FillMode::Zoom,
+            FillMode::Spanning_Screens
+        };
     }
     else{
         return{};

@@ -56,5 +56,13 @@ enum class FillModeKDE{
     TileVertically,
     TileHorizontally,
 };
+enum class FillModeGNOME{
+    Center,
+    Tile,
+    Scaled,
+    Stretch,
+    Zoom,
+    Spanning_Screens
+};
 
 #endif // FILLMODE_H

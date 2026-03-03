@@ -13,6 +13,7 @@ add_library(cayppercore SHARED
     IChanger.h
     backends/changerFactory.cpp
     backends/changerFactory.h
+    domainExpansion/raiiguard.h
 )
 
 target_include_directories(cayppercore

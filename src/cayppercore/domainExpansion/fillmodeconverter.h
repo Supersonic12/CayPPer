@@ -67,6 +67,16 @@ inline int fromKDEModetoInt(FillModeKDE mode){
         return 4;
     }
 }
+inline std::string fromGNOMEModetoString(FillModeGNOME mode){
+    switch(mode){
+    case FillModeGNOME::Center: return "centered";
+    case FillModeGNOME::Scaled: return "scaled";
+    case FillModeGNOME::Tile:   return "wallpaper";
+    case FillModeGNOME::Stretch:return "stretched";
+    case FillModeGNOME::Spanning_Screens:return "spanned";
+    default:    return "zoom";
+    }
+}
 inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
     switch(mode){
     case FillMode::Center:          return FillModeXWall::Center;
@@ -127,6 +137,19 @@ inline std::optional<FillModeKDE>   mapToKDE(FillMode mode){
     case FillMode::TileHorizontally:return FillModeKDE::TileHorizontally;
     default:
         std::cerr<<"Unsupported KDE fill mode\n";
+        return std::nullopt;
+    }
+}
+inline std::optional<FillModeGNOME> mapToGNOME(FillMode mode){
+    switch(mode){
+    case FillMode::Center:      return FillModeGNOME::Center;
+    case FillMode::Scaled:      return FillModeGNOME::Scaled;
+    case FillMode::Spanning_Screens: return FillModeGNOME::Spanning_Screens;
+    case FillMode::Tile:        return FillModeGNOME::Tile;
+    case FillMode::Stretch:     return FillModeGNOME::Stretch;
+    case FillMode::Zoom:        return FillModeGNOME::Zoom;
+    default:
+        std::cerr<<"Unsupported GNOME fill mode\n";
         return std::nullopt;
     }
 }
