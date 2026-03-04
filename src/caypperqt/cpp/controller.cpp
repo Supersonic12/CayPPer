@@ -145,7 +145,11 @@ void Controller::setWallpaper(QString q_index){
         selectedMonitorsVector.push_back(monitor.toStdString());
     }
     //call core service
-    core_.setWallpaper(wallpaper,selectedMonitorsVector,fillmode);
+    try{
+        core_.setWallpaper(wallpaper,selectedMonitorsVector,fillmode);
+    }catch(std::runtime_error &e){
+        std::cerr<<"setWallpaper in core failed with this cause:\n->"<<e.what()<<"\n";
+    }
 }
 
 void Controller::setSelectedMonitors(const bool ischecked, const QString selectedmonitor){

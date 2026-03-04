@@ -23,70 +23,20 @@ std::vector<std::string> coreService::monitors() const{
 
 void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
     if(!changer_){
-        return;
+        throw std::runtime_error(
+            std::string("Changer object doesnt exist!\n")
+            );
     }
     changer_->setWallpaper(path,selectedMonitors,fillMode);
 }
 
 std::vector<FillMode> coreService::supportedModes() const{
-    if(!isWayland_){
-        if(compositor_==EnvVarDetector::Compositor::XFCE){
-            return{
-                FillMode::Center,
-                FillMode::Scaled,
-                FillMode::Stretch,
-                FillMode::Zoom,
-                FillMode::Spanning_Screens
-            };
-        }
-        else{
-            return{
-                FillMode::Center,
-                FillMode::Focus,
-                FillMode::Maximize,
-                FillMode::Stretch,
-                FillMode::Tile,
-                FillMode::Zoom
-            };
-        }
-    }else if(compositor_==EnvVarDetector::Compositor::Hyprland) {
-        return{
-            FillMode::Contain,
-            FillMode::Cover,
-            FillMode::Fill,
-            FillMode::Tile
-        };
-    }else if(compositor_==EnvVarDetector::Compositor::Sway){
-        return{
-            FillMode::Center,
-            FillMode::Fill,
-            FillMode::Fit,
-            FillMode::Stretch,
-            FillMode::Tile
-        };
-    }else if(compositor_==EnvVarDetector::Compositor::KDE){
-        return{
-            FillMode::Center,
-            FillMode::Scaled,
-            FillMode::ScaledCropped,
-            FillMode::ScaledKeepAspect,
-            FillMode::Tile,
-            FillMode::TileHorizontally,
-            FillMode::TileVertically
-        };
-    }else if(compositor_==EnvVarDetector::Compositor::GNOME){
-        return{
-            FillMode::Center,
-            FillMode::Scaled,
-            FillMode::Stretch,
-            FillMode::Tile,
-            FillMode::Zoom,
-            FillMode::Spanning_Screens
-        };
+    if(!changer_){
+        throw std::runtime_error(
+            std::string("Changer object doesnt exist!\n")
+            );
     }
-    else{
-        return{};
-    }
+    return changer_->supportedModes();
 }
 
 const std::vector<std::filesystem::path> coreService::listDirectory(std::filesystem::path stdpath){

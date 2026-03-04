@@ -22,3 +22,11 @@ void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
         }
     }
 }
+std::vector<FillMode> HyprChanger::supportedModes() const{
+    return{
+        FillMode::Contain,
+        FillMode::Cover,
+        FillMode::Fill,
+        FillMode::Tile
+    };
+}

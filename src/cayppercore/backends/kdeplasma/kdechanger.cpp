@@ -68,3 +68,14 @@ void KDEChanger::setWallpaperAll(std::filesystem::path path,FillMode fillMode){
     jsScript+="\napplyAll("+givenVars.dump()+")";
     proxy->callMethod(scriptEvAll).onInterface(interf).withArguments(jsScript);
 }
+std::vector<FillMode> KDEChanger::supportedModes() const{
+    return{
+        FillMode::Center,
+        FillMode::Scaled,
+        FillMode::ScaledCropped,
+        FillMode::ScaledKeepAspect,
+        FillMode::Tile,
+        FillMode::TileHorizontally,
+        FillMode::TileVertically
+    };
+}

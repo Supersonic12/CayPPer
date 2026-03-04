@@ -41,7 +41,7 @@ bool GNOMEChanger::isDarkMode(){
     write_guard.release();
     if(status !=0){
         throw std::runtime_error(
-            std::string("posix_spawn failed")+strerror(status));
+            std::string("posix_spawn failed")+strerror(status)+std::string("\n"));
     }
     std::string output;
     char buffer[4096];
@@ -52,55 +52,112 @@ bool GNOMEChanger::isDarkMode(){
     int wstatus;
     waitpid(pid,&wstatus,0);
     if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)!=0){
-        throw std::runtime_error("waitpid failed");
+        throw std::runtime_error("Waitpid failed during getting system color-scheme.\n");
     }
     return output.find("dark")!=std::string::npos;
 }
 void GNOMEChanger::setWallpaperAll(std::filesystem::path path, FillMode fillMode){
 
-
+    if(path.empty()){
+        throw std::runtime_error(std::string("GNOMEChanger::setWallpaperAll has got empty path\n"));
+    }
     pid_t pid;
     std::string str_path=std::string("file://")+std::string(path);
     int status;
-    if(isDarkMode()){
-        char *argv[]={
-            (char*)"gsettings",
-            (char*)"set",
-            (char*)"org.gnome.desktop.background",
-            (char*)"picture-uri-dark",
-            const_cast<char*>(str_path.c_str()),
-            nullptr
-        };
-        status = posix_spawnp(
-            &pid,
-            "gsettings",
-            nullptr,
-            nullptr,
-            argv,
-            environ
-            );
-    }else{
-        char *argv[]={
-            (char*)"gsettings",
-            (char*)"set",
-            (char*)"org.gnome.desktop.background",
-            (char*)"picture-uri",
-            const_cast<char*>(str_path.c_str()),
-            nullptr
-        };
-        status = posix_spawnp(
-            &pid,
-            "gsettings",
-            nullptr,
-            nullptr,
-            argv,
-            environ
-            );
-    }
+    //if(isDarkMode()){
+    char *argv1[]={
+        (char*)"gsettings",
+        (char*)"set",
+        (char*)"org.gnome.desktop.background",
+        (char*)"picture-uri-dark",
+        const_cast<char*>(str_path.c_str()),
+        nullptr
+    };
+    status = posix_spawnp(
+        &pid,
+        "gsettings",
+        nullptr,
+        nullptr,
+        argv1,
+        environ
+        );
     if(status!=0){
         throw std::runtime_error(
-            std::string("posix spawn failed:")+strerror(status));
+            std::string("posix spawn failed:")+strerror(status)+std::string("\n"));
     }
-    waitpid(pid,nullptr,0);
+    int wstatus;
+    waitpid(pid,&wstatus,0);
+    if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+        throw std::runtime_error(std::string("ERROR: waitpid failed during setting wallpaper in dark mode\n"));
+    }
+    //}else{
+    char *argv2[]={
+        (char*)"gsettings",
+        (char*)"set",
+        (char*)"org.gnome.desktop.background",
+        (char*)"picture-uri",
+        const_cast<char*>(str_path.c_str()),
+        nullptr
+    };
+    status = posix_spawnp(
+        &pid,
+        "gsettings",
+        nullptr,
+        nullptr,
+        argv2,
+        environ
+        );
+    //}
+    if(status!=0){
+        throw std::runtime_error(
+            std::string("posix spawn failed:")+strerror(status)+std::string("\n"));
+    }
+    waitpid(pid,&wstatus,0);
+    if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+        throw std::runtime_error(std::string("ERROR: waitpid failed during setting wallpaper in light mode\n"));
+    }
+    std::string str_mode;
+    if(auto mapped=mapToGNOME(fillMode)){
+        str_mode=fromGNOMEModetoString(*mapped);
+    }
+    else{
+        throw std::runtime_error(std::string("ERROR: mapToGNOME function returned nullopt\n"));
+    }
+
+    char *argv3[]={
+        (char *)"gsettings",
+        (char *)"set",
+        (char *)"org.gnome.desktop.background",
+        (char *)"picture-options",
+        const_cast<char *>(str_mode.c_str()),
+        nullptr
+    };
+
+    status=posix_spawnp(
+        &pid,
+        "gsettings",
+        nullptr,
+        nullptr,
+        argv3,
+        environ
+        );
+    if(status!=0){
+        throw std::runtime_error(std::string("Setting fillMode failed: ")+strerror(status));
+    }
+    waitpid(pid,&wstatus,0);
+    if(!WIFEXITED(wstatus)|| WEXITSTATUS(wstatus)){
+        throw std::runtime_error(std::string("ERROR: waitpid failed during setting fillMode\n"));
+    }
 
 }
+std::vector<FillMode> GNOMEChanger::supportedModes() const{
+    return{
+        FillMode::Center,
+        FillMode::Scaled,
+        FillMode::Stretch,
+        FillMode::Tile,
+        FillMode::Zoom,
+        FillMode::Spanning_Screens
+    };
+}
+

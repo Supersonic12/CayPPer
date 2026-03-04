@@ -33,7 +33,6 @@ ChangerFactory::create(EnvVarDetector::Compositor compositor, bool isWayland){
         switch(compositor){
 
 #ifdef HYPRLAND_BACKEND
-
         case EnvVarDetector::Compositor::Hyprland:  return std::make_unique<HyprChanger>();
 #endif
 #ifdef KDE_BACKEND

@@ -23,3 +23,13 @@ void XChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> 
         //std::cout<<"runXwallpaper applies to this monitors:"<<monitor<<";\n";
     }
 }
+std::vector<FillMode> XChanger::supportedModes() const{
+    return {
+            FillMode::Center,
+            FillMode::Focus,
+            FillMode::Maximize,
+            FillMode::Stretch,
+            FillMode::Tile,
+            FillMode::Zoom
+    };
+}

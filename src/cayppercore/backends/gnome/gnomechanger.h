@@ -7,6 +7,7 @@ class GNOMEChanger:public IChanger{
     void setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode) override;
     void setWallpaperAll(std::filesystem::path path,FillMode fillMode);
     bool isDarkMode();
+    std::vector<FillMode> supportedModes() const override;
 };
 
 #endif

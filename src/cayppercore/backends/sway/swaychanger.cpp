@@ -16,3 +16,12 @@ void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
         }
     }
 }
+std::vector<FillMode> swayChanger::supportedModes() const{
+    return{
+        FillMode::Center,
+        FillMode::Fill,
+        FillMode::Fit,
+        FillMode::Stretch,
+        FillMode::Tile
+    };
+}

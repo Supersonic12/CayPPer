@@ -27,3 +27,12 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
         }
     }
 }
+std::vector<FillMode> XFCEChanger::supportedModes() const{
+    return{
+            FillMode::Center,
+            FillMode::Scaled,
+            FillMode::Stretch,
+            FillMode::Zoom,
+            FillMode::Spanning_Screens
+    };
+}

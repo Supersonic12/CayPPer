@@ -10,7 +10,7 @@ class IChanger {
 public:
     virtual ~IChanger()=default;
     virtual void setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode)=0;
-    // virtual void setWallpaperAll(std::filesystem::path, FillMode fillMode)=0;
+    virtual std::vector<FillMode> supportedModes() const=0;
 };
 
 #endif // ICHANGER_H
