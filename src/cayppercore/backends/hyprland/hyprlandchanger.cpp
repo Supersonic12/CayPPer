@@ -3,15 +3,14 @@
 #include <spawn.h>
 #include <sys/wait.h>
 #include <cstring>
+extern char **environ;
 void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors, FillMode fillMode){
     if(selectedMonitors.empty()){
-        std::cerr<<"no Monitor Checked, check at least one\n";
-        return;
+        throw std::runtime_error(std::string("Warning: No Monitor Checked, Check At Least One!"));
     }
     auto mapped= mapToHyprland(fillMode);
     if(!mapped){
-        std::cerr<<"Unsupported Hyprland fillmode!\n";
-        return;
+        throw std::runtime_error(std::string("ERROR: mapToHyprland failed"));
     }
     pid_t pid;
     int status;
@@ -19,8 +18,6 @@ void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
     std::string str_mode = fromHyprModetoString(*mapped);
     std::string str_path = path.string();
     for(auto &monitor:selectedMonitors){
-        //std::string cmd="hyprctl hyprpaper wallpaper '" + monitor + "," + path.string() + "," + str_mode + "'";
-        //int status = std::system(cmd.c_str());
         std::string argument="'"+monitor+","+str_path+","+str_mode+"'";
         char* argv[]{
             (char*) "hyprctl",
@@ -40,13 +37,11 @@ void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
         if(status != 0){
             throw std::runtime_error(std::string("ERROR: calling hyprpaper failed\n\t: ")+strerror(status));
         }
-        waitpid(pid,&wstatus,0);
+        if(waitpid(pid,&wstatus,0)==-1){
+            throw std::runtime_error(std::string("ERROR: waitpid failed while setting wallpaper and fillMode to monitor: "+monitor));
+        }
         if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
-            throw std::runtime_error(
-                std::string(
-                    "ERROR: waitpid failed when setting wallpaper in monitor:"+
-                    monitor)
-                );
+            throw std::runtime_error(std::string("ERROR: hyprctl hyprpaper failed while setting wallpaper and fillMode"));
         }
     }
 }

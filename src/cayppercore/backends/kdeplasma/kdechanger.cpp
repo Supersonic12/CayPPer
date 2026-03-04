@@ -11,15 +11,13 @@ std::string KDEChanger::getJSPATH(){
 }
 void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode){
     if(selectedMonitors.empty()){
-        std::cerr<<"No Monitor Checked, Check at least one!\n";
-        return;
+        throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }
     int int_mode;
     if(auto mapped=mapToKDE(fillMode)){
         int_mode=fromKDEModetoInt(*mapped);
     }else{
-        std::cerr<<"Unsupported KDE fillMode!\n";
-        return;
+        throw std::runtime_error(std::string("ERROR: mapToKDE failed, Unsupported fill mode"));
     }
 
     std::vector<int> intVectorMon;
@@ -52,8 +50,7 @@ void KDEChanger::setWallpaperAll(std::filesystem::path path,FillMode fillMode){
     if(auto mapped=mapToKDE(fillMode)){
         int_mode=fromKDEModetoInt(*mapped);
     }else{
-        std::cerr<<"Unsupported KDE fillMode!\n";
-        return;
+        throw std::runtime_error(std::string("ERROR: mapToKDE failed, Unsupported fill mode"));
     }
     json givenVars;
     givenVars["wallpaperPath"]="file://"+path.string();

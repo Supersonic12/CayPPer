@@ -6,8 +6,7 @@ void XChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> 
     std::string str_mode;
 
     if(selectedMonitors.empty()){
-        std::cerr<<"no Monitor Checked, check at least one\n";
-        return;
+        throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }
     if(auto mapped=mapToXWall(fillMode)){
         str_mode=fromXWallModetoString(*mapped);
@@ -19,10 +18,12 @@ void XChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> 
     pid_t pid;
 
     for(const auto& monitor:selectedMonitors){
-        std::string argument="--output '"+monitor+"' "+str_mode+ " '" +path.string()+"'";
         char * argv[]={
             (char*)"xwallpaper",
-            const_cast<char*>(argument.c_str()),
+            (char*)"--output",
+            const_cast<char*>(monitor.c_str()),
+            const_cast<char*>(str_mode.c_str()),
+            const_cast<char*>(path.c_str()),
             nullptr
         };
         status=posix_spawnp(
@@ -44,9 +45,12 @@ void XChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> 
                         )
                     );
         }
-        waitpid(pid,&wstatus,0);
-        if(!WIFEXITED(wstatus)|| WEXITSTATUS(wstatus)){
-            throw std::runtime_error(std::string("ERROR: waitpid failed in XChanger::setWallpaper"));
+
+        if(waitpid(pid,&wstatus,0)==-1){
+            throw std::runtime_error(std::string("ERROR: waitpid failed while setting wallpaper to monitor: "+monitor));
+        }
+        if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+            throw std::runtime_error(std::string("ERROR: calling xwallpaper failed"));
         }
     }
 }

@@ -5,24 +5,31 @@
 extern char **environ;
 void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> monitors,FillMode fillMode){
     if(monitors.empty()){
-        std::cerr<<"no Monitor Checked, check at least one\n";
-        return;
+        throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }
     std::string str_mode;
     if(auto mapped=mapToXFCE(fillMode)){
         str_mode=fromXFCEModetoString(*mapped);
     }
     else{
-        throw std::runtime_error(std::string("ERROR:mapToXFCE return nullopt.\n"));
+        throw std::runtime_error(std::string("ERROR: mapToXFCE failed, Unsupported fill mode"));
     }
     int status,wstatus;
     pid_t pid;
-
+    std::string str_path=path.string();
     for(auto &monitor:monitors){
-        std::string argument="-c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/last-image -n -t string -s '"+path.string()+"'";
+        std::string argument="/backdrop/screen0/monitor"+monitor+"/workspace0/last-image";
         char * argv[]{
             (char*)"xfconf-query",
+            (char*)"-c",
+            (char*)"xfce4-desktop",
+            (char*)"-p",
             const_cast<char*>(argument.c_str()),
+            (char*)"-n",
+            (char*)"-t",
+            (char*)"string",
+            (char*)"-s",
+            const_cast<char*>(str_path.c_str()),
             nullptr
         };
         status=posix_spawnp(
@@ -36,17 +43,27 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
         if(status!=0){
             throw std::runtime_error(std::string("ERROR: setting wallpaper failed with code: ")+strerror(status));
         }
-        waitpid(pid,&wstatus,0);
-        if(!WIFEXITED(status)||WEXITSTATUS(status)){
-            throw std::runtime_error(std::string("waitpid failed while setting wallpaper to monitor: "+monitor));
+        if(waitpid(pid,&wstatus,0)==-1){
+            throw std::runtime_error(std::string("ERROR: waitpid failed while setting wallpaper to monitor: "+monitor));
+        }
+        if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+            throw std::runtime_error(std::string("ERROR: xfconf-query failed while setting wallpaper"));
         }
     }
 
     for(auto &monitor:monitors){
-        std::string argument="-c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/image-style -n -t int -s "+str_mode;
+        std::string argument="-c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/image-style";
         char * argv[]{
             (char*)"xfconf-query",
+            (char*)"-c",
+            (char*)"xfce4-desktop",
+            (char*)"-p",
             const_cast<char*>(argument.c_str()),
+            (char*)"-n",
+            (char*)"-t",
+            (char*)"int",
+            (char*)"-s",
+            const_cast<char*>(str_mode.c_str()),
             nullptr
         };
         status=posix_spawnp(
@@ -60,9 +77,12 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
         if(status!=0){
             throw std::runtime_error(std::string("ERROR: setting fillMode failed with code: ")+strerror(status));
         }
-        waitpid(pid,&wstatus,0);
-        if(!WIFEXITED(status)||WEXITSTATUS(status)){
-            throw std::runtime_error(std::string("waitpid failed while setting fillMode to monitor: "+monitor));
+
+        if(waitpid(pid,&wstatus,0)==-1){
+            throw std::runtime_error(std::string("ERROR: waitpid failed while setting fillMode to monitor: "+monitor));
+        }
+        if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+            throw std::runtime_error(std::string("ERROR: xfconf-query failed while setting fillMode"));
         }
     }
 }
