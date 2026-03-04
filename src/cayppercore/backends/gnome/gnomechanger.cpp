@@ -5,7 +5,7 @@
 #include "../../domainExpansion/raiiguard.h"
 extern char **environ;
 void GNOMEChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode){
-
+    setWallpaperAll(path,fillMode);
 }
 bool GNOMEChanger::isDarkMode(){
     int pipefd[2];
