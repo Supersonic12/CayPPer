@@ -3,7 +3,6 @@
 #include <spawn.h>
 #include <sys/wait.h>
 #include <cstring>
-extern char **environ;
 void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors, FillMode fillMode){
     if(selectedMonitors.empty()){
         std::cerr<<"no Monitor Checked, check at least one\n";

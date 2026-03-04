@@ -3,7 +3,6 @@
 #include <cstring>
 #include <sys/wait.h>
 #include "../../domainExpansion/raiiguard.h"
-extern char **environ;
 void GNOMEChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode){
 
 }
