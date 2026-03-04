@@ -148,7 +148,7 @@ void Controller::setWallpaper(QString q_index){
     try{
         core_.setWallpaper(wallpaper,selectedMonitorsVector,fillmode);
     }catch(std::runtime_error &e){
-        std::cerr<<"setWallpaper in core failed with this cause: "<<e.what()<<"\n";
+        std::cerr<<"setWallpaper in Core Service failed with this cause: "<<e.what()<<"\n";
     }
 }
 
