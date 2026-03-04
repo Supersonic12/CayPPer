@@ -33,7 +33,7 @@ void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
             throw std::runtime_error(std::string("ERROR: swaybg couldn't called: ")+strerror(status));
         }
         waitpid(pid,&wstatus,0);
-        if(!WIFEXITED(status)||WEXITSTATUS(wstatus)){
+        if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
             throw std::runtime_error(std::string ("ERROR: waitpit failed in swaychanger::setWallpaper"));
         }
     }
