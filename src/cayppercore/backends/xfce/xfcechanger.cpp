@@ -16,6 +16,7 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
     }
     int status,wstatus;
     pid_t pid;
+
     std::string str_path=path.string();
     for(auto &monitor:monitors){
         std::string argument="/backdrop/screen0/monitor"+monitor+"/workspace0/last-image";
