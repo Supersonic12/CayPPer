@@ -13,5 +13,10 @@ public:
     virtual std::vector<FillMode> supportedModes() const=0;
 
 };
+class IMonitorDetect {
+public:
+    virtual ~IMonitorDetect()=default;
+    virtual std::vector<std::string> monitors() const=0;
+};
 
 #endif // ICHANGER_H

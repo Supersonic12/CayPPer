@@ -2,6 +2,7 @@
 #include <nlohmann/json.hpp>
 #include <sdbus-c++/sdbus-c++.h>
 #include <../../domainExpansion/jsscriptloader.h>
+#include "kdemonitorlisting.h"
 using json = nlohmann::json;
 std::string KDEChanger::getJSPATH(){
     if(std::filesystem::exists(JS_TEMPLATE_PATH)){
@@ -75,4 +76,13 @@ std::vector<FillMode> KDEChanger::supportedModes() const{
         FillMode::TileHorizontally,
         FillMode::TileVertically
     };
+}
+std::vector<std::string> KDEChanger::monitors() const{
+    kdemonitorlisting listing;
+    std::vector<int> ids= listing.getMonitorListIDs();
+    std::vector<std::string> str_ids;
+    for(int id: ids){
+        str_ids.push_back(std::to_string(id));
+    }
+    return str_ids;
 }
