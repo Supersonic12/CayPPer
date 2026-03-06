@@ -18,13 +18,17 @@ EnvVarDetector::Compositor coreService::compositor() const{
 }
 
 std::vector<std::string> coreService::monitors() const{
+    if(!backend_){
+        throw std::runtime_error(
+            std::string("ERROR: backend object doesn't exist."));
+    }
     return backend_->monitors();
 }
 
 void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
     if(!backend_){
         throw std::runtime_error(
-            std::string("Changer object doesnt exist!\n")
+            std::string("ERROR: backend object doesnt exist!\n")
             );
     }
     backend_->setWallpaper(path,selectedMonitors,fillMode);
@@ -33,7 +37,7 @@ void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<st
 std::vector<FillMode> coreService::supportedModes() const{
     if(!backend_){
         throw std::runtime_error(
-            std::string("Changer object doesnt exist!\n")
+            std::string("ERROR: backend object doesnt exist!\n")
             );
     }
     return backend_->supportedModes();

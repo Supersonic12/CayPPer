@@ -1,6 +1,5 @@
 #include <QUrl>
 #include "controller.h"
-//#include "directorylister.h"
 #include "domainExpansion/fillmodeconverter.h"
 #include <QDebug>
 #include <QString>
@@ -36,37 +35,21 @@ Controller::Controller(QObject *parent)
 //should be called by default
 void Controller::refreshAvailableModes(){
     availableModes_.clear();
-    // for(auto m: core_.supportedModes()){
-    //     switch(m){
-    //     case FillMode::Center:       availableModes_.append("Center");              break;
-    //     case FillMode::Contain:      availableModes_.append("Contain");             break;
-    //     case FillMode::Cover:        availableModes_.append("Cover");               break;
-    //     case FillMode::Fill:         availableModes_.append("Fill");                break;
-    //     case FillMode::Fit:          availableModes_.append("Fit");                 break;
-    //     case FillMode::Focus:        availableModes_.append("Focus");               break;
-    //     case FillMode::Maximize:     availableModes_.append("Maximize");            break;
-    //     case FillMode::Stretch:      availableModes_.append("Stretch");             break;
-    //     case FillMode::Tile:         availableModes_.append("Tile");                break;
-    //     case FillMode::Zoom:         availableModes_.append("Zoom");                break;
-    //     case FillMode::Scaled:       availableModes_.append("Scaled");              break;
-    //     case FillMode::Spanning_Screens: availableModes_.append("SpanningScreens"); break;
-    //     case FillMode::TileHorizontally: availableModes_.append("Tile(Horizontally)");break;
-    //     case FillMode::TileVertically:  availableModes_.append("Tile(Vertically)");  break;
-    //     case FillMode::ScaledCropped:   availableModes_.append("Scaled(Crop)"); break;
-    //     case FillMode::ScaledKeepAspect: availableModes_.append("Scaled(Keep Ratio)");break;
-    //     }
-    std::vector<std::string> vectorModes=supportedFillModes(core_.supportedModes());
+    std::vector<std::string> vectorModes=filterFillModes(core_.supportedModes());
     for(auto const& m: vectorModes){
         availableModes_.append(QString::fromStdString(m));
     }
-    // }
     emit modesChanged();
 }
 void Controller::refreshAvailableMonitors(){
     availableMonitors_.clear();
-    for(const auto& monitor:core_.monitors()){
-        availableMonitors_.append(QString::fromStdString(monitor));
+    try{
+        for(const auto& monitor:core_.monitors()){
+            availableMonitors_.append(QString::fromStdString(monitor));
+        }}catch(std::runtime_error &e){
+        std::cerr<<"ERROR: While getting connected monitors: "<<e.what();
     }
+
     emit monitorsChanged();
 }
 
@@ -81,10 +64,6 @@ QStringList Controller::getConnectedMonitors() const{
     return availableMonitors_;
 }
 
-
-
-
-//first this will be called by qml
 void Controller::setDirectoryPath(QString path){
     QUrl url=QUrl::fromUserInput(path);
     QString localPath;
@@ -95,13 +74,11 @@ void Controller::setDirectoryPath(QString path){
     else{
         localPath=path;
     }
-    //emit directoryPathChanged();
     if(localPath==directoryPath_){
         return;
     }
 
     directoryPath_=localPath;
-    //call of refreshDirectoryContent
     refreshDirectoryContent(localPath);
 
 }
@@ -141,13 +118,21 @@ void Controller::setWallpaper(QString q_index){
     //index is accepted as QString which we will need as INT
     int index=q_index.toInt();
     //create a full link to given index of directoryContent
-    QUrl url(directoryContent_.at(index));
-    //turn from QUrl to std::filesystem::path
-    std::filesystem::path wallpaper=(url.toLocalFile().toStdString());
-    //turn selectedMonitors_ QStringList to vector<string>
     std::vector<std::string> selectedMonitorsVector;
-    for(const auto& monitor:std::as_const(selectedMonitors_)){
-        selectedMonitorsVector.push_back(monitor.toStdString());
+    std::filesystem::path wallpaper;
+    if(index>=0 && index<directoryContent_.size()){
+        QUrl url(directoryContent_.at(index));
+
+        //turn from QUrl to std::filesystem::path
+        wallpaper=(url.toLocalFile().toStdString());
+        //turn selectedMonitors_ QStringList to vector<string>
+
+        for(const auto& monitor:std::as_const(selectedMonitors_)){
+            selectedMonitorsVector.push_back(monitor.toStdString());
+        }
+    }else{
+        std::cerr<<"Index out of boundary of directory content\n";
+        return;
     }
     //call core service
     try{
@@ -168,7 +153,7 @@ void Controller::setSelectedMonitors(const bool ischecked, const QString selecte
 void Controller::setImageModel(QStringList content){
     imagemodel_.setImages(content);
 }
-QAbstractListModel* Controller::getImageModel(){
+QAbstractListModel* Controller::getImageModel() {
     return &imagemodel_;
 }
 
@@ -183,7 +168,7 @@ void Controller::checkDirectory(){
 
 
 //settings controls
-QString Controller::configPath(){
+QString Controller::configPath() {
     configPath_=settings_.getValue("General/configPath","Unknown").toString();
     return configPath_;
 }

@@ -189,7 +189,7 @@ inline FillMode toFillMode(std::string mode){
         return FillMode::Zoom;
     }
 }
-inline std::vector<std::string> supportedFillModes(std::vector<FillMode> givenModes){
+inline std::vector<std::string> filterFillModes(std::vector<FillMode> givenModes){
     std::vector<std::string> returnModes;
     for(auto const& m:givenModes){
         switch(m){

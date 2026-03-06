@@ -46,9 +46,10 @@ public:
 
     QStringList getModes() const;
     QStringList getConnectedMonitors() const;
-    QAbstractListModel* getImageModel();
+    QAbstractListModel* getImageModel(); //Can't put const here, I will learn why then edit this part.
 
-
+    //here either can't put const
+    //this looks like getter function but it is just a qml property so I'm not sure what to do.
     QString configPath();
     Q_INVOKABLE void setConfigPath(QUrl path);
     QString defaultWallPath();
