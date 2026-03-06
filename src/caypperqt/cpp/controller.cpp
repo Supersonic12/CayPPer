@@ -86,7 +86,14 @@ void Controller::setDirectoryPath(QString path){
 void Controller::refreshDirectoryContent(QString path){
 
     //see what is inside new path
-    std::vector<std::filesystem::path> stdPath=core_.listDirectory(path.toStdString());
+    std::vector<std::filesystem::path> stdPath;
+    try{
+        stdPath=core_.listDirectory(path.toStdString());
+    }
+    catch(std::runtime_error &e){
+        std::cerr<<"ERROR: listing directory content failed: "<<e.what();
+    }
+
     //newList takes newPath's contents vector as QT list
     //IMPORTANT
     //I will need to change this to QAbstractList

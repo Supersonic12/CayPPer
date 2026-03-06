@@ -1,5 +1,4 @@
 #include "directorylister.h"
-#include<iostream>
 #include<algorithm>
 using namespace std;
     const std::vector<filesystem::path> directoryLister::listDirectory(filesystem::path dirPath)
@@ -7,8 +6,7 @@ using namespace std;
         // Checking existence of directory
         if (!filesystem::exists(dirPath))
         {
-            cerr << "NonExistent folder";
-            return {};
+            throw std::runtime_error(std::string("ERROR: Non-existent folder"));
         }
 
         // Array of files

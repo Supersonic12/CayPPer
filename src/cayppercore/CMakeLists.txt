@@ -3,8 +3,6 @@ add_library(cayppercore SHARED
     directorylister.h
     envvardetector.cpp
     envvardetector.h
-
-
     coreservice.h
     coreservice.cpp
     domainExpansion/fillmode.h
