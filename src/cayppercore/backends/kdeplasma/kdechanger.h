@@ -4,7 +4,7 @@
 #include <string>
 #include <filesystem>
 #include "../../IChanger.h"
-class KDEChanger : public IChanger,IMonitorDetect
+class KDEChanger : public IBackend
 {
 public:
     void setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode) override;

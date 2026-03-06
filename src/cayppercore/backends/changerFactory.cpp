@@ -17,7 +17,7 @@
 #ifdef SWAY_BACKEND
 #include "sway/swaychanger.h"
 #endif
-std::unique_ptr<IChanger>
+std::unique_ptr<IBackend>
 ChangerFactory::create(EnvVarDetector::Compositor compositor, bool isWayland){
     if(!isWayland){
         #ifdef XFCE_BACKEND

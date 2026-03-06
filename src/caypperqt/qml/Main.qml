@@ -121,6 +121,8 @@ ApplicationWindow {
                                 root.keyBuffer=""
                                 handled=true
                                 break
+                                case "wq":
+                                Qt.quit();
                             }
 
                         }

@@ -4,7 +4,7 @@
 #include <iostream>
 #include "fillmode.h"
 #include <optional>
-
+#include <vector>
 inline std::string fromSwayModetoString(FillModeSway mode)
 {
     switch(mode){
@@ -188,5 +188,29 @@ inline FillMode toFillMode(std::string mode){
     else{
         return FillMode::Zoom;
     }
+}
+inline std::vector<std::string> supportedFillModes(std::vector<FillMode> givenModes){
+    std::vector<std::string> returnModes;
+    for(auto const& m:givenModes){
+        switch(m){
+        case FillMode::Center:       returnModes.push_back("Center");              break;
+        case FillMode::Contain:      returnModes.push_back("Contain");             break;
+        case FillMode::Cover:        returnModes.push_back("Cover");               break;
+        case FillMode::Fill:         returnModes.push_back("Fill");                break;
+        case FillMode::Fit:          returnModes.push_back("Fit");                 break;
+        case FillMode::Focus:        returnModes.push_back("Focus");               break;
+        case FillMode::Maximize:     returnModes.push_back("Maximize");            break;
+        case FillMode::Stretch:      returnModes.push_back("Stretch");             break;
+        case FillMode::Tile:         returnModes.push_back("Tile");                break;
+        case FillMode::Zoom:         returnModes.push_back("Zoom");                break;
+        case FillMode::Scaled:       returnModes.push_back("Scaled");              break;
+        case FillMode::Spanning_Screens: returnModes.push_back("SpanningScreens"); break;
+        case FillMode::TileHorizontally: returnModes.push_back("Tile(Horizontally)");break;
+        case FillMode::TileVertically:  returnModes.push_back("Tile(Vertically)");  break;
+        case FillMode::ScaledCropped:   returnModes.push_back("Scaled(Crop)"); break;
+        case FillMode::ScaledKeepAspect: returnModes.push_back("Scaled(Keep Ratio)");break;
+        }
+    }
+    return returnModes;
 }
 #endif // FILLMODECONVERTER_H

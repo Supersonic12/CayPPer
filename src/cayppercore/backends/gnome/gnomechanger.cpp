@@ -7,6 +7,9 @@ extern char **environ;
 void GNOMEChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode){
     setWallpaperAll(path,fillMode);
 }
+std::vector<std::string> GNOMEChanger::monitors() const{
+    return{};
+}
 bool GNOMEChanger::isDarkMode(){
     int pipefd[2];
     if(pipe(pipefd)==-1){

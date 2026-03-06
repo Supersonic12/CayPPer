@@ -2,7 +2,7 @@
 #define SWAYCHANGER_H
 #include "../../IChanger.h"
 #include <unordered_map>
-class swayChanger : public IChanger,IMonitorDetect{
+class swayChanger : public IBackend{
 public:
     struct monitorState{
         pid_t pid;

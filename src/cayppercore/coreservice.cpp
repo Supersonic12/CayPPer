@@ -7,7 +7,7 @@ coreService::coreService() :
     isWayland_(envvardetector_.isWayland()),
     compositor_(envvardetector_.getCompositor())
 {
-    changer_=ChangerFactory::create(compositor_,isWayland_);
+    backend_=ChangerFactory::create(compositor_,isWayland_);
 }
 
 bool coreService::isWayland() const{
@@ -18,25 +18,25 @@ EnvVarDetector::Compositor coreService::compositor() const{
 }
 
 std::vector<std::string> coreService::monitors() const{
-    return monitorlister_.getMonitor(compositor_);
+    return backend_->monitors();
 }
 
 void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
-    if(!changer_){
+    if(!backend_){
         throw std::runtime_error(
             std::string("Changer object doesnt exist!\n")
             );
     }
-    changer_->setWallpaper(path,selectedMonitors,fillMode);
+    backend_->setWallpaper(path,selectedMonitors,fillMode);
 }
 
 std::vector<FillMode> coreService::supportedModes() const{
-    if(!changer_){
+    if(!backend_){
         throw std::runtime_error(
             std::string("Changer object doesnt exist!\n")
             );
     }
-    return changer_->supportedModes();
+    return backend_->supportedModes();
 }
 
 const std::vector<std::filesystem::path> coreService::listDirectory(std::filesystem::path stdpath){

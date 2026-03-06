@@ -6,7 +6,7 @@
 #include "envvardetector.h"
 class ChangerFactory{
 public:
-    static std::unique_ptr<IChanger>
+    static std::unique_ptr<IBackend>
     create(EnvVarDetector::Compositor compositor,bool isWayland);
 };
 

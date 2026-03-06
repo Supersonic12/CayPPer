@@ -9,7 +9,6 @@
 #include <thread>
 
 #include "envvardetector.h"
-#include "monitorlister.h"
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
 #include "IChanger.h"
@@ -30,7 +29,6 @@ public:
 
 private:
     EnvVarDetector envvardetector_;
-    MonitorLister monitorlister_;
     directoryLister directorylister_;
     bool isWayland_;
     EnvVarDetector::Compositor compositor_;
@@ -44,7 +42,7 @@ private:
     std::atomic<bool> running_{false};
 
     //polymorphic pointer for linking backends to core service
-    std::unique_ptr<IChanger> changer_;
+    std::unique_ptr<IBackend> backend_;
 };
 
 #endif // CORESERVICE_H

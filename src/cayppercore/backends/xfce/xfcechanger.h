@@ -3,7 +3,7 @@
 
 #include "../../IChanger.h"
 
-class XFCEChanger : public IChanger,IMonitorDetect
+class XFCEChanger : public IBackend
 {
 public:
     void setWallpaper(std::filesystem::path path,std::vector<std::string> monitors,FillMode fillMode) override;

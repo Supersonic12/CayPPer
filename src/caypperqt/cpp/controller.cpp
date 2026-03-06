@@ -3,6 +3,7 @@
 //#include "directorylister.h"
 #include "domainExpansion/fillmodeconverter.h"
 #include <QDebug>
+#include <QString>
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {
@@ -35,26 +36,30 @@ Controller::Controller(QObject *parent)
 //should be called by default
 void Controller::refreshAvailableModes(){
     availableModes_.clear();
-    for(auto m: core_.supportedModes()){
-        switch(m){
-        case FillMode::Center:       availableModes_.append("Center");              break;
-        case FillMode::Contain:      availableModes_.append("Contain");             break;
-        case FillMode::Cover:        availableModes_.append("Cover");               break;
-        case FillMode::Fill:         availableModes_.append("Fill");                break;
-        case FillMode::Fit:          availableModes_.append("Fit");                 break;
-        case FillMode::Focus:        availableModes_.append("Focus");               break;
-        case FillMode::Maximize:     availableModes_.append("Maximize");            break;
-        case FillMode::Stretch:      availableModes_.append("Stretch");             break;
-        case FillMode::Tile:         availableModes_.append("Tile");                break;
-        case FillMode::Zoom:         availableModes_.append("Zoom");                break;
-        case FillMode::Scaled:       availableModes_.append("Scaled");              break;
-        case FillMode::Spanning_Screens: availableModes_.append("SpanningScreens"); break;
-        case FillMode::TileHorizontally: availableModes_.append("Tile(Horizontally)");break;
-        case FillMode::TileVertically:  availableModes_.append("Tile(Vertically)");  break;
-        case FillMode::ScaledCropped:   availableModes_.append("Scaled(Crop)"); break;
-        case FillMode::ScaledKeepAspect: availableModes_.append("Scaled(Keep Ratio)");break;
-        }
+    // for(auto m: core_.supportedModes()){
+    //     switch(m){
+    //     case FillMode::Center:       availableModes_.append("Center");              break;
+    //     case FillMode::Contain:      availableModes_.append("Contain");             break;
+    //     case FillMode::Cover:        availableModes_.append("Cover");               break;
+    //     case FillMode::Fill:         availableModes_.append("Fill");                break;
+    //     case FillMode::Fit:          availableModes_.append("Fit");                 break;
+    //     case FillMode::Focus:        availableModes_.append("Focus");               break;
+    //     case FillMode::Maximize:     availableModes_.append("Maximize");            break;
+    //     case FillMode::Stretch:      availableModes_.append("Stretch");             break;
+    //     case FillMode::Tile:         availableModes_.append("Tile");                break;
+    //     case FillMode::Zoom:         availableModes_.append("Zoom");                break;
+    //     case FillMode::Scaled:       availableModes_.append("Scaled");              break;
+    //     case FillMode::Spanning_Screens: availableModes_.append("SpanningScreens"); break;
+    //     case FillMode::TileHorizontally: availableModes_.append("Tile(Horizontally)");break;
+    //     case FillMode::TileVertically:  availableModes_.append("Tile(Vertically)");  break;
+    //     case FillMode::ScaledCropped:   availableModes_.append("Scaled(Crop)"); break;
+    //     case FillMode::ScaledKeepAspect: availableModes_.append("Scaled(Keep Ratio)");break;
+    //     }
+    std::vector<std::string> vectorModes=supportedFillModes(core_.supportedModes());
+    for(auto const& m: vectorModes){
+        availableModes_.append(QString::fromStdString(m));
     }
+    // }
     emit modesChanged();
 }
 void Controller::refreshAvailableMonitors(){
