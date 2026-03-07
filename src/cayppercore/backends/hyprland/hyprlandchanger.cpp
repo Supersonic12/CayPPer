@@ -17,33 +17,33 @@ void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
     pid_t pid;
     int status;
     int wstatus;
-    char* argv[]={
-        (char*) "hyprctl",
-        (char*) "hyprpaper",
-        (char*) "preload",
-        const_cast<char*>(path.c_str()),
-        nullptr
-    };
-    status=posix_spawnp(
-        &pid,
-        "hyprctl",
-        nullptr,
-        nullptr,
-        argv,
-        environ);
-    if(status!=0){
-        throw std::runtime_error(
-            std::string("ERROR: preloading wallpaper failed with code: ")
-            +strerror(status));
-    }
-    if(waitpid(pid,&wstatus,0)==-1){
-        throw std::runtime_error(
-            std::string("ERROR: waitpid failed while preloading wallpaper"));
-    }
-    if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
-        throw std::runtime_error(
-            std::string("ERROR: preloading wallpaper failed"));
-    }
+    // char* argv[]={
+    //     (char*) "hyprctl",
+    //     (char*) "hyprpaper",
+    //     (char*) "preload",
+    //     const_cast<char*>(path.c_str()),
+    //     nullptr
+    // };
+    // status=posix_spawnp(
+    //     &pid,
+    //     "hyprctl",
+    //     nullptr,
+    //     nullptr,
+    //     argv,
+    //     environ);
+    // if(status!=0){
+    //     throw std::runtime_error(
+    //         std::string("ERROR: preloading wallpaper failed with code: ")
+    //         +strerror(status));
+    // }
+    // if(waitpid(pid,&wstatus,0)==-1){
+    //     throw std::runtime_error(
+    //         std::string("ERROR: waitpid failed while preloading wallpaper"));
+    // }
+    // if(!WIFEXITED(wstatus)||WEXITSTATUS(wstatus)){
+    //     throw std::runtime_error(
+    //         std::string("ERROR: preloading wallpaper failed"));
+    // }
     std::string str_mode = fromHyprModetoString(*mapped);
     std::string str_path = path.string();
     for(auto &monitor:selectedMonitors){
