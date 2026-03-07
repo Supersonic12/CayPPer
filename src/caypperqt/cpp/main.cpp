@@ -11,11 +11,11 @@ int main(int argc, char *argv[])
 {
 
     QGuiApplication app(argc, argv);
-    Controller controller;
-    QQmlApplicationEngine engine;
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
+    Controller controller;
+    QQmlApplicationEngine engine;
 
 
     engine.rootContext()->setContextProperty("controller",&controller);

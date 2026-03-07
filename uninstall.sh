@@ -40,7 +40,7 @@ TARGETS=(
 
 # 2. Define User Config (handled separately to avoid sudo issues)
 # We use the real user's home even if run with sudo
-REAL_USER_CONFIG="/home/${SUDO_USER:-$USER}/.config/caypper.ini"
+REAL_USER_CONFIG="/home/${SUDO_USER:-$USER}/.config/caypper/caypper.ini"
 
 # --- Logic ---
 
