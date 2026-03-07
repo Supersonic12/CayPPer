@@ -472,13 +472,12 @@ ApplicationWindow {
 
                 Loader{
                     id:wallpaperGridLoader
-                    width:parent.width-20
-                    height:parent.width-20-50
+                    property int cellWidth:260
+                    property int columns:Math.floor(parent.width/cellWidth)
+                    width:columns*cellWidth
                     anchors.top:horizontalSeparator.bottom
-                    anchors.left:parent.left
                     anchors.bottom:parent.bottom
-                    anchors.right:parent.right
-                    anchors.margins: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
                     source:"Grid.qml"
                     active:true
                     onLoaded:{
