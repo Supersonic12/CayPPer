@@ -27,6 +27,15 @@ TARGETS=(
     "/usr/lib/libgnomewallchanger.so"
     "/usr/lib/libplasmawallchanger.so"
     "/usr/lib/libxfcewallchanger.so"
+
+# Debian/Ubuntu/Kali multiarch paths
+    "/usr/lib/x86_64-linux-gnu/libcayppercore.so"
+    "/usr/lib/x86_64-linux-gnu/libxelevenchanger.so"
+    "/usr/lib/x86_64-linux-gnu/libswaychanger.so"
+    "/usr/lib/x86_64-linux-gnu/libplasmawallchanger.so"
+    "/usr/lib/x86_64-linux-gnu/libxfcewallchanger.so"
+    "/usr/lib/x86_64-linux-gnu/libgnomewallchanger.so"
+    "/usr/lib/x86_64-linux-gnu/libhyprlandchanger.so"
 )
 
 # 2. Define User Config (handled separately to avoid sudo issues)
