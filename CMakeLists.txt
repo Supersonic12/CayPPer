@@ -73,4 +73,10 @@ endif()
 install(FILES ${CMAKE_BINARY_DIR}/install_manifest.txt
 DESTINATION share/caypper
 )
+install(FILES uninstall.sh
+DESTINATION share/caypper
+PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+GROUP_EXECUTE GROUP_READ
+WORLD_EXECUTE WORLD_READ
+)
 
