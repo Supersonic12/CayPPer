@@ -11,7 +11,7 @@ void XFCEChanger::setWallpaper(std::filesystem::path& path,std::vector<std::stri
     }
     std::string str_mode;
     auto mapped=mapToXFCE(fillMode);
-    if(!mapped){
+    if(mapped){
         str_mode=fromXFCEModetoString(*mapped);
     }
     else{
