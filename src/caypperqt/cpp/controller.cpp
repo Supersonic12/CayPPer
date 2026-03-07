@@ -6,6 +6,7 @@
 Controller::Controller(QObject *parent)
     : QObject{parent}
 {
+
     refreshAvailableModes();
     refreshAvailableMonitors();
     QByteArray desktop = qgetenv("XDG_CURRENT_DESKTOP").toLower();

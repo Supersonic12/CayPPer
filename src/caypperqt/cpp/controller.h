@@ -71,6 +71,7 @@ signals:
 private:
     void refreshDirectoryContent(QString path);
     void checkDirectory();
+    coreService core_;
     // these will be set by default when launched and controller object is created.
     QStringList availableModes_;
     QStringList availableMonitors_;
@@ -88,7 +89,7 @@ private:
     //and a or a bunch of monitors
     QStringList selectedMonitors_;
     //and for setWallpaper create a coreservice object
-    coreService core_;
+
 
     //settings object;
     appsettings settings_;

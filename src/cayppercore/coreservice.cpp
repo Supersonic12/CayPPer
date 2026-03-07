@@ -8,6 +8,9 @@ coreService::coreService() :
     compositor_(envvardetector_.getCompositor())
 {
     backend_=ChangerFactory::create(compositor_,isWayland_);
+    if(backend_==nullptr){
+        throw std::runtime_error(std::string("ERROR: backend object couldn't created"));
+    }
 }
 
 bool coreService::isWayland() const{

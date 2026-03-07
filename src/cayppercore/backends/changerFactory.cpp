@@ -27,6 +27,8 @@ ChangerFactory::create(EnvVarDetector::Compositor compositor, bool isWayland){
         #endif
         #ifdef XELEVEN_BACKEND
         return std::make_unique<XChanger>();
+        #else
+        return nullptr;
         #endif
     }
     else{

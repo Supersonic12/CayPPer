@@ -10,7 +10,8 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
         throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }
     std::string str_mode;
-    if(auto mapped=mapToXFCE(fillMode)){
+    auto mapped=mapToXFCE(fillMode);
+    if(!mapped){
         str_mode=fromXFCEModetoString(*mapped);
     }
     else{
@@ -55,7 +56,7 @@ void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::strin
     }
 
     for(auto &monitor:monitors){
-        std::string argument="-c xfce4-desktop -p /backdrop/screen0/monitor"+monitor+"/workspace0/image-style";
+        std::string argument="/backdrop/screen0/monitor"+monitor+"/workspace0/image-style";
         char * argv[]{
             (char*)"xfconf-query",
             (char*)"-c",

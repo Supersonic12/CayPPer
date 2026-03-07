@@ -35,6 +35,12 @@ if KDE
 sudo apt install libsdbus-c++-dev nlohman-json3-dev
 ```
 
+if GNOME
+
+```
+sudo apt install nlohman-json3-dev 
+```
+
 ## Build from source
 
 ```
@@ -48,11 +54,13 @@ ninja build install
 
 ### Options for different environments
 
-```-DKDE_BACKEND ON/OFF
+```
+-DKDE_BACKEND ON/OFF
 -DGNOME_BACKEND ON/OFF
 -DHYPRLAND_BACKEND ON/OFF
 -DXELEVEN_BACKEND ON/OFF
 -DXFCE_BACKEND ON/OFF
+-DSWAY_BACKEND ON/OFF
 ```
 By default all of them comes OFF
 
@@ -64,6 +72,7 @@ By default all of them comes OFF
 > gw - open folder dialog \
 > gr - focus to wallpaper grid \
 > gm - focus to fill mode changer 
+> wq - exits app
 
 ### in Grid
 
