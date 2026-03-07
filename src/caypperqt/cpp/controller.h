@@ -72,6 +72,8 @@ private:
     void refreshDirectoryContent(QString path);
     void checkDirectory();
     coreService core_;
+    //settings object;
+    appsettings settings_;
     // these will be set by default when launched and controller object is created.
     QStringList availableModes_;
     QStringList availableMonitors_;
@@ -91,8 +93,7 @@ private:
     //and for setWallpaper create a coreservice object
 
 
-    //settings object;
-    appsettings settings_;
+
 
     QString configPath_;
     QString defaultWallPath_;

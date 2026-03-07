@@ -479,8 +479,8 @@ ApplicationWindow {
                     anchors.bottom:parent.bottom
                     anchors.right:parent.right
                     anchors.margins: 10
-                    active:false
-                    source:""
+                    source:"Grid.qml"
+                    active:true
                     onLoaded:{
                         searchField.focus=false
                         item.currentIndex=0

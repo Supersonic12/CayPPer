@@ -31,6 +31,11 @@ Controller::Controller(QObject *parent)
     configPath_=settings_.getValue("General/configPath","Unknown").toString();
     defaultWallPath_=settings_.getValue("General/defaultWallPath","Unknown").toString();
     vimKeysToggle_=settings_.getBoolValue("Behavior/vimKeys",false).toBool();
+
+    if(!defaultWallPath_.isEmpty()&& defaultWallPath_!="Unknown"){
+        setDirectoryPath(defaultWallPath_);
+    }
+    qDebug()<<defaultWallPath_;
 }
 //constructor functions
 //should be called by default

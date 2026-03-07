@@ -16,7 +16,6 @@ qt_standard_project_setup(REQUIRES 6.8)
 include(GNUInstallDirs)
 add_subdirectory(src/cayppercore)
 add_subdirectory(src/caypperqt)
-add_subdirectory(src/caypperwx)
 
 option(KDE_BACKEND "KDE wayland backend for KDE environment" OFF)
 option(XFCE_BACKEND "XFCE backend enabled" OFF)
@@ -59,7 +58,7 @@ if(XELEVEN_BACKEND)
     add_subdirectory(src/cayppercore/backends/x11)
     target_link_libraries(cayppercore
         PRIVATE
-        XElevenChanger)
+        xelevenchanger)
     target_compile_definitions(cayppercore PRIVATE XELEVEN_BACKEND)
 endif()
 if(GNOME_BACKEND)
@@ -70,9 +69,6 @@ if(GNOME_BACKEND)
     target_compile_definitions(cayppercore PRIVATE GNOME_BACKEND)
 endif()
 
-install(FILES ${CMAKE_BINARY_DIR}/install_manifest.txt
-DESTINATION share/caypper
-)
 install(FILES uninstall.sh
 DESTINATION share/caypper
 PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
