@@ -36,6 +36,11 @@ TARGETS=(
     "/usr/lib/x86_64-linux-gnu/libxfcewallchanger.so"
     "/usr/lib/x86_64-linux-gnu/libgnomewallchanger.so"
     "/usr/lib/x86_64-linux-gnu/libhyprlandchanger.so"
+
+
+# Icons
+    "/usr/share/icons/hicolor/scalable/apps/caypper.svg"
+    "/usr/share/icons/hicolor/256x256/apps/caypper.png"
 )
 
 # 2. Define User Config (handled separately to avoid sudo issues)
