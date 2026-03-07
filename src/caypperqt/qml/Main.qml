@@ -88,6 +88,7 @@ ApplicationWindow {
                                 case "gn":
                                 if(stackRoot.depth===2){
                                     stackRoot.pop(null)
+                                    stackRoot.currentItem.gridLoader.forceActiveFocus()
                                 }
                                 root.keyBuffer=""
                                 handled=true

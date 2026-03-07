@@ -12,9 +12,14 @@
         focus:true
         activeFocusOnTab: true
         property bool vimMode:controller? controller.vimKeysToggle:false
+        keyNavigationEnabled: controller? !controller.vimKeysToggle:false
         Component.onCompleted: {
             keyNavigationEnabled=!vimMode
         }
+        onVimModeChanged: {
+            keyNavigationEnabled=!vimMode
+        }
+
         model:controller? controller.getImageModel : []
 
         delegate: Rectangle{

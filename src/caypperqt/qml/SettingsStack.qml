@@ -46,6 +46,7 @@ Rectangle{
             onClicked:{
                 if(mainComponent!==stackRoot.currentItem){
                     stackRoot.pop(null)
+                    stackRoot.currentItem.gridLoader.forceActiveFocus()
                 }
             }
         }
