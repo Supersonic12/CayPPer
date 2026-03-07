@@ -13,7 +13,7 @@ find_package(Qt6 REQUIRED COMPONENTS
 )
 
 qt_standard_project_setup(REQUIRES 6.8)
-
+include(GNUInstallDirs)
 add_subdirectory(src/cayppercore)
 add_subdirectory(src/caypperqt)
 add_subdirectory(src/caypperwx)
@@ -69,4 +69,8 @@ if(GNOME_BACKEND)
         gnomewallchanger)
     target_compile_definitions(cayppercore PRIVATE GNOME_BACKEND)
 endif()
-include(GNUInstallDirs)
+
+install(FILES ${CMAKE_BINARY_DIR}/install_manifest.txt
+DESTINATION share/caypper
+)
+

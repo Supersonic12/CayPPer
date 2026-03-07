@@ -19,3 +19,6 @@ target_include_directories(cayppercore
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+install(TARGETS cayppercore
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

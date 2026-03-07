@@ -7,4 +7,6 @@ target_include_directories(xfcewallchanger
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-
+install(TARGETS xfcewallchanger
+LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

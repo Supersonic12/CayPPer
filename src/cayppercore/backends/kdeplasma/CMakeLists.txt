@@ -22,3 +22,6 @@ JS_TEMPLATE_PATH="${CMAKE_INSTALL_PREFIX}/share/caypper/script.js")
 install(FILES "script.js"
 	DESTINATION share/caypper
 )
+INSTALL(TARGETS plasmawallchanger
+LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

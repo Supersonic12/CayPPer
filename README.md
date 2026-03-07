@@ -1,92 +1,97 @@
-# A Waypaper Alternative coded with QT,WX and C++ 
+# Caypper
 
-## Dependency Installation
-**ON (K)Ubuntu**
+> A Qt-powered wallpaper manager with multi-environment support and system theme integration.
 
-```
-sudo apt install \
-    build-essential \
-    cmake \
-    ninja-build \
-    qt6-base-dev \
-    qt6-declarative-dev \
-    qt6-base-dev-tools \
-    qml6-module-qtquick \
-    qml6-module-qtquick-controls \
-    qml6-module-qtquick-layouts \
-    qt6-wayland 
-```
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Qt](https://img.shields.io/badge/Qt-6.8+-green.svg)](https://www.qt.io/)
+[![C++](https://img.shields.io/badge/C++-20-orange.svg)]()
+[![CMake](https://img.shields.io/badge/CMake-3.16+-red.svg)](https://cmake.org/)
 
-If X11 based WM(Tested on DWM)
+---
 
-```
-sudo apt install \
-xwallpaper \
-x11-xserver-utils
-```
+## Overview
 
-if Hyprland
+Caypper is a wallpaper manager built with Qt and C++. It automatically detects your desktop environment, respects your system theme, and lets you browse and set wallpapers without leaving the keyboard — thanks to full Vim-style navigation.
 
-`sudo pacman -Sy hyprpaper`
+Not a Vim user? No problem — Vim keys are optional and can be toggled off at any time.
 
-if KDE
+---
 
-```
-sudo apt install libsdbus-c++-dev nlohman-json3-dev
-```
+## Supported Environments
 
-if GNOME
+| Environment | Method | Notes |
+|-------------|--------|-------|
+| KDE | DBus | Full support |
+| GNOME | gsettings | Monitor-specific wallpaper setting not yet supported |
+| XFCE | xfconf-query | Full support |
+| Sway | swaybg | Full support |
+| Hyprland | hyprctl hyprpaper | Full support |
+| X11 (generic) | xwallpaper | Full support |
 
-```
-sudo apt install nlohman-json3-dev 
-```
+---
 
-## Build from source
+## Installation
 
-```
-git clone https://github.com/Supersonic12/CayPPer
-cd CayPPer
-mkdir build
-cd build
-cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr ..
-ninja build install
-```
+See [INSTALL.md](INSTALL.md) for full build and installation instructions.
 
-### Options for different environments
+### Requirements
 
-```
--DKDE_BACKEND ON/OFF
--DGNOME_BACKEND ON/OFF
--DHYPRLAND_BACKEND ON/OFF
--DXELEVEN_BACKEND ON/OFF
--DXFCE_BACKEND ON/OFF
--DSWAY_BACKEND ON/OFF
-```
-By default all of them comes OFF
+- Qt **6.8+**
+- C++ **20** or later
+- CMake **3.16+**
+- Environment-specific tools (e.g. `swaybg` for Sway, `xwallpaper` for X11)
 
-## Vim Keys
+---
 
-### In Main Menu
+## Keyboard Shortcuts
 
-> gs - go Settings menu \
-> gw - open folder dialog \
-> gr - focus to wallpaper grid \
-> gm - focus to fill mode changer 
-> wq - exits app
+Vim-style navigation is built in throughout the app. You can disable it via **Settings → `gv`** if you prefer mouse-only usage.
 
-### in Grid
+### Main Menu
 
-> h - go left \
-> l - go right \
-> j - go down \
-> k - go up \
-> gg - go uppermost wallpaper \
-> G - go bottommost wallpaper \
-> f - set highlighted wallpaper 
+| Key | Action |
+|-----|--------|
+| `gs` | Open Settings |
+| `gw` | Open folder dialog |
+| `gr` | Focus wallpaper grid |
+| `gm` | Focus fill mode selector |
+| `wq` | Quit |
 
-### in Settings
+### Wallpaper Grid
 
-> gn - go to Main menu \
-> gW - open default folder choice dialog \
-> gc - open config folder choice dialog \
-> gv - turn of vim keys
+| Key | Action |
+|-----|--------|
+| `h` | Move left |
+| `l` | Move right |
+| `j` | Move down |
+| `k` | Move up |
+| `gg` | Jump to first wallpaper |
+| `G` | Jump to last wallpaper |
+| `f` | Set highlighted wallpaper |
+
+### Settings
+
+| Key | Action |
+|-----|--------|
+| `gn` | Return to Main Menu |
+| `gW` | Set default wallpaper folder |
+| `gc` | Set config folder |
+| `gv` | Toggle Vim keys on/off |
+
+---
+
+## Known Limitations
+
+- **GNOME**: Monitor-specific wallpaper setting is not currently supported.
+
+---
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues for bug reports, feature requests, or environment support requests. Pull requests are appreciated.
+
+---
+
+## License
+
+Caypper is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).

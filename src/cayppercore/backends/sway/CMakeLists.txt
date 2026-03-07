@@ -7,3 +7,6 @@ target_include_directories(
   swaychanger PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
+install(TARGETS swaychanger
+LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
