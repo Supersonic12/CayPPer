@@ -19,6 +19,7 @@ qt_add_qml_module(caypper
     qml/icons/folder.svg
     qml/icons/left-arrow.svg
     qml/icons/check.svg
+    qml/icons/caypper.png
 
     SOURCES
         #cpp/inputtakerfromqml.cpp
@@ -29,7 +30,6 @@ qt_add_qml_module(caypper
         cpp/controller.cpp
         cpp/appsettings.h
         cpp/appsettings.cpp
-
 )
 
 
