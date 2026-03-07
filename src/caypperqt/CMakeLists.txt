@@ -44,6 +44,7 @@ target_link_libraries(caypper
 install(TARGETS caypper
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
+install(FILES qml/icons/caypper.png
+DESTINATION share/icons/hicolor/256x256/apps/caypper.png)
 
 

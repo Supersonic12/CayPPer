@@ -68,7 +68,8 @@ if(GNOME_BACKEND)
         gnomewallchanger)
     target_compile_definitions(cayppercore PRIVATE GNOME_BACKEND)
 endif()
-
+install(FILES caypper.desktop
+DESTINATION share/applications)
 install(FILES uninstall.sh
 DESTINATION share/caypper
 PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
