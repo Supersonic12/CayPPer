@@ -9,7 +9,7 @@
 class IChanger {
 public:
     virtual ~IChanger()=default;
-    virtual void setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode)=0;
+    virtual void setWallpaper(std::filesystem::path& path,std::vector<std::string>& selectedMonitors,FillMode fillMode)=0;
     virtual std::vector<FillMode> supportedModes() const=0;
 
 };
@@ -21,7 +21,7 @@ public:
 class IBackend: public IChanger, public IMonitorDetect{
 public:
     virtual ~IBackend()=default;
-    virtual void setWallpaper(std::filesystem::path,std::vector<std::string> selectedMonitors,FillMode fillMode)=0;
+    virtual void setWallpaper(std::filesystem::path& path,std::vector<std::string>& selectedMonitors,FillMode fillMode)=0;
     virtual std::vector<FillMode> supportedModes() const=0;
     virtual std::vector<std::string> monitors() const=0;
 };

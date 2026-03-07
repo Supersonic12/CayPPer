@@ -10,7 +10,7 @@ std::string KDEChanger::getJSPATH(){
     }
     return "./script.js";
 }
-void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors,FillMode fillMode){
+void KDEChanger::setWallpaper(std::filesystem::path& path,std::vector<std::string>& selectedMonitors,FillMode fillMode){
     if(selectedMonitors.empty()){
         throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }
@@ -46,7 +46,7 @@ void KDEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string
     jsScript+="\napply("+givenVars.dump()+");";
     proxy->callMethod(scriptEv).onInterface(interf).withArguments(jsScript);
 }
-void KDEChanger::setWallpaperAll(std::filesystem::path path,FillMode fillMode){
+void KDEChanger::setWallpaperAll(std::filesystem::path& path,FillMode fillMode){
     int int_mode;
     if(auto mapped=mapToKDE(fillMode)){
         int_mode=fromKDEModetoInt(*mapped);

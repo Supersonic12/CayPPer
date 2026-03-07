@@ -5,7 +5,7 @@
 #include "../../domainExpansion/raiiguard.h"
 #include <regex>
 extern char **environ;
-void XFCEChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> monitors,FillMode fillMode){
+void XFCEChanger::setWallpaper(std::filesystem::path& path,std::vector<std::string>& monitors,FillMode fillMode){
     if(monitors.empty()){
         throw std::runtime_error(std::string("Warning: No Monitor Checked, Check at least one!"));
     }

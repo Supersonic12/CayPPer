@@ -28,7 +28,7 @@ std::vector<std::string> coreService::monitors() const{
     return backend_->monitors();
 }
 
-void coreService::setWallpaper(const std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
+void coreService::setWallpaper(std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
     if(!backend_){
         throw std::runtime_error(
             std::string("ERROR: backend object doesnt exist!\n")

@@ -6,7 +6,7 @@
 #include "../../domainExpansion/raiiguard.h"
 #include <regex>
 extern char **environ;
-void HyprChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors, FillMode fillMode){
+void HyprChanger::setWallpaper(std::filesystem::path& path, std::vector<std::string>& selectedMonitors, FillMode fillMode){
     if(selectedMonitors.empty()){
         throw std::runtime_error(std::string("Warning: No Monitor Checked, Check At Least One!"));
     }

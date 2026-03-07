@@ -9,10 +9,14 @@ public:
         std::string currentWall;
         std::string currentFillMode;
     };
-    void setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors, FillMode fillMode) override;
+    void setWallpaper(std::filesystem::path& path,std::vector<std::string>& selectedMonitors, FillMode fillMode) override;
     std::vector<FillMode> supportedModes() const override;
     std::vector<std::string> monitors() const override;
-    void killCurrentSwaybgs();
+    void recordProcesses(std::unordered_map<std::string,monitorState>& map);
+    void reacquireProcesses();
+    swayChanger();
+    ~swayChanger();
+  
 private:
     std::unordered_map<std::string,monitorState> monitorsState_;
 };

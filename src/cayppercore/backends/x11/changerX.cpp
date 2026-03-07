@@ -4,7 +4,7 @@
 #include <cstring>
 #include <regex>
 #include "../../domainExpansion/raiiguard.h"
-void XChanger::setWallpaper(std::filesystem::path path,std::vector<std::string> selectedMonitors, FillMode fillMode){
+void XChanger::setWallpaper(std::filesystem::path& path,std::vector<std::string>& selectedMonitors, FillMode fillMode){
     std::string str_mode;
 
     if(selectedMonitors.empty()){

@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include "../../domainExpansion/raiiguard.h"
 extern char **environ;
-void GNOMEChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode){
+void GNOMEChanger::setWallpaper(std::filesystem::path& path, std::vector<std::string>& selectedMonitors,FillMode fillMode){
     setWallpaperAll(path,fillMode);
 }
 std::vector<std::string> GNOMEChanger::monitors() const{
@@ -62,7 +62,7 @@ bool GNOMEChanger::isDarkMode(){
     }
     return output.find("dark")!=std::string::npos;
 }
-void GNOMEChanger::setWallpaperAll(std::filesystem::path path, FillMode fillMode){
+void GNOMEChanger::setWallpaperAll(std::filesystem::path& path, FillMode fillMode){
     if(path.empty()){
         throw std::runtime_error(std::string("ERROR: GNOMEChanger::setWallpaperAll has got empty path\n"));
     }

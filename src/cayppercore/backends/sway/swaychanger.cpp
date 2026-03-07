@@ -4,10 +4,11 @@
 #include <sys/wait.h>
 #include "../../domainExpansion/raiiguard.h"
 #include <nlohmann/json.hpp>
+#include <fstream>
 
 using Json = nlohmann::json;
 extern char ** environ;
-void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::string> selectedMonitors,FillMode fillMode){
+void swayChanger::setWallpaper(std::filesystem::path& path, std::vector<std::string>& selectedMonitors,FillMode fillMode){
     if(selectedMonitors.empty()){
         throw std::runtime_error(std::string("Warning!: No Monitor Checked, Check at least one!"));
     }
@@ -23,10 +24,16 @@ void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
     for(auto &monitor:selectedMonitors){
         auto search=monitorsState_.find(monitor);
         if(search!=monitorsState_.end()){
-            kill(search->second.pid,SIGTERM);
-            waitpid(search->second.pid,&wstatus,0);
+            pid_t old_pid=search->second.pid;
+            if(kill(old_pid,0)==0)
+            kill(old_pid,SIGKILL);
+
             monitorsState_.erase(search);
         }
+        posix_spawnattr_t attr;
+        posix_spawnattr_init(&attr);
+        posix_spawnattr_setflags(&attr,POSIX_SPAWN_SETPGROUP);
+        posix_spawnattr_setpgroup(&attr,0);
         char * argv[]={
             (char*) "swaybg",
             (char*)"-o",
@@ -41,10 +48,11 @@ void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
             &pid,
             "swaybg",
             nullptr,
-            nullptr,
+            &attr,
             argv,
             environ
             );
+        posix_spawnattr_destroy(&attr);
         if(status!=0){
             throw std::runtime_error(std::string("ERROR: swaybg couldn't called: ")+strerror(status));
         }else{
@@ -54,6 +62,11 @@ void swayChanger::setWallpaper(std::filesystem::path path, std::vector<std::stri
             monState.currentFillMode=str_mode;
             monitorsState_[monitor]=monState;
         }
+        recordProcesses(monitorsState_);
+        /*for(const auto & state: monitorsState_){
+      std::cout<<"Current swaybg list: "<<state.first<<": \n"<<state.second.currentFillMode<<"\n"<<
+      state.second.currentWall<<"\n"<<state.second.pid<<"\n";
+    }*/
 
     }
 }
@@ -83,7 +96,9 @@ std::vector<std::string> swayChanger::monitors() const{
     char* argv[]={
         (char*)"swaymsg",
         (char*)"-t",
-        (char*)"get_outputs"
+        (char*)"get_outputs",
+        (char*)"-r",
+        nullptr
     };
     status = posix_spawnp(
         &pid,
@@ -130,4 +145,70 @@ std::vector<std::string> swayChanger::monitors() const{
         throw std::runtime_error(std::string("ERROR: swaymsg failed while getting monitors"));
     }
     return availableMonitors;
+}
+swayChanger::swayChanger(){
+    try{
+        reacquireProcesses();
+    }catch(std::runtime_error &e){
+        std::cerr<<"ERROR: Failed to reacquire old swaybg instances:" << e.what();
+    }
+}
+swayChanger::~swayChanger(){
+    try{
+        recordProcesses(monitorsState_);
+    }catch(std::runtime_error &e){
+        std::cerr<<"ERROR: Failed to save ongoing swaybg instances:" << e.what();
+    }
+}
+void swayChanger::recordProcesses(std::unordered_map<std::string,monitorState>& map){
+    std::filesystem::create_directories("/tmp/caypper");
+    Json j_processList=Json::array();
+    std::ofstream output_file("/tmp/caypper/processList.json");
+    if(!output_file.is_open()){
+        throw std::runtime_error("ERROR: failed to open json file");
+    }else{
+        for(auto const & state: map){
+            Json j_processEntry;
+            j_processEntry["processInfo"]=
+                {
+                    {"name",state.first},
+                    {"pid",state.second.pid},
+                    {"currentWall",state.second.currentWall},
+                    {"currentFillMode",state.second.currentFillMode}
+                };
+            j_processList.push_back(j_processEntry);
+        }
+        output_file<<std::setw(4)<<j_processList<<std::endl;
+        output_file.close();
+    }
+}
+void swayChanger::reacquireProcesses(){
+    Json j_processList;
+    std::ifstream inputFile("/tmp/caypper/processList.json");
+    if(!inputFile.is_open()){
+        throw std::runtime_error(std::string("ERROR: failed to open json file to reacquire old processes"));
+    }
+    try{
+        inputFile>>j_processList;
+    }catch(Json::parse_error &e){
+        throw std::runtime_error("ERROR: failed to parse processList from json file");
+    }
+    monitorState state;
+    for(const auto & proc:j_processList){
+        try{
+            if(!proc.contains("processInfo")){
+                throw std::runtime_error(std::string("ERROR: missing processInfo key in entry"));
+            }
+            if(!proc["processInfo"].contains("pid") || !proc["processInfo"].contains("name")
+                || !proc["processInfo"].contains("currentWall") || !proc["processInfo"].contains("currentFillMode")){
+                throw std::runtime_error(std::string("ERROR: json file missing required field"));
+            }
+            state.pid=proc["processInfo"]["pid"].get<int>();
+            state.currentWall=proc["processInfo"]["currentWall"].get<std::string>();
+            state.currentFillMode=proc["processInfo"]["currentFillMode"].get<std::string>();
+            monitorsState_.insert({proc["processInfo"]["name"].get<std::string>(),state});
+        }catch(Json::type_error &e){
+            throw std::runtime_error(std::string("ERROR: wrong type in processInfo entry"));
+        }
+    }
 }

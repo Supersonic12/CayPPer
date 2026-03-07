@@ -9,15 +9,16 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-    Controller *controller=new Controller;
+
     QGuiApplication app(argc, argv);
+    Controller controller;
     QQmlApplicationEngine engine;
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
 
-    engine.rootContext()->setContextProperty("controller",controller);
+    engine.rootContext()->setContextProperty("controller",&controller);
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,

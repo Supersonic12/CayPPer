@@ -22,7 +22,7 @@ public:
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
     const std::vector<std::filesystem::path> listDirectory(std::filesystem::path);
-    void setWallpaper(const std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillmode);
+    void setWallpaper(std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillmode);
     void setDirectoryChangeCallBack(std::function<void()> callback);
     void stopWatching();
     void startWatching(const std::filesystem::path& path);
