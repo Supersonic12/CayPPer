@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CayPPer
+GenericName=Wallpaper Manager
+Comment=Wallpaper manager for X11 and Wayland
+Exec=caypper
+Icon=caypper
+Terminal=false
+StartupNotify=true
+StartupWMClass=caypper
+Categories=Utility;Graphics;Settings;
+Keywords=wallpaper;background;desktop;monitor;multi-monitor;hyprland;sway;wayland;x11;kde;gnome;xfce;
+X-KDE-StartupNotify=true
+X-GNOME-UsesNotifications=false

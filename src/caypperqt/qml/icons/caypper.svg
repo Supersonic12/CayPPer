@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d4a7a"/>
+      <stop offset="100%" stop-color="#1e3560"/>
+    </linearGradient>
+    <linearGradient id="mountainNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f2040"/>
+      <stop offset="100%" stop-color="#0a1628"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2a3e"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="frameGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a4a6a"/>
+      <stop offset="100%" stop-color="#2a2a3e"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5b8dee"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <clipPath id="screenClip">
+      <rect x="30" y="36" width="196" height="130" rx="4"/>
+    </clipPath>
+    <!-- Stars -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Monitor outer frame -->
+  <rect x="22" y="28" width="212" height="146" rx="10" fill="url(#frameGrad)"/>
+
+  <!-- Monitor bezel -->
+  <rect x="26" y="32" width="204" height="138" rx="8" fill="#1a1a2e"/>
+
+  <!-- Screen background - night sky -->
+  <rect x="30" y="36" width="196" height="130" rx="4" fill="url(#skyGrad)" clip-path="url(#screenClip)"/>
+
+  <!-- Stars -->
+  <g clip-path="url(#screenClip)" fill="white" filter="url(#glow)">
+    <circle cx="50"  cy="48" r="0.8" opacity="0.9"/>
+    <circle cx="78"  cy="42" r="0.6" opacity="0.7"/>
+    <circle cx="110" cy="50" r="1.0" opacity="0.9"/>
+    <circle cx="145" cy="44" r="0.7" opacity="0.8"/>
+    <circle cx="170" cy="52" r="0.9" opacity="0.7"/>
+    <circle cx="200" cy="45" r="0.6" opacity="0.9"/>
+    <circle cx="62"  cy="58" r="0.5" opacity="0.6"/>
+    <circle cx="95"  cy="55" r="0.8" opacity="0.8"/>
+    <circle cx="185" cy="60" r="0.6" opacity="0.7"/>
+    <circle cx="220" cy="56" r="0.9" opacity="0.8"/>
+    <circle cx="130" cy="43" r="0.5" opacity="0.6"/>
+    <circle cx="158" cy="58" r="0.7" opacity="0.7"/>
+  </g>
+
+  <!-- Moon -->
+  <g clip-path="url(#screenClip)">
+    <circle cx="195" cy="58" r="10" fill="#c8d8f0" opacity="0.9"/>
+    <circle cx="199" cy="55" r="9"  fill="#16213e"/>
+  </g>
+
+  <!-- Far mountains -->
+  <g clip-path="url(#screenClip)">
+    <polygon points="30,130 58,82 86,105 112,72 140,98 165,78 196,95 226,75 226,130"
+             fill="url(#mountainFar)"/>
+  </g>
+
+  <!-- Near mountains -->
+  <g clip-path="url(#screenClip)">
+    <polygon points="30,166 55,110 80,130 108,95 135,120 160,100 190,118 226,105 226,166"
+             fill="url(#mountainNear)"/>
+  </g>
+
+  <!-- Accent glow line on horizon -->
+  <g clip-path="url(#screenClip)">
+    <rect x="30" y="128" width="196" height="2" fill="url(#accentGrad)" opacity="0.4"/>
+  </g>
+
+  <!-- Monitor stand neck -->
+  <rect x="116" y="174" width="24" height="18" rx="2" fill="#2a2a3e"/>
+
+  <!-- Monitor stand base -->
+  <rect x="88" y="190" width="80" height="10" rx="5" fill="#2a2a3e"/>
+
+  <!-- Accent line on monitor top edge -->
+  <rect x="26" y="32" width="204" height="2" rx="1" fill="url(#accentGrad)" opacity="0.6"/>
+
+  <!-- Power LED dot -->
+  <circle cx="128" cy="170" r="2" fill="#5b8dee" opacity="0.8"/>
+</svg>
