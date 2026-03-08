@@ -40,6 +40,7 @@ target_link_libraries(caypper
         Qt6::Gui
         Qt6::Quick
         Qt6::Qml
+        Qt6::QuickControls2
         cayppercore
 )
 install(TARGETS caypper

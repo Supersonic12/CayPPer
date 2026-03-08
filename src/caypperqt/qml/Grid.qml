@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+
 GridView{
     id:wallpaperGridRoot
     objectName: "wallpaperGrid"

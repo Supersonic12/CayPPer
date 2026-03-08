@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QPalette>
 #include <QWindow>
+#include <QQuickStyle>
 #include "controller.h"
 using namespace std;
 int main(int argc, char *argv[])
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QIcon icon = QIcon(":/qt/qml/CayPPer/qml/icons/caypper.png");
     app.setWindowIcon(icon);
+    QQuickStyle::setStyle("Fusion");
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
