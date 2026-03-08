@@ -11,5 +11,6 @@ target_include_directories(gnomewallchanger
   ${CMAKE_CURRENT_SOURCE_DIR})
 
 install(TARGETS gnomewallchanger
-LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  COMPONENT gnome
 )

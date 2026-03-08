@@ -1,6 +1,6 @@
 add_library(
   swaychanger SHARED
-  swaychanger.cpp 
+  swaychanger.cpp
   swaychanger.h
 )
 target_include_directories(
@@ -8,5 +8,6 @@ target_include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 install(TARGETS swaychanger
-LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  COMPONENT sway
 )

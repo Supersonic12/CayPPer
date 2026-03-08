@@ -8,4 +8,5 @@ target_include_directories(xelevenchanger
   ${CMAKE_CURRENT_SOURCE_DIR})
 install(TARGETS xelevenchanger
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  COMPONENT x11
 )

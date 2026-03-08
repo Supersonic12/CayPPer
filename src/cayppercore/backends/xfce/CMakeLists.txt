@@ -1,6 +1,6 @@
 add_library(xfcewallchanger SHARED
-	xfcechanger.cpp
-	xfcechanger.h
+  xfcechanger.cpp
+  xfcechanger.h
 )
 target_include_directories(xfcewallchanger
   PUBLIC
@@ -8,5 +8,6 @@ target_include_directories(xfcewallchanger
 )
 
 install(TARGETS xfcewallchanger
-LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  COMPONENT xfce
 )

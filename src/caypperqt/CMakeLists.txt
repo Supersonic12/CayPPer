@@ -23,34 +23,37 @@ qt_add_qml_module(caypper
     qml/icons/caypper.svg
 
     SOURCES
-        #cpp/inputtakerfromqml.cpp
-        cpp/imagemodel.cpp
-        #cpp/inputtakerfromqml.h
-        cpp/imagemodel.h
-        cpp/controller.h
-        cpp/controller.cpp
-        cpp/appsettings.h
-        cpp/appsettings.cpp
+    #cpp/inputtakerfromqml.cpp
+    cpp/imagemodel.cpp
+    #cpp/inputtakerfromqml.h
+    cpp/imagemodel.h
+    cpp/controller.h
+    cpp/controller.cpp
+    cpp/appsettings.h
+    cpp/appsettings.cpp
 )
 
 
 target_link_libraries(caypper
     PRIVATE
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Quick
-        Qt6::Qml
-        Qt6::QuickControls2
-        cayppercore
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Quick
+    Qt6::Qml
+    Qt6::QuickControls2
+    cayppercore
 )
 install(TARGETS caypper
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    COMPONENT base
 )
 install(FILES qml/icons/caypper.png
-    DESTINATION share/icons/hicolor/256x256/apps)
+    DESTINATION share/icons/hicolor/256x256/apps
+    COMPONENT base)
 
 install(FILES qml/icons/caypper.svg
-    DESTINATION share/icons/hicolor/scalable/apps)
+    DESTINATION share/icons/hicolor/scalable/apps
+    COMPONENT base)
 install(CODE "
     find_program(GTK_UPDATE_ICON_CACHE gtk-update-icon-cache)
     if(GTK_UPDATE_ICON_CACHE)
@@ -61,4 +64,5 @@ install(CODE "
     if(UPDATE_DESKTOP_DB)
         execute_process(COMMAND \${UPDATE_DESKTOP_DB} /usr/share/applications)
     endif()
-")
+    "
+    COMPONENT base)

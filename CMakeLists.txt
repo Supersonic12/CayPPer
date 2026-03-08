@@ -69,11 +69,13 @@ if(GNOME_BACKEND)
     target_compile_definitions(cayppercore PRIVATE GNOME_BACKEND)
 endif()
 install(FILES caypper.desktop
-DESTINATION share/applications)
+    DESTINATION share/applications
+    COMPONENT base)
 install(FILES uninstall.sh
-DESTINATION share/caypper
-PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-GROUP_EXECUTE GROUP_READ
-WORLD_EXECUTE WORLD_READ
+    DESTINATION share/caypper
+    PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+    GROUP_EXECUTE GROUP_READ
+    WORLD_EXECUTE WORLD_READ
+    COMPONENT base
 )
 

@@ -18,10 +18,12 @@ target_include_directories(plasmawallchanger
 )
 #set(MY_JS_PATH "share/caypper")
 target_compile_definitions(plasmawallchanger PRIVATE
-JS_TEMPLATE_PATH="${CMAKE_INSTALL_PREFIX}/share/caypper/script.js")
+	JS_TEMPLATE_PATH="${CMAKE_INSTALL_PREFIX}/share/caypper/script.js")
 install(FILES "script.js"
 	DESTINATION share/caypper
+	COMPONENT kde
 )
 INSTALL(TARGETS plasmawallchanger
-LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	COMPONENT kde
 )

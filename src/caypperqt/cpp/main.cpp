@@ -12,13 +12,18 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    //set icon
     QIcon icon = QIcon(":/qt/qml/CayPPer/qml/icons/caypper.png");
     app.setWindowIcon(icon);
+    //app style selected like this because of qqc2 styles folder dialog errors. can be changed to any wanted style.
     QQuickStyle::setStyle("Fusion");
+    //for config files place
     QCoreApplication::setOrganizationName("caypper");
     QCoreApplication::setApplicationName("caypper");
     QSettings::setDefaultFormat(QSettings::IniFormat);
+    //god class for everything
     Controller controller;
+
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("controller",&controller);
