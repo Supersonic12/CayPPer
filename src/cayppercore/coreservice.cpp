@@ -2,12 +2,12 @@
 #include <sys/inotify.h>
 #include <unistd.h>
 #include <cstring>
-#include "backends/changerFactory.h"
+#include "changerFactory.h"
 coreService::coreService() :
     isWayland_(envvardetector_.isWayland()),
     compositor_(envvardetector_.getCompositor())
 {
-    backend_=ChangerFactory::create(compositor_,isWayland_);
+    backend_=factory.create(compositor_,isWayland_);
     if(backend_==nullptr){
         throw std::runtime_error(std::string("ERROR: backend object couldn't created"));
     }
@@ -28,13 +28,14 @@ std::vector<std::string> coreService::monitors() const{
     return backend_->monitors();
 }
 
-void coreService::setWallpaper(std::filesystem::path& path ,std::vector<std::string>& selectedMonitors, FillMode fillMode){
+void coreService::setWallpaper(stateOfMon newState){
     if(!backend_){
         throw std::runtime_error(
             std::string("ERROR: backend object doesnt exist!\n")
             );
     }
-    backend_->setWallpaper(path,selectedMonitors,fillMode);
+
+    backend_->setWallpaper(newState.wallPath,newState.id,newState.fillMode);
 }
 
 std::vector<FillMode> coreService::supportedModes() const{

@@ -1,0 +1,6 @@
+add_subdirectory(gnome)
+add_subdirectory(hyprland)
+add_subdirectory(kdeplasma)
+add_subdirectory(sway)
+add_subdirectory(xfce)
+add_subdirectory(x11)

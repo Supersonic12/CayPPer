@@ -7,7 +7,7 @@
 #include <functional>
 #include <atomic>
 #include <thread>
-
+#include "changerFactory.h"
 #include "envvardetector.h"
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
@@ -15,6 +15,11 @@
 class coreService
 {
 public:
+    struct stateOfMon{
+        std::vector<std::string> id;
+        std::filesystem::path wallPath;
+        FillMode fillMode;
+    };
     coreService();
     ~coreService();
     bool isWayland() const;
@@ -22,7 +27,7 @@ public:
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
     const std::vector<std::filesystem::path> listDirectory(std::filesystem::path);
-    void setWallpaper(std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillmode);
+    void setWallpaper(stateOfMon newState);
     void setDirectoryChangeCallBack(std::function<void()> callback);
     void stopWatching();
     void startWatching(const std::filesystem::path& path);
@@ -42,7 +47,10 @@ private:
     std::atomic<bool> running_{false};
 
     //polymorphic pointer for linking backends to core service
-    std::unique_ptr<IBackend> backend_;
+    using BackendPtr=std::unique_ptr<IBackend,std::function<void(IBackend*)>>;
+    ChangerFactory factory;
+    BackendPtr backend_;
 };
+
 
 #endif // CORESERVICE_H

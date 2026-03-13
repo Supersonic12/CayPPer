@@ -31,6 +31,7 @@ qt_add_qml_module(caypper
     cpp/controller.cpp
     cpp/appsettings.h
     cpp/appsettings.cpp
+    QML_FILES qml/PersistencePopup.qml
 )
 
 
@@ -44,7 +45,7 @@ target_link_libraries(caypper
     cayppercore
 )
 install(TARGETS caypper
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION lib/caypper
     COMPONENT base
 )
 install(FILES qml/icons/caypper.png
@@ -54,15 +55,4 @@ install(FILES qml/icons/caypper.png
 install(FILES qml/icons/caypper.svg
     DESTINATION share/icons/hicolor/scalable/apps
     COMPONENT base)
-install(CODE "
-    find_program(GTK_UPDATE_ICON_CACHE gtk-update-icon-cache)
-    if(GTK_UPDATE_ICON_CACHE)
-        execute_process(COMMAND \${GTK_UPDATE_ICON_CACHE} -f -t /usr/share/icons/hicolor)
-    endif()
 
-    find_program(UPDATE_DESKTOP_DB update-desktop-database)
-    if(UPDATE_DESKTOP_DB)
-        execute_process(COMMAND \${UPDATE_DESKTOP_DB} /usr/share/applications)
-    endif()
-    "
-    COMPONENT base)

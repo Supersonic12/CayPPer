@@ -220,5 +220,16 @@ void Controller::setVimKeysToggle(bool value){
     emit vimKeysToggleChanged();
 }
 
-
+bool Controller::persistenceToggle(){
+    persistenceToggle_=settings_.getBoolValue("Behavior/persistence",false).toBool();
+    return persistenceToggle_;
+}
+void Controller::setPersistenceToggle(bool value){
+    if(persistenceToggle_==value){
+        return;
+    }
+    persistenceToggle_=value;
+    settings_.setValue("Behavior/persistence",value);
+    emit persistenceToggleChanged();
+}
 

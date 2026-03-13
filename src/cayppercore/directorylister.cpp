@@ -12,7 +12,7 @@ using namespace std;
         // Array of files
         std::vector<filesystem::path> files;
 
-        // add files to array
+        // Add files to array
         for (const auto &entry : filesystem::directory_iterator(dirPath))
         {
             if (!filesystem::is_directory(entry.path()))
