@@ -21,6 +21,7 @@ qt_add_qml_module(caypper
     qml/icons/check.svg
     qml/icons/caypper.png
     qml/icons/caypper.svg
+    qml/icons/monitor.svg
 
     SOURCES
     #cpp/inputtakerfromqml.cpp
@@ -31,7 +32,6 @@ qt_add_qml_module(caypper
     cpp/controller.cpp
     cpp/appsettings.h
     cpp/appsettings.cpp
-    QML_FILES qml/PersistencePopup.qml
 )
 
 

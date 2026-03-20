@@ -7,6 +7,7 @@ public:
     void setWallpaper(stateOfMons* newState) override;
     std::vector<FillMode> supportedModes() const override;
     std::vector<std::string> monitors() const override;
+    void recordCurrentStates();
 };
 
 #endif

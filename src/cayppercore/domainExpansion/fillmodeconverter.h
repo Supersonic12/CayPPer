@@ -5,212 +5,345 @@
 #include "fillmode.h"
 #include <optional>
 #include <vector>
-inline std::string fromSwayModetoString(FillModeSway mode)
-{
-    switch(mode){
-    case FillModeSway::Center:      return "center";
-    case FillModeSway::Fill:        return "fill";
-    case FillModeSway::Fit:         return "fit";
-    case FillModeSway::Stretch:     return "stretch";
-    case FillModeSway::Tile:        return "tile";
+inline std::string fromSwayModetoString(FillModeSway mode) {
+    switch (mode) {
+        case FillModeSway::Center:
+            return "center";
+        case FillModeSway::Fill:
+            return "fill";
+        case FillModeSway::Fit:
+            return "fit";
+        case FillModeSway::Stretch:
+            return "stretch";
+        case FillModeSway::Tile:
+            return "tile";
     };
     return "unknown";
 }
-inline std::string fromHyprModetoString(FitModeHyprland mode){
-    switch(mode){
-    case FitModeHyprland::Fill:     return "fill";
-    case FitModeHyprland::Contain:  return "contain";
-    case FitModeHyprland::Cover:    return "cover";
-    case FitModeHyprland::Tile:     return "tile";
+inline std::string fromHyprModetoString(FitModeHyprland mode) {
+    switch (mode) {
+        case FitModeHyprland::Fill:
+            return "fill";
+        case FitModeHyprland::Contain:
+            return "contain";
+        case FitModeHyprland::Cover:
+            return "cover";
+        case FitModeHyprland::Tile:
+            return "tile";
     }
     // fallback
     std::cerr << "Invalid Hyprland fill mode\n";
     return "fill";  // safe default
 }
-inline std::string fromXWallModetoString(FillModeXWall mode){
-    switch(mode){
-    case FillModeXWall::Center:     return "--center";
-    case FillModeXWall::Focus:      return "--focus";
-    case FillModeXWall::Maximize:   return "--maximize";
-    case FillModeXWall::Stretch:    return "--stretch";
-    case FillModeXWall::Tile:       return "--tile";
-    case FillModeXWall::Zoom:       return "--zoom";
+inline std::string fromXWallModetoString(FillModeXWall mode) {
+    switch (mode) {
+        case FillModeXWall::Center:
+            return "--center";
+        case FillModeXWall::Focus:
+            return "--focus";
+        case FillModeXWall::Maximize:
+            return "--maximize";
+        case FillModeXWall::Stretch:
+            return "--stretch";
+        case FillModeXWall::Tile:
+            return "--tile";
+        case FillModeXWall::Zoom:
+            return "--zoom";
     }
     // fallback
     std::cerr << "Invalid XWallpaper fill mode\n";
     return "--focus";  // safe default
 }
-inline std::string fromXFCEModetoString(FillModeXFCE mode){
-    switch(mode){
-    case FillModeXFCE::Center:              return "1";
-    case FillModeXFCE::Zoom:                return "2";
-    case FillModeXFCE::Scaled:              return "4";
-    case FillModeXFCE::Stretch:             return "3";
-    case FillModeXFCE::Spanning_Screens:    return "5";
+inline std::string fromXFCEModetoString(FillModeXFCE mode) {
+    switch (mode) {
+        case FillModeXFCE::Center:
+            return "1";
+        case FillModeXFCE::Zoom:
+            return "2";
+        case FillModeXFCE::Scaled:
+            return "4";
+        case FillModeXFCE::Stretch:
+            return "3";
+        case FillModeXFCE::Spanning_Screens:
+            return "5";
     }
     // fallback
     std::cerr << "Invalid XFCE fill mode\n";
     return "4";  // safe default
 }
-inline int fromKDEModetoInt(FillModeKDE mode){
-    switch(mode){
+inline int fromKDEModetoInt(FillModeKDE mode) {
+    switch (mode) {
 
-    case FillModeKDE::Scaled:                return 0;
-    case FillModeKDE::ScaledKeepAspect:      return 1;
-    case FillModeKDE::ScaledCropped:         return 2;
-    case FillModeKDE::Tile:                  return 3;
-    case FillModeKDE::TileVertically:        return 4;
-    case FillModeKDE::TileHorizontally:      return 5;
-    case FillModeKDE::Center:                return 6;
+        case FillModeKDE::Scaled:
+            return 0;
+        case FillModeKDE::ScaledKeepAspect:
+            return 1;
+        case FillModeKDE::ScaledCropped:
+            return 2;
+        case FillModeKDE::Tile:
+            return 3;
+        case FillModeKDE::TileVertically:
+            return 4;
+        case FillModeKDE::TileHorizontally:
+            return 5;
+        case FillModeKDE::Center:
+            return 6;
 
-    default:
-        return 4;
+        default:
+            return 4;
     }
 }
-inline std::string fromGNOMEModetoString(FillModeGNOME mode){
-    switch(mode){
-    case FillModeGNOME::Center: return "centered";
-    case FillModeGNOME::Scaled: return "scaled";
-    case FillModeGNOME::Tile:   return "wallpaper";
-    case FillModeGNOME::Stretch:return "stretched";
-    case FillModeGNOME::Spanning_Screens:return "spanned";
-    default:    return "zoom";
+inline std::string fromGNOMEModetoString(FillModeGNOME mode) {
+    switch (mode) {
+        case FillModeGNOME::Center:
+            return "centered";
+        case FillModeGNOME::Scaled:
+            return "scaled";
+        case FillModeGNOME::Tile:
+            return "wallpaper";
+        case FillModeGNOME::Stretch:
+            return "stretched";
+        case FillModeGNOME::Spanning_Screens:
+            return "spanned";
+        default:
+            return "zoom";
     }
 }
-inline std::optional<FillModeXWall> mapToXWall(FillMode mode){
-    switch(mode){
-    case FillMode::Center:          return FillModeXWall::Center;
-    case FillMode::Focus:           return FillModeXWall::Focus;
-    case FillMode::Maximize:        return FillModeXWall::Maximize;
-    case FillMode::Tile:            return FillModeXWall::Tile;
-    case FillMode::Stretch:         return FillModeXWall::Stretch;
-    case FillMode::Zoom:            return FillModeXWall::Zoom;
-    default:
-        std::cerr<<"Unsupported X11 fill mode\n";
-        return std::nullopt;
+inline std::optional<FillModeXWall> mapToXWall(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return FillModeXWall::Center;
+        case FillMode::Focus:
+            return FillModeXWall::Focus;
+        case FillMode::Maximize:
+            return FillModeXWall::Maximize;
+        case FillMode::Tile:
+            return FillModeXWall::Tile;
+        case FillMode::Stretch:
+            return FillModeXWall::Stretch;
+        case FillMode::Zoom:
+            return FillModeXWall::Zoom;
+        default:
+            std::cerr << "Unsupported X11 fill mode\n";
+            return std::nullopt;
     }
 }
-inline std::optional<FillModeSway> mapToSway(FillMode mode){
-    switch(mode){
-    case FillMode::Center:  return FillModeSway::Center;
-    case FillMode::Tile:    return FillModeSway::Tile;
-    case FillMode::Stretch: return FillModeSway::Stretch;
-    case FillMode::Fill:    return FillModeSway::Fill;
-    case FillMode::Fit:     return FillModeSway::Fit;
-    default:
-        std::cerr<<"Unsupported Sway fill mode\n";
-        return std::nullopt;
+inline std::optional<FillModeSway> mapToSway(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return FillModeSway::Center;
+        case FillMode::Tile:
+            return FillModeSway::Tile;
+        case FillMode::Stretch:
+            return FillModeSway::Stretch;
+        case FillMode::Fill:
+            return FillModeSway::Fill;
+        case FillMode::Fit:
+            return FillModeSway::Fit;
+        default:
+            std::cerr << "Unsupported Sway fill mode\n";
+            return std::nullopt;
     }
 }
 
-inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode){
-    switch(mode){
-    case FillMode::Contain: return FitModeHyprland::Contain;
-    case FillMode::Tile:    return FitModeHyprland::Tile;
-    case FillMode::Cover:   return FitModeHyprland::Cover;
-    case FillMode::Fill:    return FitModeHyprland::Fill;
-    default:
-        std::cerr<<"Unsupported Hyprland fill mode\n";
-        return std::nullopt;
+inline std::optional<FitModeHyprland> mapToHyprland(FillMode mode) {
+    switch (mode) {
+        case FillMode::Contain:
+            return FitModeHyprland::Contain;
+        case FillMode::Tile:
+            return FitModeHyprland::Tile;
+        case FillMode::Cover:
+            return FitModeHyprland::Cover;
+        case FillMode::Fill:
+            return FitModeHyprland::Fill;
+        default:
+            std::cerr << "Unsupported Hyprland fill mode\n";
+            return std::nullopt;
     }
 }
-inline std::optional<FillModeXFCE>  mapToXFCE(FillMode mode){
-    switch(mode){
-    case FillMode::Center:              return FillModeXFCE::Center;
-    case FillMode::Spanning_Screens:    return FillModeXFCE::Spanning_Screens;
-    case FillMode::Stretch:             return FillModeXFCE::Stretch;
-    case FillMode::Zoom:                return FillModeXFCE::Zoom;
-    case FillMode::Scaled:              return FillModeXFCE::Scaled;
-    default:
-        std::cerr<<"Unsupported XFCE fill mode\n";
-        return std::nullopt;
+inline std::optional<FillModeXFCE>  mapToXFCE(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return FillModeXFCE::Center;
+        case FillMode::Spanning_Screens:
+            return FillModeXFCE::Spanning_Screens;
+        case FillMode::Stretch:
+            return FillModeXFCE::Stretch;
+        case FillMode::Zoom:
+            return FillModeXFCE::Zoom;
+        case FillMode::Scaled:
+            return FillModeXFCE::Scaled;
+        default:
+            std::cerr << "Unsupported XFCE fill mode\n";
+            return std::nullopt;
     }
 }
-inline std::optional<FillModeKDE>   mapToKDE(FillMode mode){
-    switch(mode){
-    case FillMode::Center:          return FillModeKDE::Center;
-    case FillMode::Scaled:          return FillModeKDE::Scaled;
-    case FillMode::ScaledKeepAspect:return FillModeKDE::ScaledKeepAspect;
-    case FillMode::Tile:            return FillModeKDE::Tile;
-    case FillMode::ScaledCropped:   return FillModeKDE::ScaledCropped;
-    case FillMode::TileVertically:  return FillModeKDE::TileVertically;
-    case FillMode::TileHorizontally:return FillModeKDE::TileHorizontally;
-    default:
-        std::cerr<<"Unsupported KDE fill mode\n";
-        return std::nullopt;
+inline std::optional<FillModeKDE>   mapToKDE(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return FillModeKDE::Center;
+        case FillMode::Scaled:
+            return FillModeKDE::Scaled;
+        case FillMode::ScaledKeepAspect:
+            return FillModeKDE::ScaledKeepAspect;
+        case FillMode::Tile:
+            return FillModeKDE::Tile;
+        case FillMode::ScaledCropped:
+            return FillModeKDE::ScaledCropped;
+        case FillMode::TileVertically:
+            return FillModeKDE::TileVertically;
+        case FillMode::TileHorizontally:
+            return FillModeKDE::TileHorizontally;
+        default:
+            std::cerr << "Unsupported KDE fill mode\n";
+            return std::nullopt;
     }
 }
-inline std::optional<FillModeGNOME> mapToGNOME(FillMode mode){
-    switch(mode){
-    case FillMode::Center:      return FillModeGNOME::Center;
-    case FillMode::Scaled:      return FillModeGNOME::Scaled;
-    case FillMode::Spanning_Screens: return FillModeGNOME::Spanning_Screens;
-    case FillMode::Tile:        return FillModeGNOME::Tile;
-    case FillMode::Stretch:     return FillModeGNOME::Stretch;
-    case FillMode::Zoom:        return FillModeGNOME::Zoom;
-    default:
-        std::cerr<<"Unsupported GNOME fill mode\n";
-        return std::nullopt;
+inline std::optional<FillModeGNOME> mapToGNOME(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return FillModeGNOME::Center;
+        case FillMode::Scaled:
+            return FillModeGNOME::Scaled;
+        case FillMode::Spanning_Screens:
+            return FillModeGNOME::Spanning_Screens;
+        case FillMode::Tile:
+            return FillModeGNOME::Tile;
+        case FillMode::Stretch:
+            return FillModeGNOME::Stretch;
+        case FillMode::Zoom:
+            return FillModeGNOME::Zoom;
+        default:
+            std::cerr << "Unsupported GNOME fill mode\n";
+            return std::nullopt;
     }
 }
-inline FillMode toFillMode(std::string mode){
-    if(mode=="Fill"){
+inline FillMode toFillMode(std::string mode) {
+    if (mode == "Fill") {
         return FillMode::Fill;
-    }else if(mode=="Fit"){
+    } else if (mode == "Fit") {
         return FillMode::Fit;
-    }else if(mode=="Stretch"){
+    } else if (mode == "Stretch") {
         return FillMode::Stretch;
-    }else if(mode=="Tile"){
+    } else if (mode == "Tile") {
         return FillMode::Tile;
-    }else if(mode=="Center"){
+    } else if (mode == "Center") {
         return FillMode::Center;
-    }else if(mode=="Contain"){
+    } else if (mode == "Contain") {
         return FillMode::Contain;
-    }else if(mode=="Cover"){
+    } else if (mode == "Cover") {
         return FillMode::Cover;
-    }else if(mode=="Focus"){
+    } else if (mode == "Focus") {
         return FillMode::Focus;
-    }else if(mode=="Maximize"){
+    } else if (mode == "Maximize") {
         return FillMode::Maximize;
-    }else if(mode=="Scaled"){
+    } else if (mode == "Scaled") {
         return FillMode::Scaled;
-    }else if(mode=="SpanningScreens"){
+    } else if (mode == "SpanningScreens") {
         return FillMode::Spanning_Screens;
-    }else if(mode=="Tile(Horizontally)"){
+    } else if (mode == "Tile(Horizontally)") {
         return FillMode::TileHorizontally;
-    }else if(mode=="Tile(Vertically)"){
+    } else if (mode == "Tile(Vertically)") {
         return FillMode::TileVertically;
-    }else if(mode=="Scaled(Keep Ratio)"){
+    } else if (mode == "Scaled(Keep Ratio)") {
         return FillMode::ScaledKeepAspect;
-    }else if(mode=="Scaled(Crop)"){
+    } else if (mode == "Scaled(Crop)") {
         return FillMode::ScaledCropped;
-    }
-    else{
+    } else {
         return FillMode::Zoom;
     }
 }
-inline std::vector<std::string> filterFillModes(std::vector<FillMode> givenModes){
+inline std::vector<std::string> filterFillModes(std::vector<FillMode> givenModes) {
     std::vector<std::string> returnModes;
-    for(auto const& m:givenModes){
-        switch(m){
-        case FillMode::Center:       returnModes.push_back("Center");              break;
-        case FillMode::Contain:      returnModes.push_back("Contain");             break;
-        case FillMode::Cover:        returnModes.push_back("Cover");               break;
-        case FillMode::Fill:         returnModes.push_back("Fill");                break;
-        case FillMode::Fit:          returnModes.push_back("Fit");                 break;
-        case FillMode::Focus:        returnModes.push_back("Focus");               break;
-        case FillMode::Maximize:     returnModes.push_back("Maximize");            break;
-        case FillMode::Stretch:      returnModes.push_back("Stretch");             break;
-        case FillMode::Tile:         returnModes.push_back("Tile");                break;
-        case FillMode::Zoom:         returnModes.push_back("Zoom");                break;
-        case FillMode::Scaled:       returnModes.push_back("Scaled");              break;
-        case FillMode::Spanning_Screens: returnModes.push_back("SpanningScreens"); break;
-        case FillMode::TileHorizontally: returnModes.push_back("Tile(Horizontally)");break;
-        case FillMode::TileVertically:  returnModes.push_back("Tile(Vertically)");  break;
-        case FillMode::ScaledCropped:   returnModes.push_back("Scaled(Crop)"); break;
-        case FillMode::ScaledKeepAspect: returnModes.push_back("Scaled(Keep Ratio)");break;
+    for (auto const& m : givenModes) {
+        switch (m) {
+            case FillMode::Center:
+                returnModes.push_back("Center");
+                break;
+            case FillMode::Contain:
+                returnModes.push_back("Contain");
+                break;
+            case FillMode::Cover:
+                returnModes.push_back("Cover");
+                break;
+            case FillMode::Fill:
+                returnModes.push_back("Fill");
+                break;
+            case FillMode::Fit:
+                returnModes.push_back("Fit");
+                break;
+            case FillMode::Focus:
+                returnModes.push_back("Focus");
+                break;
+            case FillMode::Maximize:
+                returnModes.push_back("Maximize");
+                break;
+            case FillMode::Stretch:
+                returnModes.push_back("Stretch");
+                break;
+            case FillMode::Tile:
+                returnModes.push_back("Tile");
+                break;
+            case FillMode::Zoom:
+                returnModes.push_back("Zoom");
+                break;
+            case FillMode::Scaled:
+                returnModes.push_back("Scaled");
+                break;
+            case FillMode::Spanning_Screens:
+                returnModes.push_back("SpanningScreens");
+                break;
+            case FillMode::TileHorizontally:
+                returnModes.push_back("Tile(Horizontally)");
+                break;
+            case FillMode::TileVertically:
+                returnModes.push_back("Tile(Vertically)");
+                break;
+            case FillMode::ScaledCropped:
+                returnModes.push_back("Scaled(Crop)");
+                break;
+            case FillMode::ScaledKeepAspect:
+                returnModes.push_back("Scaled(Keep Ratio)");
+                break;
         }
     }
     return returnModes;
 }
+inline std::string fromModetoString(FillMode mode) {
+    switch (mode) {
+        case FillMode::Center:
+            return "Center";
+        case FillMode::Contain:
+            return "Contain";
+        case FillMode::Cover:
+            return "Cover";
+        case FillMode::Fill:
+            return "Fill";
+        case FillMode::Fit:
+            return "Fit";
+        case FillMode::Focus:
+            return "Focus";
+        case FillMode::Maximize:
+            return "Maximize";
+        case FillMode::Stretch:
+            return "Stretch";
+        case FillMode::Tile:
+            return "Tile";
+        case FillMode::Zoom:
+            return "Zoom";
+        case FillMode::Scaled:
+            return "Scaled";
+        case FillMode::Spanning_Screens:
+            return "SpanningScreens";
+        case FillMode::TileHorizontally:
+            return "Tile(Horizontally)";
+        case FillMode::TileVertically:
+            return "Tile(Vertically)";
+        case FillMode::ScaledCropped:
+            return "Scaled(Crop)";
+        case FillMode::ScaledKeepAspect:
+            return "Scaled(Keep Ratio)";
+    }
+}
+
 #endif // FILLMODECONVERTER_H

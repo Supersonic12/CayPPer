@@ -1,18 +1,21 @@
 #ifndef PERSISTENCEADDON_H
 #define PERSISTENCEADDON_H
-
-#include <map>
-#include <string>
-#include "envvardetector.h"
-class persistenceAddon
-{
-public:
+#include "domainExpansion/monState.h"
+#include <functional>
+class persistenceAddon {
+  public:
     persistenceAddon();
-    std::string autostartPath;
-    std::map<EnvVarDetector::Compositor,std::string>
-        persistenceMap{
-            {EnvVarDetector::Compositor::GNOME,""}
-        };
+    void setPersistenceState(bool enabled);
+    bool getPersistenceState();
+    void readPersistenceState();
+    void readLastSetupJson();
+    void setLastSetupJson(stateOfMons& state);
+    std::vector<stateOfMon> getLastSetupJson();
+    void restoreLastWallpapers();
+    std::function<void(const stateOfMons&)> onRestoreFound;
+  private:
+    bool persistenceState_;
+    std::vector<stateOfMon> lastStatesVector_;
 };
 
 #endif // PERSISTENCEADDON_H

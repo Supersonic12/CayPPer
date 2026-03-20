@@ -12,14 +12,11 @@
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
 #include "IChanger.h"
+#include "domainExpansion/monState.h"
+#include "persistenceaddon.h"
 class coreService
 {
 public:
-    struct stateOfMon{
-        std::vector<std::string> id;
-        std::filesystem::path wallPath;
-        FillMode fillMode;
-    };
     coreService();
     ~coreService();
     bool isWayland() const;
@@ -27,11 +24,13 @@ public:
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
     const std::vector<std::filesystem::path> listDirectory(std::filesystem::path);
-    void setWallpaper(stateOfMon newState);
+    void setWallpaper(stateOfMons *newState);
     void setDirectoryChangeCallBack(std::function<void()> callback);
     void stopWatching();
     void startWatching(const std::filesystem::path& path);
-
+    void restoreWallpapers();
+    bool getPersState();
+    void setPersState(bool enabled);
 private:
     EnvVarDetector envvardetector_;
     directoryLister directorylister_;
@@ -48,8 +47,9 @@ private:
 
     //polymorphic pointer for linking backends to core service
     using BackendPtr=std::unique_ptr<IBackend,std::function<void(IBackend*)>>;
-    ChangerFactory factory;
+    ChangerFactory factory_;
     BackendPtr backend_;
+    persistenceAddon persState_;
 };
 
 

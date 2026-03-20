@@ -1,3 +1,4 @@
+find_package(nlohmann_json REQUIRED)
 add_library(cayppercore SHARED
     directorylister.cpp
     directorylister.h
@@ -14,8 +15,8 @@ add_library(cayppercore SHARED
     domainExpansion/raiiguard.h
     persistenceaddon.h persistenceaddon.cpp
     domainExpansion/monState.h
-
-
+    domainExpansion/replaceLine.h
+    domainExpansion/getConfigPath.h
 )
 
 target_include_directories(cayppercore
@@ -30,4 +31,5 @@ install(TARGETS cayppercore
 target_link_libraries(cayppercore
 PRIVATE
 ${CMAKE_DL_LIBS}
+nlohmann_json::nlohmann_json
 )
