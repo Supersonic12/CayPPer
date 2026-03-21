@@ -9,3 +9,7 @@ target_link_libraries(caypperctl
   Qt6::Core
   cayppercore
 )
+
+install(TARGETS caypperctl
+  RUNTIME DESTINATION bin/caypper
+  COMPONENT base)

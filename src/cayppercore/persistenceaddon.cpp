@@ -50,13 +50,13 @@ void persistenceAddon::readPersistenceState() {
         }
     }
     ifs.close();
-    if (value.empty()) {
-        throw std::runtime_error(std::string("ERROR: key or value couldn't found"));
-    }
     if (value == "true") {
         persistenceState_ = true;
     } else {
         persistenceState_ = false;
+    }
+    if (value.empty()) {
+        throw std::runtime_error(std::string("ERROR: key or value couldn't found"));
     }
 }
 bool persistenceAddon::getPersistenceState() {

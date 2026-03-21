@@ -13,6 +13,7 @@ find_package(Qt6 REQUIRED COMPONENTS
 )
 
 qt_standard_project_setup(REQUIRES 6.8)
+option(KDEBACKEND "enable KDE Backend with its dependencies requirements" OFF)
 include(GNUInstallDirs)
 add_subdirectory(src)
 
