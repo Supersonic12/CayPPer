@@ -15,8 +15,14 @@ find_package(Qt6 REQUIRED COMPONENTS
 qt_standard_project_setup(REQUIRES 6.8)
 option(KDEBACKEND "enable KDE Backend with its dependencies requirements" ON)
 include(GNUInstallDirs)
-add_subdirectory(src)
 
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib/caypper")
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+add_subdirectory(src)
+target_compile_definitions(cayppercore
+    PRIVATE
+    LIB_DIR="${CMAKE_INSTALL_PREFIX}/"
+)
 
 install(FILES caypper.desktop
     DESTINATION share/applications
@@ -29,7 +35,4 @@ install(FILES uninstall.sh
     COMPONENT base
 )
 
-target_compile_definitions(cayppercore
-    PRIVATE
-    LIB_DIR="${CMAKE_INSTALL_PREFIX}/"
-)
+

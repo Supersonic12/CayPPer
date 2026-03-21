@@ -45,7 +45,7 @@ target_link_libraries(caypper
     cayppercore
 )
 install(TARGETS caypper
-    RUNTIME DESTINATION bin/caypper
+    RUNTIME DESTINATION bin/caypper/
     COMPONENT base
 )
 install(FILES qml/icons/caypper.png

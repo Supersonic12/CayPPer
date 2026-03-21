@@ -9,12 +9,7 @@ Controller::Controller(QObject *parent)
 
     refreshAvailableModes();
     refreshAvailableMonitors();
-    QByteArray desktop = qgetenv("XDG_CURRENT_DESKTOP").toLower();
-    if (desktop.contains("xfce") || desktop.contains("gnome") || desktop.contains("mate")) {
-        qputenv("QT_QPA_PLATFORMTHEME", QByteArray("gtk3"));
-    } else if (desktop.contains("kde")) {
-        qputenv("QT_QPA_PLATFORMTHEME", QByteArray("kde"));
-    }
+
     core_.setDirectoryChangeCallBack(
     [this]() {
         QMetaObject::invokeMethod(
