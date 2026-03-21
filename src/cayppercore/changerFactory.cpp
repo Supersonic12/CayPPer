@@ -5,11 +5,10 @@
 #include <functional>
 #include <map>
 #include "IChanger.h"
-static constexpr const char* BACKEND_DIR =
-    "/home/jesus/Projects/CayPPer/build/lib/caypper/";/*/usr/lib/caypper/*/
+static constexpr const char* BACKEND_DIR = LIB_DIR;
 using BackendPtr = std::unique_ptr<IBackend, std::function<void(IBackend*)>>;
 BackendPtr ChangerFactory::loadBackend(const std::string& soName) {
-    std::string path = std::string(BACKEND_DIR) + soName;
+    std::string path = std::string(BACKEND_DIR) + "lib/caypper/" + soName;
     if (!std::filesystem::exists(path)) {
         return nullptr;
     }

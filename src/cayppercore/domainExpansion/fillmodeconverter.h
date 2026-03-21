@@ -249,8 +249,12 @@ inline FillMode toFillMode(std::string mode) {
         return FillMode::ScaledKeepAspect;
     } else if (mode == "Scaled(Crop)") {
         return FillMode::ScaledCropped;
-    } else {
+    } else if (mode == "Zoom") {
         return FillMode::Zoom;
+    } else {
+        throw std::runtime_error(
+            std::string("Unknown fillmode string in json '"
+                        + mode + "'"));
     }
 }
 inline std::vector<std::string> filterFillModes(std::vector<FillMode> givenModes) {
@@ -343,6 +347,9 @@ inline std::string fromModetoString(FillMode mode) {
             return "Scaled(Crop)";
         case FillMode::ScaledKeepAspect:
             return "Scaled(Keep Ratio)";
+        default:
+            throw std::runtime_error(
+                std::string("ERROR: Incorrect FillMode  given to fromModetoString function"));
     }
 }
 

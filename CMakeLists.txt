@@ -28,3 +28,7 @@ install(FILES uninstall.sh
     COMPONENT base
 )
 
+target_compile_definitions(cayppercore
+    PRIVATE
+    LIB_DIR="${CMAKE_INSTALL_PREFIX}/"
+)

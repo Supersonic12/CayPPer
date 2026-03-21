@@ -131,12 +131,11 @@ void coreService::watchLoop() {
 coreService::~coreService() {
     stopWatching();
 }
-
 void coreService::restoreWallpapers() {
     persState_.onRestoreFound = [this](const stateOfMons state) {
         this->setWallpaper(const_cast<stateOfMons*>(&state));
     };
-    if (persState_.getPersistenceState()) {
+    if (getPersState()) {
         persState_.restoreLastWallpapers();
     }
 }

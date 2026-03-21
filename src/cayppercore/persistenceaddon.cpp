@@ -94,19 +94,29 @@ void persistenceAddon::readLastSetupJson() {
 void persistenceAddon::setLastSetupJson(stateOfMons& states) {
     std::filesystem::path lastSetupPath = std::filesystem::path(getConfigPath()) / "lastSetup.json";
     std::filesystem::path tempPath = std::filesystem::path(getConfigPath()) / "lastSetup.json.tmp";
-    std::ofstream ofs(tempPath);
-    std::ifstream ifs(lastSetupPath);
-    if (!ofs.is_open()) {
-        throw std::runtime_error(std::string("ERROR: couldn't open lastSetup.json"));
-    }
     json newJson;
-    try {
-        newJson = json::parse(ifs);
-    } catch (json::parse_error &e) {
-        std::cerr << "ERROR: failed to parse lastSetup.json, creating new one";
-        newJson = json::object();
-    }
+    if (std::filesystem::exists(lastSetupPath)) {
+        std::ifstream ifs(lastSetupPath);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("ERROR: lastSetup.json exists, but couldn't open for reading");
+        }
+        try {
+            newJson = json::parse(ifs);
+        } catch (json::parse_error &e) {
 
+
+            std::cerr <<
+            "ERROR: lastSetup.json exists, but couldn't parse to json, will overwrite to it\n";
+            newJson = json::object();
+        }
+    } else {
+        std::cerr << "INFO: lastSetup.json doesn't exist, app will create new one\n";
+    }
+    std::ofstream ofs(tempPath);
+    if (!ofs.is_open()) {
+        throw std::runtime_error(
+            std::string("ERROR: couldn't create or open temporary file for changing last setup"));
+    }
     for (auto const& mon : states.name) {
         newJson["processInfo"][mon] = {
             {"fillMode", fromModetoString(states.fillMode)},

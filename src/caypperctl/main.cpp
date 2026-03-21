@@ -9,8 +9,11 @@ int main(int argc, char* argv[]) {
     QCoreApplication::setApplicationName("caypper");
     Controller controller;
     if (argv[1] == std::string("--restore")) {
-
-        controller.restoreLastWallpapers();
+        try {
+            controller.restoreLastWallpapers();
+        } catch (std::runtime_error &e) {
+            std::cerr << e.what();
+        }
     }
     return 0;
 }

@@ -1,14 +1,13 @@
 #include "controller.h"
 using json = nlohmann::json;
 Controller::Controller(QObject *parent)
-    : QObject{parent}
-{
+    : QObject{parent} {
 }
 
-void Controller::restoreLastWallpapers(){
+void Controller::restoreLastWallpapers() {
     core_.restoreWallpapers();
 }
-void Controller::setPersistenceState(bool enabled){
+void Controller::setPersistenceState(bool enabled) {
     core_.setPersState(enabled);
 }
 
