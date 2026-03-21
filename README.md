@@ -1,17 +1,17 @@
-# Caypper
+# CayPPer
 
 > A Qt-powered wallpaper manager with multi-environment support and system theme integration.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Qt](https://img.shields.io/badge/Qt-6.8+-green.svg)](https://www.qt.io/)
-[![C++](https://img.shields.io/badge/C++-20-orange.svg)]()
+[![C++](https://img.shields.io/badge/C++-20-orange.svg)](https://isocpp.org/)
 [![CMake](https://img.shields.io/badge/CMake-3.16+-red.svg)](https://cmake.org/)
 
 ---
 
 ## Overview
 
-Caypper is a wallpaper manager built with Qt and C++. It automatically detects your desktop environment, respects your system theme, and lets you browse and set wallpapers without leaving the keyboard — thanks to full Vim-style navigation.
+CayPPer is a wallpaper manager built with Qt and C++. It automatically detects your desktop environment, respects your system theme, and lets you browse and set wallpapers without leaving the keyboard — thanks to full Vim-style navigation.
 
 Not a Vim user? No problem — Vim keys are optional and can be toggled off at any time.
 
@@ -20,7 +20,7 @@ Not a Vim user? No problem — Vim keys are optional and can be toggled off at a
 ## Supported Environments
 
 | Environment | Method | Notes |
-|-------------|--------|-------|
+| --- | --- | --- |
 | KDE | DBus | Full support |
 | GNOME | gsettings | Monitor-specific wallpaper setting not yet supported |
 | XFCE | xfconf-query | Full support |
@@ -39,6 +39,7 @@ See [INSTALL.md](INSTALL.md) for full build and installation instructions.
 - Qt **6.8+**
 - C++ **20** or later
 - CMake **3.16+**
+- Ninja build system
 - Environment-specific tools (e.g. `swaybg` for Sway, `xwallpaper` for X11)
 
 ---
@@ -50,7 +51,7 @@ Vim-style navigation is built in throughout the app. You can disable it via **Se
 ### Main Menu
 
 | Key | Action |
-|-----|--------|
+| --- | --- |
 | `gs` | Open Settings |
 | `gw` | Open folder dialog |
 | `gr` | Focus wallpaper grid |
@@ -60,7 +61,7 @@ Vim-style navigation is built in throughout the app. You can disable it via **Se
 ### Wallpaper Grid
 
 | Key | Action |
-|-----|--------|
+| --- | --- |
 | `h` | Move left |
 | `l` | Move right |
 | `j` | Move down |
@@ -72,7 +73,7 @@ Vim-style navigation is built in throughout the app. You can disable it via **Se
 ### Settings
 
 | Key | Action |
-|-----|--------|
+| --- | --- |
 | `gn` | Return to Main Menu |
 | `gW` | Set default wallpaper folder |
 | `gc` | Set config folder |
@@ -83,6 +84,17 @@ Vim-style navigation is built in throughout the app. You can disable it via **Se
 ## Known Limitations
 
 - **GNOME**: Monitor-specific wallpaper setting is not currently supported.
+- **KDE**: Since KDE 6.6, the *Tile*, *Tile Horizontally*, and *Tile Vertically* fill modes have been dropped upstream due to resource usage concerns. These options remain available in CayPPer's UI but will have no effect on KDE.
+
+---
+
+## Uninstalling
+
+An uninstall script is included. After installing, you can remove CayPPer by running:
+
+```bash
+sudo /usr/share/caypper/uninstall.sh
+```
 
 ---
 
@@ -94,4 +106,4 @@ Contributions are welcome! Feel free to open issues for bug reports, feature req
 
 ## License
 
-Caypper is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).
+CayPPer is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).
