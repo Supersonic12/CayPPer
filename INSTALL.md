@@ -9,6 +9,13 @@ cd CayPPer
 
 ---
 
+## Install via install.sh script
+
+```
+sudo ./install.sh
+```
+
+---
 ## How It Works
 
 CayPPer uses a **component-based install system**. All backends are always compiled
