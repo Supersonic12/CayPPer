@@ -10,6 +10,7 @@ Rectangle{
     property alias vimKeysBox:vimKeysToggleBox
     property alias configDialog:configPathDialog
     property alias defaultPathDialog:defaultWallPathDialog
+    property alias persistenceInRestart:persBox
     Rectangle{
         id:backButtonRect
         anchors.left:parent.left
@@ -273,7 +274,64 @@ Rectangle{
                         }
                     }
                 }
+
+                RowLayout{
+                    id:persistenceRow
+                    Layout.alignment: Qt.AlignLeft
+                    Layout.preferredWidth:root.width-40
+                    Label{
+                        text:"Persistence"
+                        Layout.alignment: Qt.AlignLeft || Qt.AlignVCenter
+                        color:root.palette.text
+                    }
+                    Rectangle{
+                        id:separator
+                        Layout.fillWidth: true
+                    }
+                    CheckBox{
+                        id:persBox
+                        Layout.preferredWidth: 32
+                        Layout.preferredHeight: 32
+                        checked:controller?controller.persistenceToggle:false
+                        indicator:Rectangle{
+                            id:persBoxRect
+                            width:24
+                            height:24
+                            anchors.centerIn: parent
+                            border.width:1
+                            border.color:root.palette.mid
+                            color:root.palette.window
+                            radius:4
+                            Image{
+                                id:persIndicatorIcon
+                                width:parent.width
+                                height:parent.height
+                                fillMode:Image.PreserveAspectFit
+                                source:"icons/check.svg"
+                                visible:controller?controller.persistenceToggle:false
+                                layer.enabled:true
+                                layer.effect: MultiEffect{
+                                    colorization: 1.0
+                                    colorizationColor: root.palette.text
+                                }
+                            }
+                        }
+                        onCheckedChanged:{
+                            //check/uncheck
+                            //open popup
+                            if(controller){
+                                if(checked){
+                                    persIndicatorIcon.visible=true
+                                }else{
+                                    persIndicatorIcon.visible=false
+                                }
+                                controller.setPersistenceToggle(checked)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+

@@ -7,11 +7,13 @@
 #include <functional>
 #include <atomic>
 #include <thread>
-
+#include "changerFactory.h"
 #include "envvardetector.h"
 #include "domainExpansion/fillmode.h"
 #include "directorylister.h"
 #include "IChanger.h"
+#include "domainExpansion/monState.h"
+#include "persistenceaddon.h"
 class coreService
 {
 public:
@@ -22,11 +24,13 @@ public:
     std::vector<std::string> monitors() const;
     std::vector<FillMode> supportedModes() const;
     const std::vector<std::filesystem::path> listDirectory(std::filesystem::path);
-    void setWallpaper(std::filesystem::path& wallPath,std::vector<std::string>& selectedMonitors,FillMode fillmode);
+    void setWallpaper(stateOfMons *newState);
     void setDirectoryChangeCallBack(std::function<void()> callback);
     void stopWatching();
     void startWatching(const std::filesystem::path& path);
-
+    void restoreWallpapers();
+    bool getPersState();
+    void setPersState(bool enabled);
 private:
     EnvVarDetector envvardetector_;
     directoryLister directorylister_;
@@ -42,7 +46,11 @@ private:
     std::atomic<bool> running_{false};
 
     //polymorphic pointer for linking backends to core service
-    std::unique_ptr<IBackend> backend_;
+    using BackendPtr=std::unique_ptr<IBackend,std::function<void(IBackend*)>>;
+    ChangerFactory factory_;
+    BackendPtr backend_;
+    persistenceAddon persState_;
 };
+
 
 #endif // CORESERVICE_H

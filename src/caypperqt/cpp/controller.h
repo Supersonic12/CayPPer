@@ -30,6 +30,9 @@ class Controller : public QObject
     Q_PROPERTY(bool vimKeysToggle
                READ vimKeysToggle
                NOTIFY vimKeysToggleChanged)
+    Q_PROPERTY(bool persistenceToggle
+               READ persistenceToggle
+               NOTIFY persistenceToggleChanged)
 public:
 
     explicit Controller(QObject *parent = nullptr);
@@ -49,14 +52,15 @@ public:
     QAbstractListModel* getImageModel(); //Can't put const here, I will learn why then edit this part.
 
     //here either can't put const
-    //this looks like getter function but it is just a qml property so I'm not sure what to do.
+    //these look like getter functions but they are just qml properties so I'm not sure what to do.
     QString configPath();
     Q_INVOKABLE void setConfigPath(QUrl path);
     QString defaultWallPath();
     Q_INVOKABLE void setDefaultWallPath(QUrl path);
     bool vimKeysToggle();
     Q_INVOKABLE void setVimKeysToggle(bool value);
-
+    bool persistenceToggle();
+    Q_INVOKABLE void setPersistenceToggle(bool value);
 
 
 signals:
@@ -68,6 +72,7 @@ signals:
     void defaultWallPathChanged();
     void vimKeysToggleChanged();
     void iconColorsChanged();
+    void persistenceToggleChanged();
 private:
     void refreshDirectoryContent(QString path);
     void checkDirectory();
@@ -98,6 +103,7 @@ private:
     QString configPath_;
     QString defaultWallPath_;
     bool vimKeysToggle_;
+    bool persistenceToggle_;
 
 };
 

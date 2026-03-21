@@ -21,6 +21,7 @@ qt_add_qml_module(caypper
     qml/icons/check.svg
     qml/icons/caypper.png
     qml/icons/caypper.svg
+    qml/icons/monitor.svg
 
     SOURCES
     #cpp/inputtakerfromqml.cpp
@@ -44,7 +45,7 @@ target_link_libraries(caypper
     cayppercore
 )
 install(TARGETS caypper
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION bin/
     COMPONENT base
 )
 install(FILES qml/icons/caypper.png
@@ -54,5 +55,4 @@ install(FILES qml/icons/caypper.png
 install(FILES qml/icons/caypper.svg
     DESTINATION share/icons/hicolor/scalable/apps
     COMPONENT base)
-
 

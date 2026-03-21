@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Effects
+import QtQuick.Layouts
 import QtCore
 ApplicationWindow {
     id: root
@@ -366,39 +367,71 @@ ApplicationWindow {
                 Rectangle{
                     anchors.top:parent.top
                     anchors.left:separatorBox.right
-                    width:96
+                    width:monitorListView.contentWidth
                     height:32
                     anchors.topMargin: 10
                     anchors.leftMargin: 10
                     radius:10
-                    color:root.palette.window
+                    color:"transparent"
                     border.color:root.palette.mid
                     border.width: 1
                     ListView{
                         id:monitorListView
-                        width:parent.width
                         height:parent.height
-                        anchors.centerIn: parent
+                        orientation: ListView.Horizontal
+                        spacing:12
                         model: []
                         Component.onCompleted: {
-
                             model=controller.getConnectedMonitors
                         }
 
                         delegate:Rectangle{
+                            id:monitorCheckBox
                             width:96
                             height:32
-                            color:root.palette.window
-                            CheckBox{
-                                id:monitorCheckBox
+                            anchors.centerIn: parent
+                            color:"transparent"
+                            property bool checked:false
+                            border.width:1
+                            border.color:root.palette.mid
+                            radius:10
+                            RowLayout{
                                 anchors.centerIn: parent
-                                anchors.fill:parent
-                                text:modelData
-                                onCheckedChanged:{
-                                    controller.setSelectedMonitors(checked, modelData)
-                                    if(wallpaperGridLoader.item){
-                                        wallpaperGridLoader.item.forceActiveFocus()
+                                height:32
+                                Image{
+                                    id:monitorIcon
+                                    width:32
+                                    height:32
+                                    source:"icons/monitor.svg"
+                                    sourceSize:Qt.size(32,32)
+                                    fillMode: Image.PreserveAspectFit
+                                    mipmap:true
+                                    smooth:true
+                                    asynchronous: true
+                                    layer.enabled:true
+                                    layer.effect: MultiEffect{
+                                        colorization: 1.0
+                                        colorizationColor: root.palette.text
                                     }
+                                }
+                                Text{
+                                    text:modelData
+                                    font.pointSize: 12
+                                    color:root.palette.text
+                                }
+                            }
+                            MouseArea{
+                                anchors.fill:parent
+                                onClicked:{
+                                    monitorCheckBox.checked=!monitorCheckBox.checked
+                                }
+                            }
+
+                            onCheckedChanged:{
+                                monitorCheckBox.color= checked? root.palette.mid :root.palette.window
+                                controller.setSelectedMonitors(checked, modelData)
+                                if(wallpaperGridLoader.item){
+                                    wallpaperGridLoader.item.forceActiveFocus()
                                 }
                             }
                         }

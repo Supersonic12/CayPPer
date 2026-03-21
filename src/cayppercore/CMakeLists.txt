@@ -1,3 +1,4 @@
+find_package(nlohmann_json REQUIRED)
 add_library(cayppercore SHARED
     directorylister.cpp
     directorylister.h
@@ -9,9 +10,13 @@ add_library(cayppercore SHARED
     domainExpansion/fillmodeconverter.h
     domainExpansion/jsscriptloader.h
     IChanger.h
-    backends/changerFactory.cpp
-    backends/changerFactory.h
+    changerFactory.cpp
+    changerFactory.h
     domainExpansion/raiiguard.h
+    persistenceaddon.h persistenceaddon.cpp
+    domainExpansion/monState.h
+    domainExpansion/replaceLine.h
+    domainExpansion/getConfigPath.h
 )
 
 target_include_directories(cayppercore
@@ -20,6 +25,11 @@ target_include_directories(cayppercore
 )
 
 install(TARGETS cayppercore
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION lib/caypper
     COMPONENT base
+)
+target_link_libraries(cayppercore
+PRIVATE
+${CMAKE_DL_LIBS}
+nlohmann_json::nlohmann_json
 )
