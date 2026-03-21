@@ -15,6 +15,27 @@ CayPPer is a wallpaper manager built with Qt and C++. It automatically detects y
 
 Not a Vim user? No problem — Vim keys are optional and can be toggled off at any time.
 
+### Screenshots from App
+
+<table>
+  <tr>
+    <td><img src="screenshots/xfce.png" width="400"/></td>
+    <td><img src="screenshots/xfcesettings.png" width="400"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/xfcebeforechange.png" width="400"/></td>
+    <td><img src="screenshots/xfceafterchange.png" width="400"/></td>
+  </tr>
+  <tr>
+  <td><img src="screenshots/caypperadwaita.png" width="400"></td>
+  <td><img src="screenshots/caypperindwm.png" width="400"></td>
+  </tr>
+  <tr>
+  <td><img src="screenshots/cayppersettingsadwaita.png" width="400"></td>
+  <td><img src="screenshots/cayppersettingsindwm.png" width="400"></td>
+  </tr>
+</table>
+
 ---
 
 ## Supported Environments
