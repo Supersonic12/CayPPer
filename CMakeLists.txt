@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Qml
 )
 
-qt_standard_project_setup(REQUIRES 6.8)
+qt_standard_project_setup(REQUIRES 6.5)
 option(KDEBACKEND "enable KDE Backend with its dependencies requirements" ON)
 include(GNUInstallDirs)
 
