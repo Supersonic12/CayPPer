@@ -11,5 +11,5 @@ target_link_libraries(caypperctl
 )
 
 install(TARGETS caypperctl
-  RUNTIME DESTINATION bin/caypper/
+  RUNTIME DESTINATION bin/
   COMPONENT base)
